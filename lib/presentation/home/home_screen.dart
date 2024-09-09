@@ -8,6 +8,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int currentPageIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,25 +17,37 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text('Flash card'),
         centerTitle: true,
       ),
-      body: ListView(
-        children: [
-          Text('최근 사용 내역이 없습니다')
+      body: const Padding(
+        padding: EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Card(
+              child: ListTile(
+                title: Text('sample1'),
+              ),
+            ),
+            Card(
+              child: ListTile(
+                title: Text('sample2'),
+              ),
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: NavigationBar(
+        onDestinationSelected: (int index) {
+          setState(() {
+            currentPageIndex = index;
+          });
+        },
+        indicatorColor: Colors.green,
+        selectedIndex: currentPageIndex,
+        destinations: const [
+          NavigationDestination(icon: Icon(Icons.home), label: '홈'),
+          NavigationDestination(icon: Icon(Icons.folder_rounded), label: '카드'),
+          NavigationDestination(icon: Icon(Icons.person), label: '내 정보'),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(items: const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: '홈',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.folder_rounded),
-          label: '카드',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.person),
-          label: '내 정보',
-        ),
-      ]),
     );
   }
 }
