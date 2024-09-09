@@ -5,6 +5,11 @@ class MyInfoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text('my info');
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('내 정보'),
+        centerTitle: true,
+      ),
+    );
   }
 }
