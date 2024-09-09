@@ -16,10 +16,6 @@ class _HomeScreenState extends State<HomeScreen> {
     final homeScreenModel = context.watch<HomeScreenModel>();
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Flash card'),
-        centerTitle: true,
-      ),
       body: homeScreenModel.screens[homeScreenModel.currentPageIndex],
       bottomNavigationBar: FlashCardBottom(
         currentPageIndex: homeScreenModel.currentPageIndex,
