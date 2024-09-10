@@ -1,20 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_flash_card/presentation/components/flash_card_bottom/flash_card_bottom_model.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class FlashCardBottom extends StatelessWidget {
-  final int currentPageIndex;
-  final Function(int) onIndexSelected;
-
   const FlashCardBottom({
     super.key,
-    required this.currentPageIndex,
-    required this.onIndexSelected,
   });
 
   @override
   Widget build(BuildContext context) {
+    final flashCardBottomModel = context.watch<FlashCardBottomModel>();
+
     return NavigationBar(
-      selectedIndex: currentPageIndex,
-      onDestinationSelected: onIndexSelected,
+      onDestinationSelected: (index) {
+        flashCardBottomModel.setIndex(index);
+
+        switch (index) {
+          case 0:
+            {
+              context.go('/home');
+            }
+          case 1:
+            {
+              context.go('/card_list');
+            }
+          case 2:
+            {
+              context.go('/my_info');
+            }
+        }
+      },
+      selectedIndex: flashCardBottomModel.selectedIndex,
       indicatorColor: Colors.green,
       destinations: const [
         NavigationDestination(icon: Icon(Icons.home), label: '홈'),
