@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_flash_card/presentation/adding_deck/adding_deck_screen.dart';
 import 'package:flutter_flash_card/presentation/card_list/card_list_screen.dart';
 import 'package:flutter_flash_card/presentation/components/flash_card_bottom/flash_card_bottom.dart';
 import 'package:flutter_flash_card/presentation/components/flash_card_bottom/flash_card_bottom_model.dart';
@@ -39,6 +40,14 @@ final GoRouter router = GoRouter(
         GoRoute(
           path: '/card_list',
           builder: (context, state) => const CardListScreen(),
+          routes: <RouteBase>[
+            GoRoute(
+              path: 'adding_card_deck',
+              builder: (context, state) {
+                return const AddingDeckScreen();
+              },
+            ),
+          ],
         ),
         GoRoute(
           path: '/my_info',
