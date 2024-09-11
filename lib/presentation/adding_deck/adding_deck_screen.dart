@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class AddingDeckScreen extends StatefulWidget {
   const AddingDeckScreen({super.key});
@@ -23,7 +24,10 @@ class _AddingDeckScreenState extends State<AddingDeckScreen> {
               child: Card(
                 child: ListTile(
                   title: Text('덱 이름'),
-                  subtitle: SizedBox(child: TextField()),
+                  subtitle: SizedBox(
+                      child: TextField(
+                    autofocus: true,
+                  )),
                 ),
               ),
             ),
@@ -31,10 +35,11 @@ class _AddingDeckScreenState extends State<AddingDeckScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.go('/card_list/card_deck');
+                  },
                   style: ButtonStyle(
                     backgroundColor: WidgetStateProperty.all(Colors.green),
-
                   ),
                   child: const Text('생성'),
                 ),
@@ -42,7 +47,9 @@ class _AddingDeckScreenState extends State<AddingDeckScreen> {
                   width: 16.0,
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.pop();
+                  },
                   style: ButtonStyle(
                     backgroundColor: WidgetStateProperty.all(Colors.red),
                   ),
