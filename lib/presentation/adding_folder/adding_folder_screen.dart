@@ -13,7 +13,7 @@ class _AddingFolderScreenState extends State<AddingFolderScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('덱 추가'),
+        title: const Text('폴더 추가'),
         centerTitle: true,
       ),
       body: Center(
@@ -23,7 +23,7 @@ class _AddingFolderScreenState extends State<AddingFolderScreen> {
               padding: EdgeInsets.all(32.0),
               child: Card(
                 child: ListTile(
-                  title: Text('덱 이름'),
+                  title: Text('폴더 이름'),
                   subtitle: SizedBox(
                       child: TextField(
                     autofocus: true,
