@@ -21,10 +21,10 @@ class _FolderListScreenState extends State<FolderListScreen> {
           Card(
             child: ListTile(
               titleAlignment: ListTileTitleAlignment.center,
-              title: const Text('덱 추가'),
+              title: const Text('폴더 추가'),
               leading: const Icon(Icons.add),
               onTap: () {
-                context.go('/card_list/adding_card_deck');
+                context.go('/folder_list/adding_card_deck');
               },
             ),
           )

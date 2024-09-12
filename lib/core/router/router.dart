@@ -39,7 +39,7 @@ final GoRouter router = GoRouter(
           },
         ),
         GoRoute(
-          path: '/card_list',
+          path: '/folder_list',
           builder: (context, state) => const FolderListScreen(),
           routes: <RouteBase>[
             GoRoute(

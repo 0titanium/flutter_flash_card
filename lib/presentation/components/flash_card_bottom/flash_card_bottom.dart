@@ -23,7 +23,7 @@ class FlashCardBottom extends StatelessWidget {
             }
           case 1:
             {
-              context.go('/card_list');
+              context.go('/folder_list');
             }
           case 2:
             {
