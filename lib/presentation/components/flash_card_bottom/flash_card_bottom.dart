@@ -35,7 +35,7 @@ class FlashCardBottom extends StatelessWidget {
       indicatorColor: Colors.green,
       destinations: const [
         NavigationDestination(icon: Icon(Icons.home), label: '홈'),
-        NavigationDestination(icon: Icon(Icons.folder_rounded), label: '카드'),
+        NavigationDestination(icon: Icon(Icons.folder_rounded), label: '폴더'),
         NavigationDestination(icon: Icon(Icons.person), label: '내 정보'),
       ],
     );

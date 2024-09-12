@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class CardListScreen extends StatefulWidget {
-  const CardListScreen({super.key});
+class FolderListScreen extends StatefulWidget {
+  const FolderListScreen({super.key});
 
   @override
-  State<CardListScreen> createState() => _CardListScreenState();
+  State<FolderListScreen> createState() => _FolderListScreenState();
 }
 
-class _CardListScreenState extends State<CardListScreen> {
+class _FolderListScreenState extends State<FolderListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('카드 목록'),
+        title: const Text('폴더 목록'),
         centerTitle: true,
       ),
       body: ListView(
