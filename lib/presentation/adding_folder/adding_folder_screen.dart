@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class AddingDeckScreen extends StatefulWidget {
-  const AddingDeckScreen({super.key});
+class AddingFolderScreen extends StatefulWidget {
+  const AddingFolderScreen({super.key});
 
   @override
-  State<AddingDeckScreen> createState() => _AddingDeckScreenState();
+  State<AddingFolderScreen> createState() => _AddingFolderScreenState();
 }
 
-class _AddingDeckScreenState extends State<AddingDeckScreen> {
+class _AddingFolderScreenState extends State<AddingFolderScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
