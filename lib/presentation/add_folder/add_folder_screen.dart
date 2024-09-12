@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_flash_card/presentation/add_folder/add_folder_model.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
-class AddingFolderScreen extends StatefulWidget {
-  const AddingFolderScreen({super.key});
+class AddFolderScreen extends StatefulWidget {
+  const AddFolderScreen({super.key});
 
   @override
-  State<AddingFolderScreen> createState() => _AddingFolderScreenState();
+  State<AddFolderScreen> createState() => _AddFolderScreenState();
 }
 
-class _AddingFolderScreenState extends State<AddingFolderScreen> {
+class _AddFolderScreenState extends State<AddFolderScreen> {
   @override
   Widget build(BuildContext context) {
+    final addFolderModel = context.watch<AddFolderModel>();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('폴더 추가'),
@@ -19,14 +23,18 @@ class _AddingFolderScreenState extends State<AddingFolderScreen> {
       body: Center(
         child: Column(
           children: [
-            const Padding(
-              padding: EdgeInsets.all(32.0),
+            Padding(
+              padding: const EdgeInsets.all(32.0),
               child: Card(
                 child: ListTile(
-                  title: Text('폴더 이름'),
+                  title: const Text('폴더 이름'),
                   subtitle: SizedBox(
                       child: TextField(
+                    controller: addFolderModel.folderNameController,
                     autofocus: true,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                        ),
                   )),
                 ),
               ),
