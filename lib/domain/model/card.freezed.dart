@@ -20,8 +20,10 @@ Card _$CardFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Card {
+  String get id => throw _privateConstructorUsedError;
   String get frontText => throw _privateConstructorUsedError;
   String get backText => throw _privateConstructorUsedError;
+  bool get know => throw _privateConstructorUsedError;
 
   /// Serializes this Card to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -37,7 +39,7 @@ abstract class $CardCopyWith<$Res> {
   factory $CardCopyWith(Card value, $Res Function(Card) then) =
       _$CardCopyWithImpl<$Res, Card>;
   @useResult
-  $Res call({String frontText, String backText});
+  $Res call({String id, String frontText, String backText, bool know});
 }
 
 /// @nodoc
@@ -55,10 +57,16 @@ class _$CardCopyWithImpl<$Res, $Val extends Card>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? frontText = null,
     Object? backText = null,
+    Object? know = null,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       frontText: null == frontText
           ? _value.frontText
           : frontText // ignore: cast_nullable_to_non_nullable
@@ -67,6 +75,10 @@ class _$CardCopyWithImpl<$Res, $Val extends Card>
           ? _value.backText
           : backText // ignore: cast_nullable_to_non_nullable
               as String,
+      know: null == know
+          ? _value.know
+          : know // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -78,7 +90,7 @@ abstract class _$$CardImplCopyWith<$Res> implements $CardCopyWith<$Res> {
       __$$CardImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String frontText, String backText});
+  $Res call({String id, String frontText, String backText, bool know});
 }
 
 /// @nodoc
@@ -93,10 +105,16 @@ class __$$CardImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? frontText = null,
     Object? backText = null,
+    Object? know = null,
   }) {
     return _then(_$CardImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       frontText: null == frontText
           ? _value.frontText
           : frontText // ignore: cast_nullable_to_non_nullable
@@ -105,6 +123,10 @@ class __$$CardImplCopyWithImpl<$Res>
           ? _value.backText
           : backText // ignore: cast_nullable_to_non_nullable
               as String,
+      know: null == know
+          ? _value.know
+          : know // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -112,19 +134,28 @@ class __$$CardImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$CardImpl implements _Card {
-  const _$CardImpl({required this.frontText, required this.backText});
+  const _$CardImpl(
+      {required this.id,
+      required this.frontText,
+      required this.backText,
+      this.know = false});
 
   factory _$CardImpl.fromJson(Map<String, dynamic> json) =>
       _$$CardImplFromJson(json);
 
   @override
+  final String id;
+  @override
   final String frontText;
   @override
   final String backText;
+  @override
+  @JsonKey()
+  final bool know;
 
   @override
   String toString() {
-    return 'Card(frontText: $frontText, backText: $backText)';
+    return 'Card(id: $id, frontText: $frontText, backText: $backText, know: $know)';
   }
 
   @override
@@ -132,15 +163,17 @@ class _$CardImpl implements _Card {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CardImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.frontText, frontText) ||
                 other.frontText == frontText) &&
             (identical(other.backText, backText) ||
-                other.backText == backText));
+                other.backText == backText) &&
+            (identical(other.know, know) || other.know == know));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, frontText, backText);
+  int get hashCode => Object.hash(runtimeType, id, frontText, backText, know);
 
   /// Create a copy of Card
   /// with the given fields replaced by the non-null parameter values.
@@ -160,15 +193,21 @@ class _$CardImpl implements _Card {
 
 abstract class _Card implements Card {
   const factory _Card(
-      {required final String frontText,
-      required final String backText}) = _$CardImpl;
+      {required final String id,
+      required final String frontText,
+      required final String backText,
+      final bool know}) = _$CardImpl;
 
   factory _Card.fromJson(Map<String, dynamic> json) = _$CardImpl.fromJson;
 
   @override
+  String get id;
+  @override
   String get frontText;
   @override
   String get backText;
+  @override
+  bool get know;
 
   /// Create a copy of Card
   /// with the given fields replaced by the non-null parameter values.

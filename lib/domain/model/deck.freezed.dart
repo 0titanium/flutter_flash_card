@@ -20,6 +20,7 @@ Deck _$DeckFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Deck {
+  String get id => throw _privateConstructorUsedError;
   String get deckName => throw _privateConstructorUsedError;
   List<Card> get cards => throw _privateConstructorUsedError;
 
@@ -37,7 +38,7 @@ abstract class $DeckCopyWith<$Res> {
   factory $DeckCopyWith(Deck value, $Res Function(Deck) then) =
       _$DeckCopyWithImpl<$Res, Deck>;
   @useResult
-  $Res call({String deckName, List<Card> cards});
+  $Res call({String id, String deckName, List<Card> cards});
 }
 
 /// @nodoc
@@ -55,10 +56,15 @@ class _$DeckCopyWithImpl<$Res, $Val extends Deck>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? deckName = null,
     Object? cards = null,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       deckName: null == deckName
           ? _value.deckName
           : deckName // ignore: cast_nullable_to_non_nullable
@@ -78,7 +84,7 @@ abstract class _$$DeckImplCopyWith<$Res> implements $DeckCopyWith<$Res> {
       __$$DeckImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String deckName, List<Card> cards});
+  $Res call({String id, String deckName, List<Card> cards});
 }
 
 /// @nodoc
@@ -93,10 +99,15 @@ class __$$DeckImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? deckName = null,
     Object? cards = null,
   }) {
     return _then(_$DeckImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       deckName: null == deckName
           ? _value.deckName
           : deckName // ignore: cast_nullable_to_non_nullable
@@ -112,12 +123,17 @@ class __$$DeckImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$DeckImpl implements _Deck {
-  const _$DeckImpl({required this.deckName, required final List<Card> cards})
+  const _$DeckImpl(
+      {required this.id,
+      required this.deckName,
+      required final List<Card> cards})
       : _cards = cards;
 
   factory _$DeckImpl.fromJson(Map<String, dynamic> json) =>
       _$$DeckImplFromJson(json);
 
+  @override
+  final String id;
   @override
   final String deckName;
   final List<Card> _cards;
@@ -130,7 +146,7 @@ class _$DeckImpl implements _Deck {
 
   @override
   String toString() {
-    return 'Deck(deckName: $deckName, cards: $cards)';
+    return 'Deck(id: $id, deckName: $deckName, cards: $cards)';
   }
 
   @override
@@ -138,6 +154,7 @@ class _$DeckImpl implements _Deck {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DeckImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.deckName, deckName) ||
                 other.deckName == deckName) &&
             const DeepCollectionEquality().equals(other._cards, _cards));
@@ -146,7 +163,7 @@ class _$DeckImpl implements _Deck {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType, deckName, const DeepCollectionEquality().hash(_cards));
+      runtimeType, id, deckName, const DeepCollectionEquality().hash(_cards));
 
   /// Create a copy of Deck
   /// with the given fields replaced by the non-null parameter values.
@@ -166,11 +183,14 @@ class _$DeckImpl implements _Deck {
 
 abstract class _Deck implements Deck {
   const factory _Deck(
-      {required final String deckName,
+      {required final String id,
+      required final String deckName,
       required final List<Card> cards}) = _$DeckImpl;
 
   factory _Deck.fromJson(Map<String, dynamic> json) = _$DeckImpl.fromJson;
 
+  @override
+  String get id;
   @override
   String get deckName;
   @override

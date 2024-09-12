@@ -8,6 +8,7 @@ part 'deck.g.dart';
 @freezed
 class Deck with _$Deck {
   const factory Deck({
+    required String id,
     required String deckName,
     required List<Card> cards,
   }) = _Deck;
