@@ -12,7 +12,7 @@ class _CardDeckScreenState extends State<CardDeckScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('덱 이름'),
+        title: const Text('덱 이름'),
         centerTitle: true,
       ),
       body: ListView(
