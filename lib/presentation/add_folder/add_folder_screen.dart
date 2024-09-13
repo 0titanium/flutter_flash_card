@@ -33,7 +33,7 @@ class _AddFolderScreenState extends State<AddFolderScreen> {
                     controller: addFolderModel.folderNameController,
                     autofocus: true,
                         decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
+                          border: UnderlineInputBorder(),
                         ),
                   )),
                 ),
@@ -44,7 +44,8 @@ class _AddFolderScreenState extends State<AddFolderScreen> {
               children: [
                 TextButton(
                   onPressed: () {
-                    context.go('/card_list/card_deck');
+                    addFolderModel.createFolder();
+                    context.pop();
                   },
                   style: ButtonStyle(
                     backgroundColor: WidgetStateProperty.all(Colors.green),
