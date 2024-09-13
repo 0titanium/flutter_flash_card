@@ -4,25 +4,33 @@ import 'package:flutter_flash_card/domain/model/folder.dart';
 
 class AddFolderModel extends ChangeNotifier {
   final DataService _dataService;
-  // final Folder rootFolder;
+  final TextEditingController folderNameController = TextEditingController();
 
   AddFolderModel({
     required DataService dataService,
-  }) : _dataService = dataService{
-    loadRootFolder();
+  }) : _dataService = dataService;
+
+  Future<void> createFolder() async {
+    final folderName = folderNameController.text.trim();
+
+    if (folderName == '') {
+      return;
+    }
+
+    try {
+      Folder rootFolder = await _dataService.loadRootFolder();
+
+      _dataService.addFolder(rootFolder, folderName);
+
+      await _dataService.saveRootFolder(rootFolder);
+    } catch (e) {
+      debugPrint('Error : $e');
+    }
   }
 
-  final TextEditingController folderNameController = TextEditingController();
-
-  String _folderName = '';
-
-  Future<void> loadRootFolder() async {
-    // rootFolder = await _dataService.loadRootFolder();
-  }
-
-  Future<void> makeFolder (String folderName) async {
-    _folderName = folderName;
-
-    // _dataService.addFolder(parentFolder, _folderName);
+  @override
+  void dispose() {
+    folderNameController.dispose();
+    super.dispose();
   }
 }
