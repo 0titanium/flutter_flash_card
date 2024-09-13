@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_flash_card/core/router/router.dart';
+import 'package:flutter_flash_card/presentation/folder_list/folder_list_model.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class FolderListScreen extends StatefulWidget {
   const FolderListScreen({super.key});
@@ -11,6 +14,7 @@ class FolderListScreen extends StatefulWidget {
 class _FolderListScreenState extends State<FolderListScreen> {
   @override
   Widget build(BuildContext context) {
+    final folderListModel = context.watch<FolderListModel>();
     return Scaffold(
       appBar: AppBar(
         title: const Text('폴더 목록'),
@@ -27,7 +31,14 @@ class _FolderListScreenState extends State<FolderListScreen> {
                 context.go('/folder_list/adding_card_deck');
               },
             ),
-          )
+          ),
+          ...folderListModel.folders.map(
+            (folder) => Card(
+              child: ListTile(
+                title: Text(folder.name),
+              ),
+            ),
+          ),
         ],
       ),
     );
