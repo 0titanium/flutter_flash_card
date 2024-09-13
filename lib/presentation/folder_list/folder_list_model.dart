@@ -16,11 +16,11 @@ class FolderListModel extends ChangeNotifier {
   Future<void> loadFolders() async {
     final rootFolder = await _dataService.loadRootFolder();
 
-    print(rootFolder);
+    debugPrint(rootFolder.toString());
 
     folders = [rootFolder, ...rootFolder.subFolders];
     notifyListeners();
 
-    print(folders);
+    debugPrint(folders.toString());
   }
 }
