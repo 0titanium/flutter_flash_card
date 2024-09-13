@@ -5,6 +5,7 @@ import 'package:flutter_flash_card/presentation/add_folder/add_folder_screen.dar
 import 'package:flutter_flash_card/presentation/card_deck/card_deck_screen.dart';
 import 'package:flutter_flash_card/presentation/components/flash_card_bottom/flash_card_bottom.dart';
 import 'package:flutter_flash_card/presentation/components/flash_card_bottom/flash_card_bottom_model.dart';
+import 'package:flutter_flash_card/presentation/folder_list/folder_list_model.dart';
 import 'package:flutter_flash_card/presentation/folder_list/folder_list_screen.dart';
 import 'package:flutter_flash_card/presentation/home/home_screen.dart';
 import 'package:flutter_flash_card/presentation/home/home_screen_model.dart';
@@ -42,7 +43,12 @@ final GoRouter router = GoRouter(
         ),
         GoRoute(
           path: '/folder_list',
-          builder: (context, state) => const FolderListScreen(),
+          builder: (context, state) {
+            return ChangeNotifierProvider(
+              create: (_) => FolderListModel(dataService: DataService()),
+              child: const FolderListScreen(),
+            );
+          },
           routes: <RouteBase>[
             GoRoute(
               path: 'adding_card_deck',
