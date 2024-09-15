@@ -51,7 +51,7 @@ final GoRouter router = GoRouter(
           },
           routes: <RouteBase>[
             GoRoute(
-              path: 'adding_card_deck',
+              path: 'add_folder',
               builder: (context, state) {
                 return ChangeNotifierProvider(
                     create: (_) => AddFolderModel(dataService: DataService()),
