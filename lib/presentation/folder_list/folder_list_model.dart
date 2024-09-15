@@ -18,7 +18,7 @@ class FolderListModel extends ChangeNotifier {
 
     debugPrint(rootFolder.toString());
 
-    folders = [rootFolder, ...rootFolder.subFolders];
+    folders = [...rootFolder.subFolders];
     notifyListeners();
 
     debugPrint(folders.toString());
