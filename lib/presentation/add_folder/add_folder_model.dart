@@ -20,7 +20,7 @@ class AddFolderModel extends ChangeNotifier {
     try {
       Folder rootFolder = await _dataService.loadRootFolder();
 
-      _dataService.addFolder(rootFolder, folderName);
+      rootFolder = _dataService.addFolder(rootFolder, folderName);
 
       await _dataService.saveRootFolder(rootFolder);
     } catch (e) {
