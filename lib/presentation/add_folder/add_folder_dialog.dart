@@ -1,41 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_flash_card/presentation/add_folder/add_folder_model.dart';
+import 'package:flutter_flash_card/presentation/folder_list/folder_list_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-class AddFolderScreen extends StatefulWidget {
-  const AddFolderScreen({super.key});
+class AddFolderDialog extends StatefulWidget {
+  const AddFolderDialog({super.key});
 
   @override
-  State<AddFolderScreen> createState() => _AddFolderScreenState();
+  State<AddFolderDialog> createState() => _AddFolderDialogState();
 }
 
-class _AddFolderScreenState extends State<AddFolderScreen> {
+class _AddFolderDialogState extends State<AddFolderDialog> {
   @override
   Widget build(BuildContext context) {
-    final addFolderModel = context.watch<AddFolderModel>();
+    final folderListModel = context.watch<FolderListModel>();
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('폴더 추가'),
-        centerTitle: true,
-      ),
-      body: Center(
+    return Dialog(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(32.0),
-              child: Card(
-                child: ListTile(
-                  title: const Text('폴더 이름'),
-                  subtitle: SizedBox(
-                      child: TextField(
-                    controller: addFolderModel.folderNameController,
-                    autofocus: true,
-                        decoration: const InputDecoration(
-                          border: UnderlineInputBorder(),
-                        ),
-                  )),
+            ListTile(
+              title: const Text('폴더 이름'),
+              subtitle: SizedBox(
+                child: TextField(
+                  controller: folderListModel.folderNameController,
+                  autofocus: true,
+                  decoration: const InputDecoration(
+                    border: UnderlineInputBorder(),
+                  ),
                 ),
               ),
             ),
@@ -44,7 +39,7 @@ class _AddFolderScreenState extends State<AddFolderScreen> {
               children: [
                 TextButton(
                   onPressed: () {
-                    addFolderModel.createFolder();
+                    folderListModel.createFolder();
                     context.pop();
                   },
                   style: ButtonStyle(
