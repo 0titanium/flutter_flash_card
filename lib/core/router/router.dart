@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_flash_card/data/local/data_service.dart';
-import 'package:flutter_flash_card/presentation/add_folder/add_folder_model.dart';
-import 'package:flutter_flash_card/presentation/add_folder/add_folder_screen.dart';
+import 'package:flutter_flash_card/presentation/add_folder/add_folder_dialog.dart';
 import 'package:flutter_flash_card/presentation/card_deck/card_deck_screen.dart';
 import 'package:flutter_flash_card/presentation/components/flash_card_bottom/flash_card_bottom.dart';
 import 'package:flutter_flash_card/presentation/components/flash_card_bottom/flash_card_bottom_model.dart';
@@ -54,8 +53,9 @@ final GoRouter router = GoRouter(
               path: 'add_folder',
               builder: (context, state) {
                 return ChangeNotifierProvider(
-                    create: (_) => AddFolderModel(dataService: DataService()),
-                    child: const AddFolderScreen());
+                  create: (_) => FolderListModel(dataService: DataService()),
+                  child: const AddFolderDialog(),
+                );
               },
             ),
             GoRoute(
