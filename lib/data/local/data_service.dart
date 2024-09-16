@@ -33,9 +33,8 @@ class DataService {
       decks: [],
     );
 
-    parentFolder.copyWith(subFolders: [...parentFolder.subFolders, newFolder]);
-
-    return newFolder;
+    return parentFolder
+        .copyWith(subFolders: [...parentFolder.subFolders, newFolder]);
   }
 
   void addDeck(Folder folder, Deck deck) {

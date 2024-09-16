@@ -14,31 +14,49 @@ class _FolderListScreenState extends State<FolderListScreen> {
   @override
   Widget build(BuildContext context) {
     final folderListModel = context.watch<FolderListModel>();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('폴더 목록'),
-        centerTitle: true,
-      ),
-      body: ListView(
-        children: [
-          Card(
-            child: ListTile(
-              titleAlignment: ListTileTitleAlignment.center,
-              title: const Text('폴더 추가'),
-              leading: const Icon(Icons.add),
-              onTap: () {
-                context.go('/folder_list/adding_card_deck');
-              },
-            ),
-          ),
-          ...folderListModel.folders.map(
-            (folder) => Card(
-              child: ListTile(
-                title: Text(folder.name),
-              ),
-            ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              // showDialog(
+              //   context: context,
+              //   builder: (context) => AddFolderDialog(),
+              // );
+              context.go('/folder_list/add_folder');
+            },
+            icon: const Icon(Icons.create_new_folder),
           ),
         ],
+        centerTitle: true,
+      ),
+      body: ListView.builder(
+        padding: const EdgeInsets.all(8),
+        itemCount: folderListModel.folders.length,
+        itemBuilder: (context, index) {
+          return Card(
+            child: ListTile(
+              title: Text(folderListModel.folders[index].name),
+              onTap: () {
+                context.go(
+                  '/folder_list/folder/:${folderListModel.folders[index].name}',
+                  extra: folderListModel.folders[index].name,
+                );
+              },
+            ),
+          );
+        },
+        // children: [
+        //   ...folderListModel.folders.map(
+        //     (folder) => Card(
+        //       child: ListTile(
+        //         title: Text(folder.name),
+        //       ),
+        //     ),
+        //   ),
+        // ],
       ),
     );
   }
