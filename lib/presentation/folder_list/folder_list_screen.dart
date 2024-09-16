@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_flash_card/presentation/add_folder/add_folder_dialog.dart';
 import 'package:flutter_flash_card/presentation/folder_list/folder_list_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -40,6 +39,12 @@ class _FolderListScreenState extends State<FolderListScreen> {
           return Card(
             child: ListTile(
               title: Text(folderListModel.folders[index].name),
+              onTap: () {
+                context.go(
+                  '/folder_list/folder/:${folderListModel.folders[index].name}',
+                  extra: folderListModel.folders[index].name,
+                );
+              },
             ),
           );
         },
