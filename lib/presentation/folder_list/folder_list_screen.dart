@@ -42,21 +42,15 @@ class _FolderListScreenState extends State<FolderListScreen> {
               onTap: () {
                 context.go(
                   '/folder_list/folder/:${folderListModel.folders[index].name}',
-                  extra: folderListModel.folders[index].name,
+                  extra: [
+                    folderListModel.folders[index].name,
+                    folderListModel.folders[index].id,
+                  ],
                 );
               },
             ),
           );
         },
-        // children: [
-        //   ...folderListModel.folders.map(
-        //     (folder) => Card(
-        //       child: ListTile(
-        //         title: Text(folder.name),
-        //       ),
-        //     ),
-        //   ),
-        // ],
       ),
     );
   }
