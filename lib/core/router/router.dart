@@ -63,7 +63,10 @@ final GoRouter router = GoRouter(
               path: 'folder/:folderName',
               builder: (context, state) {
                 return ChangeNotifierProvider(
-                  create: (_) => FolderModel(folderName: state.extra as String),
+                  create: (_) => FolderModel(
+                    folderData: state.extra as List<String>,
+                    dataService: DataService(),
+                  ),
                   child: const FolderScreen(),
                 );
               },
