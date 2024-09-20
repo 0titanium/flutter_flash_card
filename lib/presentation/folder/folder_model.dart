@@ -5,6 +5,7 @@ import 'package:flutter_flash_card/domain/model/deck.dart';
 class FolderModel extends ChangeNotifier {
   final List<String> folderData;
   final DataService _dataService;
+  final TextEditingController deckNameController = TextEditingController();
 
   List<Deck> _decks = [];
 
@@ -24,6 +25,25 @@ class FolderModel extends ChangeNotifier {
 
     if (nowFolder != null) {
       _decks = nowFolder.decks;
+    }
+  }
+
+  Future<void> createDeck() async {
+    final folderId = folderData[1];
+    final deckName = deckNameController.text.trim();
+    final rootFolder = await _dataService.loadRootFolder();
+    final nowFolder = _dataService.findFolder(rootFolder, folderId);
+
+    if (deckName == '') {
+      return;
+    }
+
+    try {
+      if (nowFolder != null) {
+        _dataService.addDeck(nowFolder, deckName);
+      }
+    } catch (e) {
+      debugPrint('Error : $e');
     }
   }
 }
