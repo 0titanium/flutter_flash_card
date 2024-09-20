@@ -37,8 +37,14 @@ class DataService {
         .copyWith(subFolders: [...parentFolder.subFolders, newFolder]);
   }
 
-  void addDeck(Folder folder, Deck deck) {
-    folder.decks.add(deck);
+  void addDeck(Folder folder, String deckName) {
+    final newDeck = Deck(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      deckName: deckName,
+      cards: [],
+    );
+
+    folder.decks.add(newDeck);
   }
 
   Folder? findFolder(Folder rootFolder, String folderId) {
