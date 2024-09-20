@@ -21,7 +21,10 @@ class _FolderScreenState extends State<FolderScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              // context.go('/folder_list/add_folder');
+              context.go(
+                '/folder_list/folder/${folderModel.folderData[0]}/add_deck',
+                extra: folderModel.folderData,
+              );
             },
             icon: const Icon(Icons.archive),
           ),
