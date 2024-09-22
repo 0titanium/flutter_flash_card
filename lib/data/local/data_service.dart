@@ -37,14 +37,14 @@ class DataService {
         .copyWith(subFolders: [...parentFolder.subFolders, newFolder]);
   }
 
-  void addDeck(Folder folder, String deckName) {
+  Folder addDeck(Folder folder, String deckName) {
     final newDeck = Deck(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       deckName: deckName,
       cards: [],
     );
 
-    folder.decks.add(newDeck);
+    return folder.copyWith(decks: [...folder.decks, newDeck]);
   }
 
   Folder? findFolder(Folder rootFolder, String folderId) {
@@ -56,6 +56,20 @@ class DataService {
     }
 
     return null;
+  }
+
+  Folder replaceFolder(Folder rootFolder, Folder updatedFolder) {
+    if (rootFolder.id == updatedFolder.id) {
+      return updatedFolder;
+    }
+    return rootFolder.copyWith(
+      subFolders: rootFolder.subFolders.map((subFolder) {
+        if (subFolder.id == updatedFolder.id) {
+          return updatedFolder;
+        }
+        return replaceFolder(subFolder, updatedFolder);
+      }).toList(),
+    );
   }
 
   void moveDeck(
