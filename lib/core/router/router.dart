@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_flash_card/data/local/data_service.dart';
+import 'package:flutter_flash_card/presentation/add_deck/add_deck_dialog.dart';
 import 'package:flutter_flash_card/presentation/add_folder/add_folder_dialog.dart';
 import 'package:flutter_flash_card/presentation/components/flash_card_bottom/flash_card_bottom.dart';
 import 'package:flutter_flash_card/presentation/components/flash_card_bottom/flash_card_bottom_model.dart';
@@ -63,10 +64,26 @@ final GoRouter router = GoRouter(
               path: 'folder/:folderName',
               builder: (context, state) {
                 return ChangeNotifierProvider(
-                  create: (_) => FolderModel(folderName: state.extra as String),
+                  create: (_) => FolderModel(
+                    folderData: state.extra as List<String>,
+                    dataService: DataService(),
+                  ),
                   child: const FolderScreen(),
                 );
               },
+              routes: <RouteBase>[
+                GoRoute(
+                  path: 'add_deck',
+                  builder: (context, state) {
+                    return ChangeNotifierProvider(
+                      create: (_) => FolderModel(
+                          folderData: state.extra as List<String>,
+                          dataService: DataService()),
+                      child: const AddDeckDialog(),
+                    );
+                  },
+                )
+              ],
             ),
           ],
         ),

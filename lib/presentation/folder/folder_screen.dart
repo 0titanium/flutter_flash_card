@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_flash_card/presentation/folder/folder_model.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class FolderScreen extends StatefulWidget {
@@ -16,28 +17,39 @@ class _FolderScreenState extends State<FolderScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(folderModel.folderName),
+        title: Text(folderModel.folderData[0]),
         actions: [
           IconButton(
             onPressed: () {
-              // context.go('/folder_list/add_folder');
+              context.go(
+                '/folder_list/folder/${folderModel.folderData[0]}/add_deck',
+                extra: folderModel.folderData,
+              );
             },
             icon: const Icon(Icons.archive),
           ),
         ],
         centerTitle: true,
       ),
-      body: ListView(
-        children: [
-          Card(
+      body: ListView.builder(
+        padding: const EdgeInsets.all(8),
+        itemCount: folderModel.decks.length,
+        itemBuilder: (context, index) {
+          return Card(
             child: ListTile(
-              titleAlignment: ListTileTitleAlignment.center,
-              title: const Text('카드 추가'),
-              leading: const Icon(Icons.add),
-              onTap: () {},
+              title: Text(folderModel.decks[index].deckName),
+              onTap: () {
+                context.go(
+                  '/folder_list/folder/:${folderModel.decks[index].deckName}',
+                  extra: [
+                    folderModel.decks[index].deckName,
+                    folderModel.decks[index].id,
+                  ],
+                );
+              },
             ),
-          )
-        ],
+          );
+        },
       ),
     );
   }
