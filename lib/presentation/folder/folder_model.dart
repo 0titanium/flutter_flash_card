@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_flash_card/data/local/data_service.dart';
 import 'package:flutter_flash_card/domain/model/deck.dart';
+import 'package:flutter_flash_card/domain/model/folder.dart';
 
 class FolderModel extends ChangeNotifier {
   final List<String> folderData;
@@ -25,25 +26,40 @@ class FolderModel extends ChangeNotifier {
 
     if (nowFolder != null) {
       _decks = nowFolder.decks;
+      debugPrint(_decks.toString());
+      notifyListeners();
     }
   }
 
   Future<void> createDeck() async {
     final folderId = folderData[1];
     final deckName = deckNameController.text.trim();
-    final rootFolder = await _dataService.loadRootFolder();
-    final nowFolder = _dataService.findFolder(rootFolder, folderId);
+    Folder rootFolder = await _dataService.loadRootFolder();
 
     if (deckName == '') {
       return;
     }
 
     try {
+      Folder? nowFolder = _dataService.findFolder(rootFolder, folderId);
       if (nowFolder != null) {
-        _dataService.addDeck(nowFolder, deckName);
+        nowFolder = _dataService.addDeck(nowFolder, deckName);
+        rootFolder = _dataService.replaceFolder(rootFolder, nowFolder);
+
+        await _dataService.saveRootFolder(rootFolder);
+
+        _decks = List.from(nowFolder.decks);
+
+        notifyListeners();
       }
     } catch (e) {
       debugPrint('Error : $e');
     }
+  }
+
+  @override
+  void dispose() {
+    deckNameController.dispose();
+    super.dispose();
   }
 }
