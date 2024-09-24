@@ -4,6 +4,8 @@ import 'package:flutter_flash_card/presentation/add_deck/add_deck_dialog.dart';
 import 'package:flutter_flash_card/presentation/add_folder/add_folder_dialog.dart';
 import 'package:flutter_flash_card/presentation/components/flash_card_bottom/flash_card_bottom.dart';
 import 'package:flutter_flash_card/presentation/components/flash_card_bottom/flash_card_bottom_model.dart';
+import 'package:flutter_flash_card/presentation/deck/deck_model.dart';
+import 'package:flutter_flash_card/presentation/deck/deck_screen.dart';
 import 'package:flutter_flash_card/presentation/folder/folder_model.dart';
 import 'package:flutter_flash_card/presentation/folder/folder_screen.dart';
 import 'package:flutter_flash_card/presentation/folder_list/folder_list_model.dart';
@@ -61,7 +63,8 @@ final GoRouter router = GoRouter(
               },
             ),
             GoRoute(
-              path: 'folder/:folderName',
+              // :folderName으로 고칠 것
+              path: ':folderName',
               builder: (context, state) {
                 return ChangeNotifierProvider(
                   create: (_) => FolderModel(
@@ -82,7 +85,18 @@ final GoRouter router = GoRouter(
                       child: const AddDeckDialog(),
                     );
                   },
-                )
+                ),
+                GoRoute(
+                  path: ':deckName',
+                  builder: (context, state) {
+                    return ChangeNotifierProvider(
+                      create: (_) => DeckModel(
+                          deckData: state.extra as List<String>,
+                          dataService: DataService()),
+                      child: const DeckScreen(),
+                    );
+                  },
+                ),
               ],
             ),
           ],

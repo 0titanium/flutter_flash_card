@@ -22,7 +22,7 @@ class _FolderScreenState extends State<FolderScreen> {
           IconButton(
             onPressed: () {
               context.go(
-                '/folder_list/folder/${folderModel.folderData[0]}/add_deck',
+                '/folder_list/${folderModel.folderData[0]}/add_deck',
                 extra: folderModel.folderData,
               );
             },
@@ -40,7 +40,7 @@ class _FolderScreenState extends State<FolderScreen> {
               title: Text(folderModel.decks[index].deckName),
               onTap: () {
                 context.go(
-                  '/folder_list/folder/:${folderModel.decks[index].deckName}',
+                  '/folder_list/${folderModel.folderData[0]}/${folderModel.decks[index].deckName}',
                   extra: [
                     folderModel.decks[index].deckName,
                     folderModel.decks[index].id,
