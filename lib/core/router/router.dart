@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_flash_card/data/local/data_service.dart';
+import 'package:flutter_flash_card/presentation/add_card/add_card_dialog.dart';
 import 'package:flutter_flash_card/presentation/add_deck/add_deck_dialog.dart';
 import 'package:flutter_flash_card/presentation/add_folder/add_folder_dialog.dart';
 import 'package:flutter_flash_card/presentation/components/flash_card_bottom/flash_card_bottom.dart';
@@ -63,7 +64,6 @@ final GoRouter router = GoRouter(
               },
             ),
             GoRoute(
-              // :folderName으로 고칠 것
               path: ':folderName',
               builder: (context, state) {
                 return ChangeNotifierProvider(
@@ -91,11 +91,25 @@ final GoRouter router = GoRouter(
                   builder: (context, state) {
                     return ChangeNotifierProvider(
                       create: (_) => DeckModel(
-                          deckData: state.extra as List<String>,
+                          folderAndDeckData: state.extra as List<List<String>>,
                           dataService: DataService()),
                       child: const DeckScreen(),
                     );
                   },
+                  routes: <RouteBase>[
+                    GoRoute(
+                      path: 'add_card',
+                      builder: (context, state) {
+                        return ChangeNotifierProvider(
+                          create: (_) => DeckModel(
+                            folderAndDeckData: state.extra as List<List<String>>,
+                            dataService: DataService(),
+                          ),
+                          child: const AddCardDialog(),
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),
