@@ -93,8 +93,9 @@ final GoRouter router = GoRouter(
                   builder: (context, state) {
                     return ChangeNotifierProvider(
                       create: (_) => DeckModel(
-                          deckData: state.extra as Deck,
-                          dataService: DataService()),
+                        data: state.extra as List<dynamic>,
+                        dataService: DataService(),
+                      ),
                       child: const DeckScreen(),
                     );
                   },
@@ -104,7 +105,7 @@ final GoRouter router = GoRouter(
                       builder: (context, state) {
                         return ChangeNotifierProvider(
                           create: (_) => DeckModel(
-                            deckData: state.extra as Deck,
+                            data: state.extra as List<dynamic>,
                             dataService: DataService(),
                           ),
                           child: const AddCardDialog(),
