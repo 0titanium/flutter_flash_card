@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_flash_card/data/local/data_service.dart';
+import 'package:flutter_flash_card/domain/model/deck.dart';
+import 'package:flutter_flash_card/domain/model/folder.dart';
 import 'package:flutter_flash_card/presentation/add_card/add_card_dialog.dart';
 import 'package:flutter_flash_card/presentation/add_deck/add_deck_dialog.dart';
 import 'package:flutter_flash_card/presentation/add_folder/add_folder_dialog.dart';
@@ -68,7 +70,7 @@ final GoRouter router = GoRouter(
               builder: (context, state) {
                 return ChangeNotifierProvider(
                   create: (_) => FolderModel(
-                    folderData: state.extra as List<String>,
+                    folderData: state.extra as Folder,
                     dataService: DataService(),
                   ),
                   child: const FolderScreen(),
@@ -80,7 +82,7 @@ final GoRouter router = GoRouter(
                   builder: (context, state) {
                     return ChangeNotifierProvider(
                       create: (_) => FolderModel(
-                          folderData: state.extra as List<String>,
+                          folderData: state.extra as Folder,
                           dataService: DataService()),
                       child: const AddDeckDialog(),
                     );
@@ -91,7 +93,7 @@ final GoRouter router = GoRouter(
                   builder: (context, state) {
                     return ChangeNotifierProvider(
                       create: (_) => DeckModel(
-                          folderAndDeckData: state.extra as List<List<String>>,
+                          deckData: state.extra as Deck,
                           dataService: DataService()),
                       child: const DeckScreen(),
                     );
@@ -102,7 +104,7 @@ final GoRouter router = GoRouter(
                       builder: (context, state) {
                         return ChangeNotifierProvider(
                           create: (_) => DeckModel(
-                            folderAndDeckData: state.extra as List<List<String>>,
+                            deckData: state.extra as Deck,
                             dataService: DataService(),
                           ),
                           child: const AddCardDialog(),
