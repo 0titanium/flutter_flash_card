@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_flash_card/core/router/router.dart';
 import 'package:flutter_flash_card/presentation/deck/deck_model.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class DeckScreen extends StatefulWidget {
@@ -21,12 +22,13 @@ class _DeckScreenState extends State<DeckScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              // context.go(
-              //   '/folder_list/folder/${folderModel.folderData[0]}/add_deck',
-              //   extra: folderModel.folderData,
-              // );
+              // debugPrint(deckModel.folderAndDeckData.toString());
+              context.go(
+                '/folder_list/${deckModel.data[0]}/${deckModel.data[1].deckName}/add_card',
+                extra: [],
+              );
             },
-            icon: const Icon(Icons.archive),
+            icon: const Icon(Icons.edit_square),
           ),
         ],
         centerTitle: true,
