@@ -41,7 +41,7 @@ class _FolderScreenState extends State<FolderScreen> {
               onTap: () {
                 context.go(
                   '/folder_list/${folderModel.folderData.name}/${folderModel.decks[index].deckName}',
-                  extra: folderModel.decks[index],
+                  extra: [folderModel.folderData.name, folderModel.decks[index]],
                 );
               },
             ),
