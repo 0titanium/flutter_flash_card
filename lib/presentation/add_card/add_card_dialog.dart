@@ -31,6 +31,7 @@ class _AddCardDialogState extends State<AddCardDialog> {
                       autofocus: true,
                       decoration: const InputDecoration(
                         border: UnderlineInputBorder(),
+                        hintText: '앞면',
                       ),
                     ),
                     TextField(
@@ -38,6 +39,7 @@ class _AddCardDialogState extends State<AddCardDialog> {
                       autofocus: true,
                       decoration: const InputDecoration(
                         border: UnderlineInputBorder(),
+                        hintText: '뒷면',
                       ),
                     ),
                   ],
