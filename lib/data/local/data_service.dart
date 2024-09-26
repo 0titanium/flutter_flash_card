@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_flash_card/domain/model/card.dart';
 import 'package:flutter_flash_card/domain/model/deck.dart';
 import 'package:flutter_flash_card/domain/model/folder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -70,6 +71,16 @@ class DataService {
         return replaceFolder(subFolder, updatedFolder);
       }).toList(),
     );
+  }
+
+  Deck addCard(Deck deck, String frontText, String backText) {
+    final newCard = Card(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      frontText: frontText,
+      backText: backText,
+    );
+
+    return deck.copyWith(cards: [...deck.cards, newCard]);
   }
 
   void moveDeck(

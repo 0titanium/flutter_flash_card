@@ -3,9 +3,8 @@ import 'package:flutter_flash_card/data/local/data_service.dart';
 import 'package:flutter_flash_card/domain/model/deck.dart';
 
 class DeckModel extends ChangeNotifier {
-  final List<dynamic> data;
+  final Deck deckData;
   final DataService _dataService;
-  List<Deck> _deckData = [];
 
   final TextEditingController cardFrontController = TextEditingController();
   final TextEditingController cardBackController = TextEditingController();
@@ -15,15 +14,27 @@ class DeckModel extends ChangeNotifier {
   List<Card> get cards => _cards;
 
   DeckModel({
-    required this.data,
+    required this.deckData,
     required DataService dataService,
   }) : _dataService = dataService {
     loadCards();
   }
 
   Future<void> loadCards() async {
+    _cards = List.from(deckData.cards);
   }
 
-  Future<void> createCard() async {}
+  Future<void> createCard() async {
+    final cardFrontText = cardFrontController.text.trim();
+    final cardBackText = cardBackController.text.trim();
 
+    _dataService.addCard(deckData, cardFrontText, cardBackText);
+  }
+
+  @override
+  void dispose() {
+    cardFrontController.dispose();
+    cardBackController.dispose();
+    super.dispose();
+  }
 }
