@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_flash_card/domain/model/learning_card.dart';
 import 'package:flutter_flash_card/domain/model/deck.dart';
 import 'package:flutter_flash_card/domain/model/folder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -69,6 +71,55 @@ class DataService {
         }
         return replaceFolder(subFolder, updatedFolder);
       }).toList(),
+    );
+  }
+
+  Future<Deck?> addCard(
+      String deckId, String frontText, String backText) async {
+    try {
+      Folder rootFolder = await loadRootFolder();
+      Deck? deck = findDeck(rootFolder, deckId);
+
+      if (deck != null) {
+        final newCard = LearningCard(
+          id: DateTime.now().millisecondsSinceEpoch.toString(),
+          frontText: frontText,
+          backText: backText,
+        );
+
+        deck = deck.copyWith(cards: [...deck.cards, newCard]);
+        rootFolder = replaceDeck(rootFolder, deck);
+        await saveRootFolder(rootFolder);
+        return deck;
+      } else {
+        debugPrint('Error: Deck not found');
+        return null;
+      }
+    } catch (e) {
+      debugPrint('Error adding card: $e');
+      return null;
+    }
+  }
+
+  Deck? findDeck(Folder rootFolder, String deckId) {
+    for (var deck in rootFolder.decks) {
+      if (deck.id == deckId) return deck;
+    }
+    for (var subfolder in rootFolder.subFolders) {
+      final found = findDeck(subfolder, deckId);
+      if (found != null) return found;
+    }
+    return null;
+  }
+
+  Folder replaceDeck(Folder rootFolder, Deck updatedDeck) {
+    return rootFolder.copyWith(
+      decks: rootFolder.decks
+          .map((deck) => deck.id == updatedDeck.id ? updatedDeck : deck)
+          .toList(),
+      subFolders: rootFolder.subFolders
+          .map((subFolder) => replaceDeck(subFolder, updatedDeck))
+          .toList(),
     );
   }
 

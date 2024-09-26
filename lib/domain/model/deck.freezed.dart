@@ -22,7 +22,7 @@ Deck _$DeckFromJson(Map<String, dynamic> json) {
 mixin _$Deck {
   String get id => throw _privateConstructorUsedError;
   String get deckName => throw _privateConstructorUsedError;
-  List<Card> get cards => throw _privateConstructorUsedError;
+  List<LearningCard> get cards => throw _privateConstructorUsedError;
 
   /// Serializes this Deck to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -38,7 +38,7 @@ abstract class $DeckCopyWith<$Res> {
   factory $DeckCopyWith(Deck value, $Res Function(Deck) then) =
       _$DeckCopyWithImpl<$Res, Deck>;
   @useResult
-  $Res call({String id, String deckName, List<Card> cards});
+  $Res call({String id, String deckName, List<LearningCard> cards});
 }
 
 /// @nodoc
@@ -72,7 +72,7 @@ class _$DeckCopyWithImpl<$Res, $Val extends Deck>
       cards: null == cards
           ? _value.cards
           : cards // ignore: cast_nullable_to_non_nullable
-              as List<Card>,
+              as List<LearningCard>,
     ) as $Val);
   }
 }
@@ -84,7 +84,7 @@ abstract class _$$DeckImplCopyWith<$Res> implements $DeckCopyWith<$Res> {
       __$$DeckImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String deckName, List<Card> cards});
+  $Res call({String id, String deckName, List<LearningCard> cards});
 }
 
 /// @nodoc
@@ -115,7 +115,7 @@ class __$$DeckImplCopyWithImpl<$Res>
       cards: null == cards
           ? _value._cards
           : cards // ignore: cast_nullable_to_non_nullable
-              as List<Card>,
+              as List<LearningCard>,
     ));
   }
 }
@@ -126,7 +126,7 @@ class _$DeckImpl implements _Deck {
   const _$DeckImpl(
       {required this.id,
       required this.deckName,
-      required final List<Card> cards})
+      required final List<LearningCard> cards})
       : _cards = cards;
 
   factory _$DeckImpl.fromJson(Map<String, dynamic> json) =>
@@ -136,9 +136,9 @@ class _$DeckImpl implements _Deck {
   final String id;
   @override
   final String deckName;
-  final List<Card> _cards;
+  final List<LearningCard> _cards;
   @override
-  List<Card> get cards {
+  List<LearningCard> get cards {
     if (_cards is EqualUnmodifiableListView) return _cards;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_cards);
@@ -185,7 +185,7 @@ abstract class _Deck implements Deck {
   const factory _Deck(
       {required final String id,
       required final String deckName,
-      required final List<Card> cards}) = _$DeckImpl;
+      required final List<LearningCard> cards}) = _$DeckImpl;
 
   factory _Deck.fromJson(Map<String, dynamic> json) = _$DeckImpl.fromJson;
 
@@ -194,7 +194,7 @@ abstract class _Deck implements Deck {
   @override
   String get deckName;
   @override
-  List<Card> get cards;
+  List<LearningCard> get cards;
 
   /// Create a copy of Deck
   /// with the given fields replaced by the non-null parameter values.

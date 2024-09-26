@@ -1,19 +1,20 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'card.dart';
+part of 'learning_card.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$CardImpl _$$CardImplFromJson(Map<String, dynamic> json) => _$CardImpl(
+_$LearningCardImpl _$$LearningCardImplFromJson(Map<String, dynamic> json) =>
+    _$LearningCardImpl(
       id: json['id'] as String,
       frontText: json['frontText'] as String,
       backText: json['backText'] as String,
       know: json['know'] as bool? ?? false,
     );
 
-Map<String, dynamic> _$$CardImplToJson(_$CardImpl instance) =>
+Map<String, dynamic> _$$LearningCardImplToJson(_$LearningCardImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'frontText': instance.frontText,

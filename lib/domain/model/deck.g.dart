@@ -10,7 +10,7 @@ _$DeckImpl _$$DeckImplFromJson(Map<String, dynamic> json) => _$DeckImpl(
       id: json['id'] as String,
       deckName: json['deckName'] as String,
       cards: (json['cards'] as List<dynamic>)
-          .map((e) => Card.fromJson(e as Map<String, dynamic>))
+          .map((e) => LearningCard.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
