@@ -93,26 +93,26 @@ final GoRouter router = GoRouter(
                   builder: (context, state) {
                     return ChangeNotifierProvider(
                       create: (_) => DeckModel(
-                        data: state.extra as List<dynamic>,
+                        deckData: state.extra as Deck,
                         dataService: DataService(),
                       ),
                       child: const DeckScreen(),
                     );
                   },
-                  routes: <RouteBase>[
-                    GoRoute(
-                      path: 'add_card',
-                      builder: (context, state) {
-                        return ChangeNotifierProvider(
-                          create: (_) => DeckModel(
-                            data: state.extra as List<dynamic>,
-                            dataService: DataService(),
-                          ),
-                          child: const AddCardDialog(),
-                        );
-                      },
-                    ),
-                  ],
+                  // routes: <RouteBase>[
+                  //   GoRoute(
+                  //     path: 'add_card',
+                  //     builder: (context, state) {
+                  //       return ChangeNotifierProvider(
+                  //         create: (_) => DeckModel(
+                  //           data: state.extra as List<dynamic>,
+                  //           dataService: DataService(),
+                  //         ),
+                  //         child: const AddCardDialog(),
+                  //       );
+                  //     },
+                  //   ),
+                  // ],
                 ),
               ],
             ),
