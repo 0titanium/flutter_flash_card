@@ -110,16 +110,8 @@ class _DeckScreenState extends State<DeckScreen> {
               itemBuilder: (context, index) {
                 return Card(
                   child: ListTile(
-                    // title: Text(deckModel.cards[index].fronText),
-                    onTap: () {
-                      // context.go(
-                      //   '/folder_list/folder/:${folderModel.decks[index].deckName}',
-                      //   extra: [
-                      //     folderModel.decks[index].deckName,
-                      //     folderModel.decks[index].id,
-                      //   ],
-                      // );
-                    },
+                    title: Text(deckModel.cards[index].frontText),
+                    subtitle: Text(deckModel.cards[index].backText),
                   ),
                 );
               },
