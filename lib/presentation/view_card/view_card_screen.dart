@@ -16,7 +16,8 @@ class _ViewCardScreenState extends State<ViewCardScreen> {
 
     return Center(
       child: SizedBox(
-        height: 240,
+        width: MediaQuery.of(context).size.width * 0.8,
+        height: MediaQuery.of(context).size.height * 0.5,
         child: CarouselView(
           itemExtent: 330,
           shrinkExtent: 200,
