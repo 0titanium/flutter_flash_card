@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_flash_card/data/local/data_service.dart';
 import 'package:flutter_flash_card/domain/model/deck.dart';
 import 'package:flutter_flash_card/domain/model/folder.dart';
+import 'package:flutter_flash_card/domain/model/learning_card.dart';
 import 'package:flutter_flash_card/presentation/add_deck/add_deck_dialog.dart';
 import 'package:flutter_flash_card/presentation/add_folder/add_folder_dialog.dart';
 import 'package:flutter_flash_card/presentation/components/flash_card_bottom/flash_card_bottom.dart';
@@ -15,6 +16,8 @@ import 'package:flutter_flash_card/presentation/folder_list/folder_list_screen.d
 import 'package:flutter_flash_card/presentation/home/home_screen.dart';
 import 'package:flutter_flash_card/presentation/home/home_screen_model.dart';
 import 'package:flutter_flash_card/presentation/my_info/my_info_screen.dart';
+import 'package:flutter_flash_card/presentation/view_card/view_card_model.dart';
+import 'package:flutter_flash_card/presentation/view_card/view_card_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -98,6 +101,19 @@ final GoRouter router = GoRouter(
                       child: const DeckScreen(),
                     );
                   },
+                  routes: <RouteBase>[
+                    GoRoute(
+                      path: 'view_card',
+                      builder: (context, state) {
+                        return ChangeNotifierProvider(
+                          create: (_) => ViewCardModel(
+                            cardsData: state.extra as List<LearningCard>,
+                          ),
+                          child: const ViewCardScreen(),
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),
