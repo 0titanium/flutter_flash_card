@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_flash_card/data/local/data_service.dart';
 import 'package:flutter_flash_card/domain/model/deck.dart';
 import 'package:flutter_flash_card/domain/model/folder.dart';
-import 'package:flutter_flash_card/presentation/add_card/add_card_dialog.dart';
 import 'package:flutter_flash_card/presentation/add_deck/add_deck_dialog.dart';
 import 'package:flutter_flash_card/presentation/add_folder/add_folder_dialog.dart';
 import 'package:flutter_flash_card/presentation/components/flash_card_bottom/flash_card_bottom.dart';
@@ -99,20 +98,6 @@ final GoRouter router = GoRouter(
                       child: const DeckScreen(),
                     );
                   },
-                  // routes: <RouteBase>[
-                  //   GoRoute(
-                  //     path: 'add_card',
-                  //     builder: (context, state) {
-                  //       return ChangeNotifierProvider(
-                  //         create: (_) => DeckModel(
-                  //           data: state.extra as List<dynamic>,
-                  //           dataService: DataService(),
-                  //         ),
-                  //         child: const AddCardDialog(),
-                  //       );
-                  //     },
-                  //   ),
-                  // ],
                 ),
               ],
             ),
