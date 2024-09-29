@@ -16,8 +16,27 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('플래시 카드'),
-        centerTitle: true,
+        title: const Text(
+          '플래시 카드',
+          style: TextStyle(fontSize: 32),
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextButton(
+              style: TextButton.styleFrom(
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(8),
+                  ),
+                  side: BorderSide(width: 1),
+                ),
+              ),
+              onPressed: () {},
+              child: const Text('로그인'),
+            ),
+          ),
+        ],
       ),
     );
   }
