@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_flash_card/presentation/deck/deck_model.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class DeckScreen extends StatefulWidget {
@@ -13,6 +14,7 @@ class _DeckScreenState extends State<DeckScreen> {
   @override
   Widget build(BuildContext context) {
     final deckModel = context.watch<DeckModel>();
+    final path = GoRouter.of(context).routerDelegate.currentConfiguration.uri;
 
     return Scaffold(
       appBar: AppBar(
@@ -20,13 +22,9 @@ class _DeckScreenState extends State<DeckScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              // debugPrint(deckModel.folderAndDeckData.toString());
-              // context.go(
-              //   '/folder_list/${deckModel.data[0]}/${deckModel.data[1].deckName}/add_card',
-              //   extra: [],
-              // );
+              context.go('$path/view_card', extra: deckModel.cards);
             },
-            icon: const Icon(Icons.edit_square),
+            icon: const Icon(Icons.view_carousel),
           ),
         ],
         centerTitle: true,
