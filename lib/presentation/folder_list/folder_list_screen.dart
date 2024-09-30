@@ -17,37 +17,80 @@ class _FolderListScreenState extends State<FolderListScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('폴더 목록'),
+        title: const Text(
+          '폴더 목록',
+          style: TextStyle(fontSize: 24),
+        ),
         actions: [
-          IconButton(
-            onPressed: () {
-              // showDialog(
-              //   context: context,
-              //   builder: (context) => AddFolderDialog(),
-              // );
-              context.go('/folder_list/add_folder');
-            },
-            icon: const Icon(Icons.create_new_folder),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextButton(
+              style: TextButton.styleFrom(
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(8),
+                  ),
+                  side: BorderSide(width: 1),
+                ),
+              ),
+              onPressed: () {},
+              child: const Text('로그인'),
+            ),
           ),
         ],
-        centerTitle: true,
       ),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(8),
-        itemCount: folderListModel.folders.length,
-        itemBuilder: (context, index) {
-          return Card(
-            child: ListTile(
-              title: Text(folderListModel.folders[index].name),
-              onTap: () {
-                context.go(
-                  '/folder_list/:${folderListModel.folders[index].name}',
-                  extra: folderListModel.folders[index],
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: InkWell(
+                  onTap: () {
+                    context.go('/folder_list/add_folder');
+                  },
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          '폴더 추가',
+                          style: TextStyle(fontSize: 16.0),
+                        ),
+                      ),
+                      Icon(Icons.create_new_folder),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.all(8),
+              itemCount: folderListModel.folders.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  child: ListTile(
+                    title: Text(folderListModel.folders[index].name),
+                    onTap: () {
+                      context.go(
+                        '/folder_list/:${folderListModel.folders[index].name}',
+                        extra: folderListModel.folders[index],
+                      );
+                    },
+                  ),
                 );
               },
             ),
-          );
-        },
+          ),
+        ],
       ),
     );
   }
