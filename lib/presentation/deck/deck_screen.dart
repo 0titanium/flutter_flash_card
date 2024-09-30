@@ -17,20 +17,91 @@ class _DeckScreenState extends State<DeckScreen> {
     final path = GoRouter.of(context).routerDelegate.currentConfiguration.uri;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Card list'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              context.go('$path/view_card', extra: deckModel.cards);
-            },
-            icon: const Icon(Icons.view_carousel),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(70.0),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 16.0),
+          child: AppBar(
+            title: Text(
+              deckModel.deckData.deckName,
+              style: const TextStyle(fontSize: 24),
+            ),
+            centerTitle: true,
+            actions: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(8),
+                      ),
+                      side: BorderSide(width: 1),
+                    ),
+                  ),
+                  onPressed: () {},
+                  child: const Text('로그인 / 회원가입'),
+                ),
+              ),
+            ],
           ),
-        ],
-        centerTitle: true,
+        ),
       ),
       body: Column(
         children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        '카드 보기',
+                        style: TextStyle(fontSize: 16.0),
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Radio(
+                          value: deckModel.inOrder,
+                          groupValue: deckModel.willChangeOrder,
+                          onChanged: (String? value) {
+                            deckModel.changeOrder(value);
+                          },
+                        ),
+                        const Text('순서대로'),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Radio(
+                          value: deckModel.inRandomOrder,
+                          groupValue: deckModel.willChangeOrder,
+                          onChanged: (String? value) {
+                            deckModel.changeOrder(value);
+                          },
+                        ),
+                        const Text('랜덤하게'),
+                      ],
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          context.go('$path/view_card', extra: deckModel.cards);
+                        },
+                        icon: const Icon(Icons.view_carousel)),
+                  ],
+                ),
+              ),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Card(

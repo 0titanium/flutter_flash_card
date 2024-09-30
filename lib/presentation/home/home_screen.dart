@@ -15,9 +15,34 @@ class _HomeScreenState extends State<HomeScreen> {
     final homeScreenModel = context.watch<HomeScreenModel>();
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('플래시 카드'),
-        centerTitle: true,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(70.0),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 16.0),
+          child: AppBar(
+            title: const Text(
+              '플래시 카드',
+              style: TextStyle(fontSize: 24),
+            ),
+            actions: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(8),
+                      ),
+                      side: BorderSide(width: 1),
+                    ),
+                  ),
+                  onPressed: () {},
+                  child: const Text('로그인 / 회원가입'),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
