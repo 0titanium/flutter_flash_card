@@ -14,11 +14,18 @@ class DeckModel extends ChangeNotifier {
 
   List<LearningCard> get cards => _cards;
 
+  String inOrder = 'inOrder';
+
+  String inRandomOrder = 'inRandomOrder';
+
+  String willChangeOrder = '';
+
   DeckModel({
     required this.deckData,
     required DataService dataService,
   }) : _dataService = dataService {
     loadCards();
+    willChangeOrder = inOrder;
   }
 
   Future<void> loadCards() async {
@@ -62,6 +69,11 @@ class DeckModel extends ChangeNotifier {
     } catch (e) {
       debugPrint('Error creating card: $e');
     }
+  }
+
+  void changeOrder(String? value) {
+    willChangeOrder = value!;
+    notifyListeners();
   }
 
   @override
