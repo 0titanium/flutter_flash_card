@@ -16,37 +16,91 @@ class _FolderScreenState extends State<FolderScreen> {
     final folderModel = context.watch<FolderModel>();
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(folderModel.folderData.name),
-        actions: [
-          IconButton(
-            onPressed: () {
-              context.go(
-                '/folder_list/${folderModel.folderData.name}/add_deck',
-                extra: folderModel.folderData,
-              );
-            },
-            icon: const Icon(Icons.archive),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(70.0),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 16.0),
+          child: AppBar(
+            title: Text(
+              folderModel.folderData.name,
+              style: const TextStyle(fontSize: 24),
+            ),
+            centerTitle: true,
+            actions: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(8),
+                      ),
+                      side: BorderSide(width: 1),
+                    ),
+                  ),
+                  onPressed: () {},
+                  child: const Text('로그인 / 회원가입'),
+                ),
+              ),
+            ],
           ),
-        ],
-        centerTitle: true,
+        ),
       ),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(8),
-        itemCount: folderModel.decks.length,
-        itemBuilder: (context, index) {
-          return Card(
-            child: ListTile(
-              title: Text(folderModel.decks[index].deckName),
-              onTap: () {
-                context.go(
-                  '/folder_list/${folderModel.folderData.name}/${folderModel.decks[index].deckName}',
-                  extra: folderModel.decks[index],
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: InkWell(
+                  onTap: () {
+                    context.go(
+                      '/folder_list/${folderModel.folderData.name}/add_deck',
+                      extra: folderModel.folderData,
+                    );
+                  },
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          '덱 추가',
+                          style: TextStyle(fontSize: 16.0),
+                        ),
+                      ),
+                      Icon(Icons.archive),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.all(8),
+              itemCount: folderModel.decks.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  child: ListTile(
+                    title: Text(folderModel.decks[index].deckName),
+                    onTap: () {
+                      context.go(
+                        '/folder_list/${folderModel.folderData.name}/${folderModel.decks[index].deckName}',
+                        extra: folderModel.decks[index],
+                      );
+                    },
+                  ),
                 );
               },
             ),
-          );
-        },
+          ),
+        ],
       ),
     );
   }
