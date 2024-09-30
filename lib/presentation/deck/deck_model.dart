@@ -20,6 +20,8 @@ class DeckModel extends ChangeNotifier {
 
   String willChangeOrder = '';
 
+  Map<String, dynamic> cardAndOrder = {};
+
   DeckModel({
     required this.deckData,
     required DataService dataService,
@@ -36,6 +38,11 @@ class DeckModel extends ChangeNotifier {
       if (deck != null) {
         _cards = List.from(deck.cards);
         notifyListeners();
+
+        cardAndOrder = {
+          'cardList': _cards,
+          'order': willChangeOrder,
+        };
       } else {
         debugPrint('Deck not found: $deckData.id');
       }
@@ -61,6 +68,8 @@ class DeckModel extends ChangeNotifier {
         _cards = List.from(updatedDeck.cards);
         notifyListeners();
 
+        cardAndOrder['cardList'] = _cards;
+
         cardFrontController.clear();
         cardBackController.clear();
       } else {
@@ -74,6 +83,8 @@ class DeckModel extends ChangeNotifier {
   void changeOrder(String? value) {
     willChangeOrder = value!;
     notifyListeners();
+
+    cardAndOrder['order'] = willChangeOrder;
   }
 
   @override

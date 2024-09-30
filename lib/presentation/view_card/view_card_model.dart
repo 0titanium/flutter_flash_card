@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_flash_card/domain/model/learning_card.dart';
 
 class ViewCardModel extends ChangeNotifier {
-  final List<LearningCard> cardsData;
+  final Map<String, dynamic> cardsData;
 
   final PageController _pageController = PageController(viewportFraction: 0.8);
 
@@ -17,7 +17,13 @@ class ViewCardModel extends ChangeNotifier {
   }
 
   void loadCards() {
-    _cards = List.from(cardsData);
+    if (cardsData['order'] == 'inOrder') {
+      _cards = List.from(cardsData['cardList']);
+    }else{
+      _cards = List.from(cardsData['cardList']);
+      _cards.shuffle();
+    }
+    debugPrint(_cards.toString());
     notifyListeners();
   }
 
