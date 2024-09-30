@@ -16,28 +16,34 @@ class _FolderListScreenState extends State<FolderListScreen> {
     final folderListModel = context.watch<FolderListModel>();
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          '폴더 목록',
-          style: TextStyle(fontSize: 24),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextButton(
-              style: TextButton.styleFrom(
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(8),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(70.0),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 16.0),
+          child: AppBar(
+            title: const Text(
+              '폴더 목록',
+              style: TextStyle(fontSize: 24),
+            ),
+            actions: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(8),
+                      ),
+                      side: BorderSide(width: 1),
+                    ),
                   ),
-                  side: BorderSide(width: 1),
+                  onPressed: () {},
+                  child: const Text('로그인 / 회원가입'),
                 ),
               ),
-              onPressed: () {},
-              child: const Text('로그인'),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
       body: Column(
         children: [
