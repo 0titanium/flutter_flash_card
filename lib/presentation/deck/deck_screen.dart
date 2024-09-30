@@ -94,7 +94,7 @@ class _DeckScreenState extends State<DeckScreen> {
                     ),
                     IconButton(
                         onPressed: () {
-                          context.go('$path/view_card', extra: deckModel.cards);
+                          context.go('$path/view_card', extra: deckModel.cardAndOrder);
                         },
                         icon: const Icon(Icons.view_carousel)),
                   ],
