@@ -18,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text(
           '플래시 카드',
-          style: TextStyle(fontSize: 32),
+          style: TextStyle(fontSize: 24),
         ),
         actions: [
           Padding(
