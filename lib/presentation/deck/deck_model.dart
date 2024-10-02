@@ -41,7 +41,6 @@ class DeckModel extends ChangeNotifier {
 
       if (deck != null) {
         _cards = List.from(deck.cards);
-        notifyListeners();
 
         cardAndOrder = {
           'cardList': _cards,
@@ -49,6 +48,8 @@ class DeckModel extends ChangeNotifier {
         };
 
         _isLongPressed = List.filled(_cards.length, false);
+
+        notifyListeners();
       } else {
         debugPrint('Deck not found: $deckData.id');
       }
@@ -93,15 +94,15 @@ class DeckModel extends ChangeNotifier {
     cardAndOrder['order'] = willChangeOrder;
   }
 
+  void showHiddenButtons(int index) {
+    _isLongPressed[index] = !_isLongPressed[index];
+    notifyListeners();
+  }
+
   @override
   void dispose() {
     cardFrontController.dispose();
     cardBackController.dispose();
     super.dispose();
-  }
-
-  void showHiddenButtons(int index) {
-    _isLongPressed[index] = !_isLongPressed[index];
-    notifyListeners();
   }
 }
