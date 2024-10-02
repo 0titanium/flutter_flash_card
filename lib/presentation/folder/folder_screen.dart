@@ -94,6 +94,7 @@ class _FolderScreenState extends State<FolderScreen> {
                     onTap: () {
                       if (folderModel.isLongPressed[index] == true) {
                         folderModel.showHiddenButtons(index);
+                        return;
                       }
                       context.go(
                         '/folder_list/${folderModel.folderData.name}/${folderModel.decks[index].deckName}',
