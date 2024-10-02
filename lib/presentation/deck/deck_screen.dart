@@ -94,7 +94,8 @@ class _DeckScreenState extends State<DeckScreen> {
                     ),
                     IconButton(
                         onPressed: () {
-                          context.go('$path/view_card', extra: deckModel.cardAndOrder);
+                          context.go('$path/view_card',
+                              extra: deckModel.cardAndOrder);
                         },
                         icon: const Icon(Icons.view_carousel)),
                   ],
@@ -179,8 +180,36 @@ class _DeckScreenState extends State<DeckScreen> {
               itemBuilder: (context, index) {
                 return Card(
                   child: ListTile(
+                    onLongPress: () {
+                      deckModel.showHiddenButtons(index);
+                    },
+                    onTap: () {
+                      if (deckModel.isLongPressed[index] == true) {
+                        deckModel.showHiddenButtons(index);
+                      }
+                    },
                     title: Text(deckModel.cards[index].frontText),
                     subtitle: Text(deckModel.cards[index].backText),
+                    trailing: deckModel.isLongPressed[index]
+                        ? Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: const Icon(Icons.mode_edit),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: const Icon(Icons.delete),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          )
+                        : null,
                   ),
                 );
               },

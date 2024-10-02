@@ -22,6 +22,10 @@ class DeckModel extends ChangeNotifier {
 
   Map<String, dynamic> cardAndOrder = {};
 
+  List<bool> _isLongPressed = [];
+
+  List<bool> get isLongPressed => _isLongPressed;
+
   DeckModel({
     required this.deckData,
     required DataService dataService,
@@ -43,6 +47,8 @@ class DeckModel extends ChangeNotifier {
           'cardList': _cards,
           'order': willChangeOrder,
         };
+
+        _isLongPressed = List.filled(_cards.length, false);
       } else {
         debugPrint('Deck not found: $deckData.id');
       }
@@ -92,5 +98,10 @@ class DeckModel extends ChangeNotifier {
     cardFrontController.dispose();
     cardBackController.dispose();
     super.dispose();
+  }
+
+  void showHiddenButtons(int index) {
+    _isLongPressed[index] = !_isLongPressed[index];
+    notifyListeners();
   }
 }
