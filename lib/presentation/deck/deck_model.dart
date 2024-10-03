@@ -87,6 +87,49 @@ class DeckModel extends ChangeNotifier {
     }
   }
 
+  Future<void> editCard(
+      String cardId, String newFrontText, String newBackText) async {
+    try {
+      final success = await _dataService.editCard(
+          deckData.id, cardId, newFrontText, newBackText);
+      if (success) {
+        final cardIndex = _cards.indexWhere((card) => card.id == cardId);
+        if (cardIndex != -1) {
+          _cards[cardIndex] = _cards[cardIndex].copyWith(
+            frontText: newFrontText,
+            backText: newBackText,
+          );
+          cardAndOrder['cardList'] = _cards;
+
+          notifyListeners();
+        } else {
+          debugPrint('Card not found in local list');
+        }
+      } else {
+        debugPrint('Failed to edit card');
+      }
+    } catch (e) {
+      debugPrint('Error editing card: $e');
+    }
+  }
+
+  Future<void> deleteCard(String cardId) async {
+    try {
+      final success = await _dataService.deleteCard(deckData.id, cardId);
+      if (success) {
+        _cards.removeWhere((card) => card.id == cardId);
+        _isLongPressed = _isLongPressed.sublist(0, _cards.length);
+        cardAndOrder['cardList'] = _cards;
+
+        notifyListeners();
+      } else {
+        debugPrint('Failed to delete card');
+      }
+    } catch (e) {
+      debugPrint('Error deleting card: $e');
+    }
+  }
+
   void changeOrder(String? value) {
     willChangeOrder = value!;
     notifyListeners();
