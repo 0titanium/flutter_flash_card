@@ -198,11 +198,17 @@ class _DeckScreenState extends State<DeckScreen> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+
+                                    },
                                     icon: const Icon(Icons.mode_edit),
                                   ),
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      deckModel.deleteCard(
+                                          deckModel.cards[index].id);
+                                      deckModel.showHiddenButtons(index);
+                                    },
                                     icon: const Icon(Icons.delete),
                                   ),
                                 ],
