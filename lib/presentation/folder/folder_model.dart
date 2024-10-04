@@ -12,6 +12,10 @@ class FolderModel extends ChangeNotifier {
 
   List<Deck> get decks => _decks;
 
+  List<bool> _isLongPressed = [];
+
+  List<bool> get isLongPressed => _isLongPressed;
+
   FolderModel({
     required this.folderData,
     required DataService dataService,
@@ -27,6 +31,7 @@ class FolderModel extends ChangeNotifier {
     if (nowFolder != null) {
       _decks = nowFolder.decks;
       debugPrint(_decks.toString());
+      _isLongPressed = List.filled(_decks.length, false);
       notifyListeners();
     }
   }
@@ -55,6 +60,11 @@ class FolderModel extends ChangeNotifier {
     } catch (e) {
       debugPrint('Error : $e');
     }
+  }
+
+  void showHiddenButtons(int index) {
+    _isLongPressed[index] = !_isLongPressed[index];
+    notifyListeners();
   }
 
   @override

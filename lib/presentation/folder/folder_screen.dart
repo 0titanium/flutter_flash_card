@@ -88,13 +88,40 @@ class _FolderScreenState extends State<FolderScreen> {
               itemBuilder: (context, index) {
                 return Card(
                   child: ListTile(
-                    title: Text(folderModel.decks[index].deckName),
+                    onLongPress: () {
+                      folderModel.showHiddenButtons(index);
+                    },
                     onTap: () {
+                      if (folderModel.isLongPressed[index] == true) {
+                        folderModel.showHiddenButtons(index);
+                        return;
+                      }
                       context.go(
                         '/folder_list/${folderModel.folderData.name}/${folderModel.decks[index].deckName}',
                         extra: folderModel.decks[index],
                       );
                     },
+                    title: Text(folderModel.decks[index].deckName),
+                    trailing: folderModel.isLongPressed[index]
+                        ? Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: const Icon(Icons.mode_edit),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: const Icon(Icons.delete),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          )
+                        : null,
                   ),
                 );
               },

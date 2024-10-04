@@ -39,16 +39,6 @@ class DataService {
         .copyWith(subFolders: [...parentFolder.subFolders, newFolder]);
   }
 
-  Folder addDeck(Folder folder, String deckName) {
-    final newDeck = Deck(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
-      deckName: deckName,
-      cards: [],
-    );
-
-    return folder.copyWith(decks: [...folder.decks, newDeck]);
-  }
-
   Folder? findFolder(Folder rootFolder, String folderId) {
     if (rootFolder.id == folderId) return rootFolder;
 
@@ -58,6 +48,16 @@ class DataService {
     }
 
     return null;
+  }
+
+  Folder addDeck(Folder folder, String deckName) {
+    final newDeck = Deck(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      deckName: deckName,
+      cards: [],
+    );
+
+    return folder.copyWith(decks: [...folder.decks, newDeck]);
   }
 
   Folder replaceFolder(Folder rootFolder, Folder updatedFolder) {
@@ -89,7 +89,9 @@ class DataService {
 
         deck = deck.copyWith(cards: [...deck.cards, newCard]);
         rootFolder = replaceDeck(rootFolder, deck);
+
         await saveRootFolder(rootFolder);
+
         return deck;
       } else {
         debugPrint('Error: Deck not found');
@@ -107,6 +109,7 @@ class DataService {
     }
     for (var subfolder in rootFolder.subFolders) {
       final found = findDeck(subfolder, deckId);
+
       if (found != null) return found;
     }
     return null;
@@ -141,6 +144,72 @@ class DataService {
 
         targetFolder.decks.add(deck);
       }
+    }
+  }
+
+  Future<bool> editCard(String deckId, String cardId, String newFrontText,
+      String newBackText) async {
+    try {
+      Folder rootFolder = await loadRootFolder();
+      Deck? deck = findDeck(rootFolder, deckId);
+
+      if (deck != null) {
+        final updatedCards = deck.cards.map((card) {
+          if (card.id == cardId) {
+            return card.copyWith(
+                frontText: newFrontText, backText: newBackText);
+          }
+          return card;
+        }).toList();
+
+        if (deck.cards.length != updatedCards.length) {
+          debugPrint('Error: Card not found');
+          return false;
+        }
+
+        deck = deck.copyWith(cards: updatedCards);
+        rootFolder = replaceDeck(rootFolder, deck);
+
+        await saveRootFolder(rootFolder);
+
+        return true;
+      } else {
+        debugPrint('Error: Deck not found');
+        return false;
+      }
+    } catch (e) {
+      debugPrint('Error editing card: $e');
+      return false;
+    }
+  }
+
+  Future<bool> deleteCard(String deckId, String cardId) async {
+    try {
+      Folder rootFolder = await loadRootFolder();
+      Deck? deck = findDeck(rootFolder, deckId);
+
+      if (deck != null) {
+        final updatedCards =
+            deck.cards.where((card) => card.id != cardId).toList();
+
+        if (updatedCards.length == deck.cards.length) {
+          debugPrint('Error: Card not found');
+          return false;
+        }
+
+        deck = deck.copyWith(cards: updatedCards);
+        rootFolder = replaceDeck(rootFolder, deck);
+
+        await saveRootFolder(rootFolder);
+
+        return true;
+      } else {
+        debugPrint('Error: Deck not found');
+        return false;
+      }
+    } catch (e) {
+      debugPrint('Error deleting card: $e');
+      return false;
     }
   }
 }

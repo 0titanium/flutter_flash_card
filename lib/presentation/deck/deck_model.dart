@@ -10,6 +10,9 @@ class DeckModel extends ChangeNotifier {
   final TextEditingController cardFrontController = TextEditingController();
   final TextEditingController cardBackController = TextEditingController();
 
+  TextEditingController editFrontController = TextEditingController();
+  TextEditingController editBackController = TextEditingController();
+
   List<LearningCard> _cards = [];
 
   List<LearningCard> get cards => _cards;
@@ -21,6 +24,14 @@ class DeckModel extends ChangeNotifier {
   String willChangeOrder = '';
 
   Map<String, dynamic> cardAndOrder = {};
+
+  List<bool> _isLongPressed = [];
+
+  List<bool> get isLongPressed => _isLongPressed;
+
+  List<bool> _isEditing = [];
+
+  List<bool> get isEditing => _isEditing;
 
   DeckModel({
     required this.deckData,
@@ -37,12 +48,16 @@ class DeckModel extends ChangeNotifier {
 
       if (deck != null) {
         _cards = List.from(deck.cards);
-        notifyListeners();
 
         cardAndOrder = {
           'cardList': _cards,
           'order': willChangeOrder,
         };
+
+        _isLongPressed = List.filled(_cards.length, false);
+        _isEditing = List.filled(_cards.length, false);
+
+        notifyListeners();
       } else {
         debugPrint('Deck not found: $deckData.id');
       }
@@ -66,17 +81,74 @@ class DeckModel extends ChangeNotifier {
       if (updatedDeck != null) {
         // deckData = updatedDeck;
         _cards = List.from(updatedDeck.cards);
-        notifyListeners();
+
+        _isLongPressed = List.filled(_cards.length, false);
+        _isEditing = List.filled(_cards.length, false);
 
         cardAndOrder['cardList'] = _cards;
 
         cardFrontController.clear();
         cardBackController.clear();
+
+        notifyListeners();
       } else {
         debugPrint('Failed to add card');
       }
     } catch (e) {
       debugPrint('Error creating card: $e');
+    }
+  }
+
+  Future<void> editCard(String cardId, int index) async {
+    final editFrontText = editFrontController.text.trim();
+    final editBackText = editBackController.text.trim();
+
+    if (editFrontText.isEmpty || editBackText.isEmpty) {
+      return;
+    }
+
+    try {
+      final success = await _dataService.editCard(
+          deckData.id, cardId, editFrontText, editBackText);
+      if (success) {
+        final cardIndex = _cards.indexWhere((card) => card.id == cardId);
+        if (cardIndex != -1) {
+          _cards[cardIndex] = _cards[cardIndex].copyWith(
+            frontText: editFrontText,
+            backText: editBackText,
+          );
+
+          _isEditing = List.filled(_cards.length, false);
+
+          cardAndOrder['cardList'] = _cards;
+
+          notifyListeners();
+        } else {
+          debugPrint('Card not found in local list');
+        }
+      } else {
+        debugPrint('Failed to edit card');
+      }
+    } catch (e) {
+      debugPrint('Error editing card: $e');
+    }
+  }
+
+  Future<void> deleteCard(String cardId) async {
+    try {
+      final success = await _dataService.deleteCard(deckData.id, cardId);
+      if (success) {
+        _cards.removeWhere((card) => card.id == cardId);
+        _isLongPressed = _isLongPressed.sublist(0, _cards.length);
+        _isEditing = _isEditing.sublist(0, _cards.length);
+        cardAndOrder['cardList'] = _cards;
+
+        notifyListeners();
+      } else {
+        debugPrint('Failed to delete card');
+      }
+    } catch (e) {
+      debugPrint('Error deleting card: $e');
     }
   }
 
@@ -87,10 +159,25 @@ class DeckModel extends ChangeNotifier {
     cardAndOrder['order'] = willChangeOrder;
   }
 
+  void showHiddenButtons(int index) {
+    _isLongPressed[index] = !_isLongPressed[index];
+    notifyListeners();
+  }
+
+  void showEditingMode(int index) {
+    _isEditing[index] = !_isEditing[index];
+    editFrontController = TextEditingController(text: _cards[index].frontText);
+    editBackController = TextEditingController(text: _cards[index].backText);
+    notifyListeners();
+  }
+
   @override
   void dispose() {
     cardFrontController.dispose();
     cardBackController.dispose();
+    editFrontController.dispose();
+    editBackController.dispose();
+
     super.dispose();
   }
 }
