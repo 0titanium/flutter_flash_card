@@ -210,7 +210,7 @@ class _DeckScreenState extends State<DeckScreen> {
                                         icon: const Icon(Icons.edit),
                                         onPressed: () {
                                           deckModel.editCard(
-                                              deckModel.cards[index].id);
+                                              deckModel.cards[index].id, index);
                                           FocusScope.of(context).unfocus();
                                           deckModel.showEditingMode(index);
                                           deckModel.showHiddenButtons(index);

@@ -10,8 +10,8 @@ class DeckModel extends ChangeNotifier {
   final TextEditingController cardFrontController = TextEditingController();
   final TextEditingController cardBackController = TextEditingController();
 
-  final TextEditingController editFrontController = TextEditingController();
-  final TextEditingController editBackController = TextEditingController();
+  TextEditingController editFrontController = TextEditingController();
+  TextEditingController editBackController = TextEditingController();
 
   List<LearningCard> _cards = [];
 
@@ -67,8 +67,8 @@ class DeckModel extends ChangeNotifier {
   }
 
   Future<void> createCard() async {
-    final cardFrontText = editFrontController.text.trim();
-    final cardBackText = editBackController.text.trim();
+    final cardFrontText = cardFrontController.text.trim();
+    final cardBackText = cardBackController.text.trim();
 
     if (cardFrontText.isEmpty || cardBackText.isEmpty) {
       return;
@@ -99,7 +99,7 @@ class DeckModel extends ChangeNotifier {
     }
   }
 
-  Future<void> editCard(String cardId) async {
+  Future<void> editCard(String cardId, int index) async {
     final editFrontText = editFrontController.text.trim();
     final editBackText = editBackController.text.trim();
 
@@ -166,6 +166,8 @@ class DeckModel extends ChangeNotifier {
 
   void showEditingMode(int index) {
     _isEditing[index] = !_isEditing[index];
+    editFrontController = TextEditingController(text: _cards[index].frontText);
+    editBackController = TextEditingController(text: _cards[index].backText);
     notifyListeners();
   }
 
@@ -175,6 +177,7 @@ class DeckModel extends ChangeNotifier {
     cardBackController.dispose();
     editFrontController.dispose();
     editBackController.dispose();
+
     super.dispose();
   }
 }
