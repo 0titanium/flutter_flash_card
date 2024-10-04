@@ -73,12 +73,15 @@ class DeckModel extends ChangeNotifier {
       if (updatedDeck != null) {
         // deckData = updatedDeck;
         _cards = List.from(updatedDeck.cards);
-        notifyListeners();
+
+        _isLongPressed = List.filled(_cards.length, false);
 
         cardAndOrder['cardList'] = _cards;
 
         cardFrontController.clear();
         cardBackController.clear();
+
+        notifyListeners();
       } else {
         debugPrint('Failed to add card');
       }
