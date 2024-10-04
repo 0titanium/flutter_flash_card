@@ -10,6 +10,9 @@ class DeckModel extends ChangeNotifier {
   final TextEditingController cardFrontController = TextEditingController();
   final TextEditingController cardBackController = TextEditingController();
 
+  final TextEditingController editFrontController = TextEditingController();
+  final TextEditingController editBackController = TextEditingController();
+
   List<LearningCard> _cards = [];
 
   List<LearningCard> get cards => _cards;
@@ -25,6 +28,10 @@ class DeckModel extends ChangeNotifier {
   List<bool> _isLongPressed = [];
 
   List<bool> get isLongPressed => _isLongPressed;
+
+  List<bool> _isEditing = [];
+
+  List<bool> get isEditing => _isEditing;
 
   DeckModel({
     required this.deckData,
@@ -48,6 +55,7 @@ class DeckModel extends ChangeNotifier {
         };
 
         _isLongPressed = List.filled(_cards.length, false);
+        _isEditing = List.filled(_cards.length, false);
 
         notifyListeners();
       } else {
@@ -59,8 +67,8 @@ class DeckModel extends ChangeNotifier {
   }
 
   Future<void> createCard() async {
-    final cardFrontText = cardFrontController.text.trim();
-    final cardBackText = cardBackController.text.trim();
+    final cardFrontText = editFrontController.text.trim();
+    final cardBackText = editBackController.text.trim();
 
     if (cardFrontText.isEmpty || cardBackText.isEmpty) {
       return;
@@ -75,6 +83,7 @@ class DeckModel extends ChangeNotifier {
         _cards = List.from(updatedDeck.cards);
 
         _isLongPressed = List.filled(_cards.length, false);
+        _isEditing = List.filled(_cards.length, false);
 
         cardAndOrder['cardList'] = _cards;
 
@@ -90,18 +99,27 @@ class DeckModel extends ChangeNotifier {
     }
   }
 
-  Future<void> editCard(
-      String cardId, String newFrontText, String newBackText) async {
+  Future<void> editCard(String cardId) async {
+    final editFrontText = editFrontController.text.trim();
+    final editBackText = editBackController.text.trim();
+
+    if (editFrontText.isEmpty || editBackText.isEmpty) {
+      return;
+    }
+
     try {
       final success = await _dataService.editCard(
-          deckData.id, cardId, newFrontText, newBackText);
+          deckData.id, cardId, editFrontText, editBackText);
       if (success) {
         final cardIndex = _cards.indexWhere((card) => card.id == cardId);
         if (cardIndex != -1) {
           _cards[cardIndex] = _cards[cardIndex].copyWith(
-            frontText: newFrontText,
-            backText: newBackText,
+            frontText: editFrontText,
+            backText: editBackText,
           );
+
+          _isEditing = List.filled(_cards.length, false);
+
           cardAndOrder['cardList'] = _cards;
 
           notifyListeners();
@@ -122,6 +140,7 @@ class DeckModel extends ChangeNotifier {
       if (success) {
         _cards.removeWhere((card) => card.id == cardId);
         _isLongPressed = _isLongPressed.sublist(0, _cards.length);
+        _isEditing = _isEditing.sublist(0, _cards.length);
         cardAndOrder['cardList'] = _cards;
 
         notifyListeners();
@@ -145,10 +164,17 @@ class DeckModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void showEditingMode(int index) {
+    _isEditing[index] = !_isEditing[index];
+    notifyListeners();
+  }
+
   @override
   void dispose() {
     cardFrontController.dispose();
     cardBackController.dispose();
+    editFrontController.dispose();
+    editBackController.dispose();
     super.dispose();
   }
 }
