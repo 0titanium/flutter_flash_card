@@ -50,16 +50,6 @@ class DataService {
     return null;
   }
 
-  Folder addDeck(Folder folder, String deckName) {
-    final newDeck = Deck(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
-      deckName: deckName,
-      cards: [],
-    );
-
-    return folder.copyWith(decks: [...folder.decks, newDeck]);
-  }
-
   Folder replaceFolder(Folder rootFolder, Folder updatedFolder) {
     if (rootFolder.id == updatedFolder.id) {
       return updatedFolder;
@@ -72,6 +62,71 @@ class DataService {
         return replaceFolder(subFolder, updatedFolder);
       }).toList(),
     );
+  }
+
+  Folder addDeck(Folder folder, String deckName) {
+    final newDeck = Deck(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      deckName: deckName,
+      cards: [],
+    );
+
+    return folder.copyWith(decks: [...folder.decks, newDeck]);
+  }
+
+  Future<bool> updateDeck(String deckId, String newDeckName) async {
+    try {
+      Folder rootFolder = await loadRootFolder();
+      Deck? deck = findDeck(rootFolder, deckId);
+
+      if (deck != null) {
+        deck = deck.copyWith(deckName: newDeckName);
+        rootFolder = replaceDeck(rootFolder, deck);
+
+        await saveRootFolder(rootFolder);
+
+        return true;
+      } else {
+        debugPrint('Error: Deck not found');
+        return false;
+      }
+    } catch (e) {
+      debugPrint('Error updating deck: $e');
+      return false;
+    }
+  }
+
+  Future<bool> deleteDeck(String deckId) async {
+    try {
+      Folder rootFolder = await loadRootFolder();
+      Folder updatedRootFolder = _removeDeckFromFolder(rootFolder, deckId);
+
+      if (rootFolder == updatedRootFolder) {
+        debugPrint('Error: Deck not found');
+        return false;
+      }
+
+      await saveRootFolder(updatedRootFolder);
+      return true;
+    } catch (e) {
+      debugPrint('Error deleting deck: $e');
+      return false;
+    }
+  }
+
+  Folder _removeDeckFromFolder(Folder folder, String deckId) {
+    List<Deck> updatedDecks =
+        folder.decks.where((deck) => deck.id != deckId).toList();
+
+    if (updatedDecks.length < folder.decks.length) {
+      return folder.copyWith(decks: updatedDecks);
+    }
+
+    List<Folder> updatedSubFolders = folder.subFolders
+        .map((subFolder) => _removeDeckFromFolder(subFolder, deckId))
+        .toList();
+
+    return folder.copyWith(subFolders: updatedSubFolders);
   }
 
   Future<Deck?> addCard(

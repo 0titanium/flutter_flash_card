@@ -62,6 +62,22 @@ class FolderModel extends ChangeNotifier {
     }
   }
 
+  Future<void> updateDeck(String deckId, String newDeckName) async {
+    try {
+      _dataService.updateDeck(deckId, newDeckName);
+    } catch (e) {
+      debugPrint('Error : $e');
+    }
+  }
+
+  Future<void> deleteDeck(String deckId) async {
+    try {
+      _dataService.deleteDeck(deckId);
+    } catch (e) {
+      debugPrint('Error : $e');
+    }
+  }
+
   void showHiddenButtons(int index) {
     _isLongPressed[index] = !_isLongPressed[index];
     notifyListeners();
