@@ -114,7 +114,11 @@ class _FolderScreenState extends State<FolderScreen> {
                                     icon: const Icon(Icons.mode_edit),
                                   ),
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      folderModel.deleteDeck(
+                                        folderModel.decks[index].id,
+                                      );
+                                    },
                                     icon: const Icon(Icons.delete),
                                   ),
                                 ],
