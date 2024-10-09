@@ -71,8 +71,19 @@ class FolderModel extends ChangeNotifier {
   }
 
   Future<void> deleteDeck(String deckId) async {
+    final folderId = folderData.id;
+    Folder rootFolder = await _dataService.loadRootFolder();
+
     try {
       _dataService.deleteDeck(deckId);
+
+      Folder? nowFolder = _dataService.findFolder(rootFolder, folderId);
+
+      if (nowFolder != null) {
+        _decks = List.from(nowFolder.decks);
+
+        notifyListeners();
+      }
     } catch (e) {
       debugPrint('Error : $e');
     }
