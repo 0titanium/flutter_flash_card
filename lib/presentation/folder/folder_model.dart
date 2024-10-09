@@ -54,6 +54,9 @@ class FolderModel extends ChangeNotifier {
         await _dataService.saveRootFolder(rootFolder);
 
         _decks = List.from(nowFolder.decks);
+        _isLongPressed = List.filled(_decks.length, false);
+
+        deckNameController.clear();
 
         notifyListeners();
       }

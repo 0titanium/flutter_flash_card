@@ -56,23 +56,36 @@ class _FolderListScreenState extends State<FolderListScreen> {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: InkWell(
-                  onTap: () {
-                    context.go('/folder_list/add_folder');
-                  },
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text(
-                          '폴더 추가',
-                          style: TextStyle(fontSize: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        '폴더 추가',
+                        style: TextStyle(fontSize: 16.0),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(),
+                          ),
+                          child: TextField(
+                            controller: folderListModel.folderNameController,
+                          ),
                         ),
                       ),
-                      Icon(Icons.create_new_folder),
-                    ],
-                  ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        folderListModel.createFolder();
+                      },
+                      icon: const Icon(Icons.archive),
+                    ),
+                  ],
                 ),
               ),
             ),

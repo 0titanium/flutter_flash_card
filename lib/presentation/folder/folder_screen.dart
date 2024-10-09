@@ -57,26 +57,36 @@ class _FolderScreenState extends State<FolderScreen> {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: InkWell(
-                  onTap: () {
-                    context.go(
-                      '/folder_list/${folderModel.folderData.name}/add_deck',
-                      extra: folderModel.folderData,
-                    );
-                  },
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text(
-                          '덱 추가',
-                          style: TextStyle(fontSize: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        '덱 추가',
+                        style: TextStyle(fontSize: 16.0),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(),
+                          ),
+                          child: TextField(
+                            controller: folderModel.deckNameController,
+                          ),
                         ),
                       ),
-                      Icon(Icons.archive),
-                    ],
-                  ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        folderModel.createDeck();
+                      },
+                      icon: const Icon(Icons.archive),
+                    ),
+                  ],
                 ),
               ),
             ),

@@ -49,6 +49,10 @@ class FolderListModel extends ChangeNotifier {
       await _dataService.saveRootFolder(rootFolder);
 
       _folders = [...rootFolder.subFolders];
+      _isLongPressed = List.filled(_folders.length, false);
+
+      folderNameController.clear();
+
       notifyListeners();
     } catch (e) {
       debugPrint('Error : $e');
