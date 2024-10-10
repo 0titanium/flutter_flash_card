@@ -99,7 +99,7 @@ class DeckModel extends ChangeNotifier {
     }
   }
 
-  Future<void> editCard(String cardId, int index) async {
+  Future<void> editCard(String cardId) async {
     final editFrontText = editFrontController.text.trim();
     final editBackText = editBackController.text.trim();
 
