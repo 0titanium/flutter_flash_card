@@ -74,7 +74,7 @@ class DataService {
     return folder.copyWith(decks: [...folder.decks, newDeck]);
   }
 
-  Future<bool> updateDeck(String deckId, String newDeckName) async {
+  Future<bool> editDeckName(String deckId, String newDeckName) async {
     try {
       Folder rootFolder = await loadRootFolder();
       Deck? deck = findDeck(rootFolder, deckId);
