@@ -73,9 +73,13 @@ class _FolderScreenState extends State<FolderScreen> {
                         child: Container(
                           decoration: BoxDecoration(
                             border: Border.all(),
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
-                          child: TextField(
-                            controller: folderModel.deckNameController,
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(8.0, 0, 8.0, 0),
+                            child: TextField(
+                              controller: folderModel.deckNameController,
+                            ),
                           ),
                         ),
                       ),
