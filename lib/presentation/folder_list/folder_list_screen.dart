@@ -72,9 +72,13 @@ class _FolderListScreenState extends State<FolderListScreen> {
                         child: Container(
                           decoration: BoxDecoration(
                             border: Border.all(),
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
-                          child: TextField(
-                            controller: folderListModel.folderNameController,
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(8.0, 0, 8.0, 0),
+                            child: TextField(
+                              controller: folderListModel.folderNameController,
+                            ),
                           ),
                         ),
                       ),
@@ -83,7 +87,7 @@ class _FolderListScreenState extends State<FolderListScreen> {
                       onPressed: () {
                         folderListModel.createFolder();
                       },
-                      icon: const Icon(Icons.archive),
+                      icon: const Icon(Icons.create_new_folder),
                     ),
                   ],
                 ),
@@ -95,44 +99,87 @@ class _FolderListScreenState extends State<FolderListScreen> {
               padding: const EdgeInsets.all(8),
               itemCount: folderListModel.folders.length,
               itemBuilder: (context, index) {
-                return Card(
-                  child: ListTile(
-                    onLongPress: () {
-                      folderListModel.showHiddenButtons(index);
-                    },
-                    onTap: () {
-                      if (folderListModel.isLongPressed[index] == true) {
-                        folderListModel.showHiddenButtons(index);
-                        return;
-                      }
-                      context.go(
-                        '/folder_list/:${folderListModel.folders[index].name}',
-                        extra: folderListModel.folders[index],
-                      );
-                    },
-                    title: Text(folderListModel.folders[index].name),
-                    trailing: folderListModel.isLongPressed[index]
-                        ? Column(
+                return folderListModel.isEditing[index]
+                    ? Card(
+                        child: ListTile(
+                          title: TextField(
+                            controller: folderListModel.editFolderController,
+                          ),
+                          trailing: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      folderListModel.editFolderName(
+                                          folderListModel.folders[index].id);
+                                      FocusScope.of(context).unfocus();
+                                      folderListModel.showEditingMode(index);
+                                      folderListModel.showHiddenButtons(index);
+                                    },
                                     icon: const Icon(Icons.mode_edit),
                                   ),
                                   IconButton(
-                                    onPressed: () {},
-                                    icon: const Icon(Icons.delete),
+                                    onPressed: () {
+                                      FocusScope.of(context).unfocus();
+                                      folderListModel.showEditingMode(index);
+                                      folderListModel.showHiddenButtons(index);
+                                    },
+                                    icon: const Icon(Icons.cancel),
                                   ),
                                 ],
                               ),
                             ],
-                          )
-                        : null,
-                  ),
-                );
+                          ),
+                        ),
+                      )
+                    : Card(
+                        child: ListTile(
+                          onLongPress: () {
+                            folderListModel.showHiddenButtons(index);
+                          },
+                          onTap: () {
+                            if (folderListModel.isLongPressed[index] == true) {
+                              folderListModel.showHiddenButtons(index);
+                              return;
+                            }
+                            context.go(
+                              '/folder_list/:${folderListModel.folders[index].name}',
+                              extra: folderListModel.folders[index],
+                            );
+                          },
+                          title: Text(folderListModel.folders[index].name),
+                          trailing: folderListModel.isLongPressed[index]
+                              ? Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        IconButton(
+                                          onPressed: () {
+                                            folderListModel
+                                                .showEditingMode(index);
+                                          },
+                                          icon: const Icon(Icons.mode_edit),
+                                        ),
+                                        IconButton(
+                                          onPressed: () {
+                                            folderListModel.deleteFolder(
+                                              folderListModel.folders[index].id,
+                                            );
+                                          },
+                                          icon: const Icon(Icons.delete),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                )
+                              : null,
+                        ),
+                      );
               },
             ),
           ),
