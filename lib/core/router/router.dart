@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_flash_card/data/local/data_service.dart';
 import 'package:flutter_flash_card/domain/model/deck.dart';
 import 'package:flutter_flash_card/domain/model/folder.dart';
-import 'package:flutter_flash_card/domain/model/learning_card.dart';
-import 'package:flutter_flash_card/presentation/add_deck/add_deck_dialog.dart';
-import 'package:flutter_flash_card/presentation/add_folder/add_folder_dialog.dart';
+
 import 'package:flutter_flash_card/presentation/components/flash_card_bottom/flash_card_bottom.dart';
 import 'package:flutter_flash_card/presentation/components/flash_card_bottom/flash_card_bottom_model.dart';
 import 'package:flutter_flash_card/presentation/deck/deck_model.dart';
@@ -59,15 +57,6 @@ final GoRouter router = GoRouter(
           },
           routes: <RouteBase>[
             GoRoute(
-              path: 'add_folder',
-              builder: (context, state) {
-                return ChangeNotifierProvider(
-                  create: (_) => FolderListModel(dataService: DataService()),
-                  child: const AddFolderDialog(),
-                );
-              },
-            ),
-            GoRoute(
               path: ':folderName',
               builder: (context, state) {
                 return ChangeNotifierProvider(
@@ -79,17 +68,6 @@ final GoRouter router = GoRouter(
                 );
               },
               routes: <RouteBase>[
-                GoRoute(
-                  path: 'add_deck',
-                  builder: (context, state) {
-                    return ChangeNotifierProvider(
-                      create: (_) => FolderModel(
-                          folderData: state.extra as Folder,
-                          dataService: DataService()),
-                      child: const AddDeckDialog(),
-                    );
-                  },
-                ),
                 GoRoute(
                   path: ':deckName',
                   builder: (context, state) {

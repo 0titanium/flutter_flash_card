@@ -57,26 +57,40 @@ class _FolderScreenState extends State<FolderScreen> {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: InkWell(
-                  onTap: () {
-                    context.go(
-                      '/folder_list/${folderModel.folderData.name}/add_deck',
-                      extra: folderModel.folderData,
-                    );
-                  },
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text(
-                          '덱 추가',
-                          style: TextStyle(fontSize: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        '덱 추가',
+                        style: TextStyle(fontSize: 16.0),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(8.0, 0, 8.0, 0),
+                            child: TextField(
+                              controller: folderModel.deckNameController,
+                            ),
+                          ),
                         ),
                       ),
-                      Icon(Icons.archive),
-                    ],
-                  ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        folderModel.createDeck();
+                      },
+                      icon: const Icon(Icons.archive),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -86,44 +100,86 @@ class _FolderScreenState extends State<FolderScreen> {
               padding: const EdgeInsets.all(8),
               itemCount: folderModel.decks.length,
               itemBuilder: (context, index) {
-                return Card(
-                  child: ListTile(
-                    onLongPress: () {
-                      folderModel.showHiddenButtons(index);
-                    },
-                    onTap: () {
-                      if (folderModel.isLongPressed[index] == true) {
-                        folderModel.showHiddenButtons(index);
-                        return;
-                      }
-                      context.go(
-                        '/folder_list/${folderModel.folderData.name}/${folderModel.decks[index].deckName}',
-                        extra: folderModel.decks[index],
-                      );
-                    },
-                    title: Text(folderModel.decks[index].deckName),
-                    trailing: folderModel.isLongPressed[index]
-                        ? Column(
+                return folderModel.isEditing[index]
+                    ? Card(
+                        child: ListTile(
+                          title: TextField(
+                            controller: folderModel.editDeckController,
+                          ),
+                          trailing: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      folderModel.editDeckName(
+                                          folderModel.decks[index].id);
+                                      FocusScope.of(context).unfocus();
+                                      folderModel.showEditingMode(index);
+                                      folderModel.showHiddenButtons(index);
+                                    },
                                     icon: const Icon(Icons.mode_edit),
                                   ),
                                   IconButton(
-                                    onPressed: () {},
-                                    icon: const Icon(Icons.delete),
+                                    onPressed: () {
+                                      FocusScope.of(context).unfocus();
+                                      folderModel.showEditingMode(index);
+                                      folderModel.showHiddenButtons(index);
+                                    },
+                                    icon: const Icon(Icons.cancel),
                                   ),
                                 ],
                               ),
                             ],
-                          )
-                        : null,
-                  ),
-                );
+                          ),
+                        ),
+                      )
+                    : Card(
+                        child: ListTile(
+                          onLongPress: () {
+                            folderModel.showHiddenButtons(index);
+                          },
+                          onTap: () {
+                            if (folderModel.isLongPressed[index] == true) {
+                              folderModel.showHiddenButtons(index);
+                              return;
+                            }
+                            context.go(
+                              '/folder_list/${folderModel.folderData.name}/${folderModel.decks[index].deckName}',
+                              extra: folderModel.decks[index],
+                            );
+                          },
+                          title: Text(folderModel.decks[index].deckName),
+                          trailing: folderModel.isLongPressed[index]
+                              ? Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        IconButton(
+                                          onPressed: () {
+                                            folderModel.showEditingMode(index);
+                                          },
+                                          icon: const Icon(Icons.mode_edit),
+                                        ),
+                                        IconButton(
+                                          onPressed: () {
+                                            folderModel.deleteDeck(
+                                              folderModel.decks[index].id,
+                                            );
+                                          },
+                                          icon: const Icon(Icons.delete),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                )
+                              : null,
+                        ),
+                      );
               },
             ),
           ),
