@@ -39,6 +39,73 @@ class DataService {
         .copyWith(subFolders: [...parentFolder.subFolders, newFolder]);
   }
 
+  Future<bool> editFolderName(String folderId, String newFolderName) async {
+    try {
+      Folder rootFolder = await loadRootFolder();
+      Folder updatedRootFolder =
+          _updateFolderName(rootFolder, folderId, newFolderName);
+
+      if (rootFolder == updatedRootFolder) {
+        debugPrint('Error: Folder not found');
+        return false;
+      }
+
+      await saveRootFolder(updatedRootFolder);
+      return true;
+    } catch (e) {
+      debugPrint('Error updating folder name: $e');
+      return false;
+    }
+  }
+
+  Folder _updateFolderName(
+      Folder folder, String folderId, String newFolderName) {
+    if (folder.id == folderId) {
+      return folder.copyWith(name: newFolderName);
+    }
+
+    List<Folder> updatedSubFolders = folder.subFolders
+        .map((subFolder) =>
+            _updateFolderName(subFolder, folderId, newFolderName))
+        .toList();
+
+    return folder.copyWith(subFolders: updatedSubFolders);
+  }
+
+  Future<bool> deleteFolder(String folderId) async {
+    try {
+      Folder rootFolder = await loadRootFolder();
+      Folder updatedRootFolder = _removeFolder(rootFolder, folderId);
+
+      if (rootFolder == updatedRootFolder) {
+        debugPrint('Error: Folder not found');
+        return false;
+      }
+
+      await saveRootFolder(updatedRootFolder);
+      return true;
+    } catch (e) {
+      debugPrint('Error deleting folder: $e');
+      return false;
+    }
+  }
+
+  Folder _removeFolder(Folder folder, String folderId) {
+    List<Folder> updatedSubFolders = folder.subFolders
+        .where((subFolder) => subFolder.id != folderId)
+        .toList();
+
+    if (updatedSubFolders.length < folder.subFolders.length) {
+      return folder.copyWith(subFolders: updatedSubFolders);
+    }
+
+    updatedSubFolders = updatedSubFolders
+        .map((subFolder) => _removeFolder(subFolder, folderId))
+        .toList();
+
+    return folder.copyWith(subFolders: updatedSubFolders);
+  }
+
   Folder? findFolder(Folder rootFolder, String folderId) {
     if (rootFolder.id == folderId) return rootFolder;
 
