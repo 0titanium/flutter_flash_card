@@ -19,7 +19,7 @@ class _ViewCardScreenState extends State<ViewCardScreen> {
       appBar: AppBar(),
       body: Center(
         child: SizedBox(
-          height: MediaQuery.of(context).size.height * 0.6,
+          height: MediaQuery.of(context).size.height * 0.7,
           child: PageView.builder(
             controller: viewCardModel.pageController,
             itemCount: viewCardModel.cards.length,
@@ -28,47 +28,100 @@ class _ViewCardScreenState extends State<ViewCardScreen> {
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: Center(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.8,
-                      child: FlipCard(
-                        frontWidget: ColoredBox(
-                          color: Colors
-                              .primaries[index % Colors.primaries.length]
-                              .withOpacity(0.5),
-                          child: Center(
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Text(
-                                viewCardModel.cards[index].frontText,
-                                style: const TextStyle(
-                                    color: Colors.white, fontSize: 20),
-                                textAlign: TextAlign.center,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Center(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            child: FlipCard(
+                              frontWidget: ColoredBox(
+                                color: Colors
+                                    .primaries[index % Colors.primaries.length]
+                                    .withOpacity(0.5),
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Text(
+                                      viewCardModel.cards[index].frontText,
+                                      style: const TextStyle(
+                                          color: Colors.white, fontSize: 20),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                        ),
-                        backWidget: ColoredBox(
-                          color: Colors
-                              .primaries[index % Colors.primaries.length]
-                              .withOpacity(0.3),
-                          child: Center(
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Text(
-                                viewCardModel.cards[index].backText,
-                                style: const TextStyle(
-                                    color: Colors.black, fontSize: 20),
-                                textAlign: TextAlign.center,
+                              backWidget: ColoredBox(
+                                color: Colors
+                                    .primaries[index % Colors.primaries.length]
+                                    .withOpacity(0.3),
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Text(
+                                      viewCardModel.cards[index].backText,
+                                      style: const TextStyle(
+                                          color: Colors.black, fontSize: 20),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 32),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(right: 16),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: TextButton(
+                                  onPressed: () {},
+                                  child: const Text(
+                                    'O',
+                                    style: TextStyle(
+                                        color: Colors.green,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 16),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: TextButton(
+                                  onPressed: () {},
+                                  child: const Text(
+                                    'X',
+                                    style: TextStyle(
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               );
             },
