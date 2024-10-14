@@ -334,4 +334,38 @@ class DataService {
       return false;
     }
   }
+
+  Future<bool> checkIsKnownCard(String deckId, String cardId) async {
+    try {
+      Folder rootFolder = await loadRootFolder();
+      Deck? deck = findDeck(rootFolder, deckId);
+
+      if (deck != null) {
+        final updatedCards = deck.cards.map((card) {
+          if (card.id == cardId) {
+            return card.copyWith(know: !card.know);
+          }
+          return card;
+        }).toList();
+
+        if (deck.cards.length != updatedCards.length) {
+          debugPrint('Error: Card not found');
+          return false;
+        }
+
+        deck = deck.copyWith(cards: updatedCards);
+        rootFolder = replaceDeck(rootFolder, deck);
+
+        await saveRootFolder(rootFolder);
+
+        return true;
+      } else {
+        debugPrint('Error: Deck not found');
+        return false;
+      }
+    } catch (e) {
+      debugPrint('Error editing card: $e');
+      return false;
+    }
+  }
 }
