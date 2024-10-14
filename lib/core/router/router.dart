@@ -86,6 +86,7 @@ final GoRouter router = GoRouter(
                         return ChangeNotifierProvider(
                           create: (_) => ViewCardModel(
                             cardsData: state.extra as Map<String, dynamic>,
+                            dataService: DataService(),
                           ),
                           child: const ViewCardScreen(),
                         );
