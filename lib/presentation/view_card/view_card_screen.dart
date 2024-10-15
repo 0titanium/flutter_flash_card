@@ -89,7 +89,13 @@ class _ViewCardScreenState extends State<ViewCardScreen> {
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    viewCardModel.checkIsKnown(
+                                      viewCardModel.deckDetails['deckId'],
+                                      viewCardModel.cards[index].id,
+                                      true,
+                                    );
+                                  },
                                   child: const Text(
                                     'O',
                                     style: TextStyle(
@@ -107,7 +113,13 @@ class _ViewCardScreenState extends State<ViewCardScreen> {
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    viewCardModel.checkIsKnown(
+                                      viewCardModel.deckDetails['deckId'],
+                                      viewCardModel.cards[index].id,
+                                      false,
+                                    );
+                                  },
                                   child: const Text(
                                     'X',
                                     style: TextStyle(
