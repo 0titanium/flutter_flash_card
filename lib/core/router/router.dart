@@ -85,7 +85,7 @@ final GoRouter router = GoRouter(
                       builder: (context, state) {
                         return ChangeNotifierProvider(
                           create: (_) => ViewCardModel(
-                            cardsData: state.extra as Map<String, dynamic>,
+                            deckDetails: state.extra as Map<String, dynamic>,
                             dataService: DataService(),
                           ),
                           child: const ViewCardScreen(),
