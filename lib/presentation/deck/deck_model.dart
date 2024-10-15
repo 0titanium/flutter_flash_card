@@ -23,7 +23,7 @@ class DeckModel extends ChangeNotifier {
 
   String willChangeOrder = '';
 
-  Map<String, dynamic> cardAndOrder = {};
+  Map<String, dynamic> deckDetails = {};
 
   List<bool> _isLongPressed = [];
 
@@ -49,9 +49,10 @@ class DeckModel extends ChangeNotifier {
       if (deck != null) {
         _cards = List.from(deck.cards);
 
-        cardAndOrder = {
+        deckDetails = {
           'cardList': _cards,
           'order': willChangeOrder,
+          'deckId' : deckData.id,
         };
 
         _isLongPressed = List.filled(_cards.length, false);
@@ -85,7 +86,7 @@ class DeckModel extends ChangeNotifier {
         _isLongPressed = List.filled(_cards.length, false);
         _isEditing = List.filled(_cards.length, false);
 
-        cardAndOrder['cardList'] = _cards;
+        deckDetails['cardList'] = _cards;
 
         cardFrontController.clear();
         cardBackController.clear();
@@ -120,7 +121,7 @@ class DeckModel extends ChangeNotifier {
 
           _isEditing = List.filled(_cards.length, false);
 
-          cardAndOrder['cardList'] = _cards;
+          deckDetails['cardList'] = _cards;
 
           notifyListeners();
         } else {
@@ -141,7 +142,7 @@ class DeckModel extends ChangeNotifier {
         _cards.removeWhere((card) => card.id == cardId);
         _isLongPressed = _isLongPressed.sublist(0, _cards.length);
         _isEditing = _isEditing.sublist(0, _cards.length);
-        cardAndOrder['cardList'] = _cards;
+        deckDetails['cardList'] = _cards;
 
         notifyListeners();
       } else {
@@ -156,7 +157,7 @@ class DeckModel extends ChangeNotifier {
     willChangeOrder = value!;
     notifyListeners();
 
-    cardAndOrder['order'] = willChangeOrder;
+    deckDetails['order'] = willChangeOrder;
   }
 
   void showHiddenButtons(int index) {
