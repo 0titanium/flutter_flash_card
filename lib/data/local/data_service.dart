@@ -335,7 +335,8 @@ class DataService {
     }
   }
 
-  Future<bool> checkIsKnownCard(String deckId, String cardId) async {
+  Future<bool> checkIsKnownCard(
+      String deckId, String cardId, bool isKnown) async {
     try {
       Folder rootFolder = await loadRootFolder();
       Deck? deck = findDeck(rootFolder, deckId);
@@ -343,7 +344,11 @@ class DataService {
       if (deck != null) {
         final updatedCards = deck.cards.map((card) {
           if (card.id == cardId) {
-            return card.copyWith(know: !card.know);
+            if (isKnown) {
+              return card.copyWith(know: true);
+            } else {
+              return card.copyWith(know: false);
+            }
           }
           return card;
         }).toList();
