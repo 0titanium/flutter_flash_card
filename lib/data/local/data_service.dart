@@ -363,6 +363,8 @@ class DataService {
 
         await saveRootFolder(rootFolder);
 
+        debugPrint(deck.cards.toString());
+
         return true;
       } else {
         debugPrint('Error: Deck not found');
