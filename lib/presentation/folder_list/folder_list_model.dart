@@ -44,13 +44,17 @@ class FolderListModel extends ChangeNotifier {
     final folderName = folderNameController.text.trim();
 
     if (folderName == '') {
-      return;
+      throw const FormatException('empty name');
     }
 
     try {
-      Folder rootFolder = await _dataService.loadRootFolder();
+      Folder? rootFolder = await _dataService.loadRootFolder();
 
-      rootFolder = _dataService.addFolder(rootFolder, folderName);
+      rootFolder = await _dataService.addFolder(rootFolder, folderName);
+
+      if (rootFolder == null) {
+        throw const FormatException('not found folder');
+      }
 
       await _dataService.saveRootFolder(rootFolder);
 
@@ -70,7 +74,7 @@ class FolderListModel extends ChangeNotifier {
     final newFolderName = editFolderController.text.trim();
 
     if (newFolderName.isEmpty) {
-      return;
+      throw const FormatException('empty name');
     }
 
     try {
