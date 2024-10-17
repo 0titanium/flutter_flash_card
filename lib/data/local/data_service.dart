@@ -27,7 +27,34 @@ class DataService {
     return Folder.fromJson(jsonDecode(folderJson));
   }
 
-  Folder addFolder(Folder parentFolder, String folderName) {
+  Future<void> saveVisitedFolders(String folderId, String folderName) async {
+    final SharedPreferencesAsync asyncPrefs = SharedPreferencesAsync();
+
+    List<String> visitedFolders = await getVisitedFolders();
+
+    visitedFolders.add(folderName);
+
+    await asyncPrefs.setStringList('visited_folders', visitedFolders);
+  }
+
+  Future<List<String>> getVisitedFolders() async {
+    final SharedPreferencesAsync asyncPrefs = SharedPreferencesAsync();
+
+    List<String>? visitedFolders =
+        await asyncPrefs.getStringList('visited_folders');
+
+    return visitedFolders ?? [];
+  }
+
+  Future<Folder?> addFolder(Folder parentFolder, String folderName) async {
+    bool hasDuplicateName =
+        parentFolder.subFolders.any((folder) => folder.name == folderName);
+
+    if (hasDuplicateName) {
+      debugPrint('Error: A folder with the same name already exists');
+      return null;
+    }
+
     final newFolder = Folder(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       name: folderName,
@@ -42,6 +69,14 @@ class DataService {
   Future<bool> editFolderName(String folderId, String newFolderName) async {
     try {
       Folder rootFolder = await loadRootFolder();
+
+      bool hasDuplicateName =
+          rootFolder.subFolders.any((folder) => folder.name == newFolderName);
+
+      if (hasDuplicateName) {
+        throw const FormatException('duplicate name');
+      }
+
       Folder updatedRootFolder =
           _updateFolderName(rootFolder, folderId, newFolderName);
 
