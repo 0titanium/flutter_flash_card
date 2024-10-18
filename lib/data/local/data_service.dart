@@ -27,7 +27,7 @@ class DataService {
     return Folder.fromJson(jsonDecode(folderJson));
   }
 
-  Future<void> saveVisitedFolders(String folderId, String folderName) async {
+  Future<void> saveVisitedFolders(String folderName) async {
     final SharedPreferencesAsync asyncPrefs = SharedPreferencesAsync();
 
     List<String> visitedFolders = await getVisitedFolders();
