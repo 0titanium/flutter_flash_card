@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_flash_card/core/router/router.dart';
 import 'package:flutter_flash_card/presentation/home/home_screen_model.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -44,6 +46,23 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
+      body: homeScreenModel.folderNames.isEmpty
+          ? const Text('최근 방문한 폴더가 없습니다')
+          : ListView.builder(
+              padding: const EdgeInsets.all(8),
+              itemCount: homeScreenModel.folderNames.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  child: ListTile(
+                    onTap: () {
+                      context.go(
+                          '/folder_list/:${homeScreenModel.folderNames[index]}');
+                    },
+                    title: Text(homeScreenModel.folderNames[index]),
+                  ),
+                );
+              },
+            ),
     );
   }
 }
