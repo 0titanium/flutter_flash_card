@@ -38,6 +38,7 @@ class FolderModel extends ChangeNotifier {
       debugPrint(_decks.toString());
       _isLongPressed = List.filled(_decks.length, false);
       _isEditing = List.filled(_decks.length, false);
+      _dataService.saveVisitedFolders(folderId, folderData.name);
       notifyListeners();
     }
   }
