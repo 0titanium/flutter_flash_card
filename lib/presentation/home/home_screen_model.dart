@@ -25,7 +25,7 @@ class HomeScreenModel extends ChangeNotifier {
 
   HomeScreenModel({required DataService dataService})
       : _dataService = dataService {
-    loadSavedFolders();
+    loadSavedFolderNames();
   }
 
   void onIndexSelected(int index) {
@@ -34,7 +34,7 @@ class HomeScreenModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> loadSavedFolders() async {
+  Future<void> loadSavedFolderNames() async {
     _folderNames = await _dataService.getVisitedFolders();
     notifyListeners();
   }
