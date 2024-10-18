@@ -32,7 +32,15 @@ class DataService {
 
     List<String> visitedFolders = await getVisitedFolders();
 
-    visitedFolders.add(folderName);
+    const int maxVisitedFolders = 10;
+
+    visitedFolders.remove(folderName);
+
+    visitedFolders.insert(0, folderName);
+
+    if (visitedFolders.length > maxVisitedFolders) {
+      visitedFolders = visitedFolders.sublist(0, maxVisitedFolders);
+    }
 
     await asyncPrefs.setStringList('visited_folders', visitedFolders);
   }
