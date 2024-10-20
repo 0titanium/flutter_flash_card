@@ -27,7 +27,45 @@ class DataService {
     return Folder.fromJson(jsonDecode(folderJson));
   }
 
-  Folder addFolder(Folder parentFolder, String folderName) {
+  Future<void> saveVisitedFolders(Folder folder) async {
+    final SharedPreferencesAsync asyncPrefs = SharedPreferencesAsync();
+    List<Folder> visitedFolders = await getVisitedFolders() ?? [];
+
+    const int maxVisitedFolders = 10;
+    visitedFolders.removeWhere((item) => item.name == folder.name);
+    visitedFolders.insert(0, folder);
+
+    if (visitedFolders.length > maxVisitedFolders) {
+      visitedFolders = visitedFolders.sublist(0, maxVisitedFolders);
+    }
+
+    final List<String> encodedFolders =
+        visitedFolders.map((folder) => jsonEncode(folder.toJson())).toList();
+
+    await asyncPrefs.setStringList('visited_folders', encodedFolders);
+  }
+
+  Future<List<Folder>?> getVisitedFolders() async {
+    final SharedPreferencesAsync asyncPrefs = SharedPreferencesAsync();
+    final List<String>? visitedFolders =
+        await asyncPrefs.getStringList('visited_folders');
+
+    if (visitedFolders == null) return [];
+
+    return visitedFolders
+        .map((folderString) => Folder.fromJson(jsonDecode(folderString)))
+        .toList();
+  }
+
+  Future<Folder?> addFolder(Folder parentFolder, String folderName) async {
+    bool hasDuplicateName =
+        parentFolder.subFolders.any((folder) => folder.name == folderName);
+
+    if (hasDuplicateName) {
+      debugPrint('Error: A folder with the same name already exists');
+      return null;
+    }
+
     final newFolder = Folder(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       name: folderName,
@@ -42,6 +80,14 @@ class DataService {
   Future<bool> editFolderName(String folderId, String newFolderName) async {
     try {
       Folder rootFolder = await loadRootFolder();
+
+      bool hasDuplicateName =
+          rootFolder.subFolders.any((folder) => folder.name == newFolderName);
+
+      if (hasDuplicateName) {
+        throw const FormatException('duplicate name');
+      }
+
       Folder updatedRootFolder =
           _updateFolderName(rootFolder, folderId, newFolderName);
 

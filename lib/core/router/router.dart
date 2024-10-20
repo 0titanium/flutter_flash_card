@@ -42,7 +42,7 @@ final GoRouter router = GoRouter(
           path: '/home',
           builder: (context, state) {
             return ChangeNotifierProvider(
-              create: (_) => HomeScreenModel(),
+              create: (_) => HomeScreenModel(dataService: DataService()),
               child: const HomeScreen(),
             );
           },
