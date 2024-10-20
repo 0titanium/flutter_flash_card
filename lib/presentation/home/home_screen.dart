@@ -45,19 +45,21 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      body: homeScreenModel.folderNames.isEmpty
+      body: homeScreenModel.savedFolders.isEmpty
           ? const Text('최근 방문한 폴더가 없습니다')
           : ListView.builder(
               padding: const EdgeInsets.all(8),
-              itemCount: homeScreenModel.folderNames.length,
+              itemCount: homeScreenModel.savedFolders.length,
               itemBuilder: (context, index) {
                 return Card(
                   child: ListTile(
                     onTap: () {
                       context.go(
-                          '/folder_list/:${homeScreenModel.folderNames[index]}');
+                        '/folder_list/:${homeScreenModel.savedFolders[index].name}',
+                        extra: homeScreenModel.savedFolders[index],
+                      );
                     },
-                    title: Text(homeScreenModel.folderNames[index]),
+                    title: Text(homeScreenModel.savedFolders[index].name),
                   ),
                 );
               },
