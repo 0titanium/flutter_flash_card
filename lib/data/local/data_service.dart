@@ -27,31 +27,34 @@ class DataService {
     return Folder.fromJson(jsonDecode(folderJson));
   }
 
-  Future<void> saveVisitedFolders(String folderName) async {
+  Future<void> saveVisitedFolders(Folder folder) async {
     final SharedPreferencesAsync asyncPrefs = SharedPreferencesAsync();
-
-    List<String> visitedFolders = await getVisitedFolders();
+    List<Folder> visitedFolders = await getVisitedFolders() ?? [];
 
     const int maxVisitedFolders = 10;
-
-    visitedFolders.remove(folderName);
-
-    visitedFolders.insert(0, folderName);
+    visitedFolders.removeWhere((item) => item.name == folder.name);
+    visitedFolders.insert(0, folder);
 
     if (visitedFolders.length > maxVisitedFolders) {
       visitedFolders = visitedFolders.sublist(0, maxVisitedFolders);
     }
 
-    await asyncPrefs.setStringList('visited_folders', visitedFolders);
+    final List<String> encodedFolders =
+        visitedFolders.map((folder) => jsonEncode(folder.toJson())).toList();
+
+    await asyncPrefs.setStringList('visited_folders', encodedFolders);
   }
 
-  Future<List<String>> getVisitedFolders() async {
+  Future<List<Folder>?> getVisitedFolders() async {
     final SharedPreferencesAsync asyncPrefs = SharedPreferencesAsync();
-
-    List<String>? visitedFolders =
+    final List<String>? visitedFolders =
         await asyncPrefs.getStringList('visited_folders');
 
-    return visitedFolders ?? [];
+    if (visitedFolders == null) return [];
+
+    return visitedFolders
+        .map((folderString) => Folder.fromJson(jsonDecode(folderString)))
+        .toList();
   }
 
   Future<Folder?> addFolder(Folder parentFolder, String folderName) async {
