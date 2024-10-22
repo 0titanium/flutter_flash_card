@@ -19,6 +19,10 @@ class ViewCardModel extends ChangeNotifier {
 
   List<bool> get checkedList => _checkedList;
 
+  List<LearningCard> _cardsForReview = [];
+
+  List<LearningCard> get cardsForReview => _cardsForReview;
+
   ViewCardModel({
     required this.deckDetails,
     required DataService dataService,
@@ -35,11 +39,18 @@ class ViewCardModel extends ChangeNotifier {
       _checkedList = List.filled(_cards.length, false);
     }
     debugPrint(_cards.toString());
+    _cardsForReview.clear();
     notifyListeners();
   }
 
   void checkIsKnown(String deckId, String cardId, bool isKnown) {
     _dataService.checkIsKnownCard(deckId, cardId, isKnown);
+
+    if (isKnown == false) {
+      final cardForReview = _cards.firstWhere((card) => card.id == cardId);
+
+      _cardsForReview.add(cardForReview);
+    }
   }
 
   @override
