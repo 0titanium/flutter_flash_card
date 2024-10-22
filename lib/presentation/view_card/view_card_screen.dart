@@ -15,6 +15,10 @@ class _ViewCardScreenState extends State<ViewCardScreen> {
   @override
   Widget build(BuildContext context) {
     final viewCardModel = context.watch<ViewCardModel>();
+    final String folderName =
+        GoRouterState.of(context).pathParameters['folderName'] ?? '';
+    final String deckName =
+        GoRouterState.of(context).pathParameters['deckName'] ?? '';
 
     return Scaffold(
       appBar: AppBar(),
@@ -70,11 +74,9 @@ class _ViewCardScreenState extends State<ViewCardScreen> {
                                   ),
                                   child: TextButton(
                                     onPressed: () {
-                                      viewCardModel.checkIsKnown(
-                                        viewCardModel.deckDetails['deckId'],
-                                        viewCardModel.cards[index].id,
-                                        true,
-                                      );
+                                      context.go(
+                                          '/folder_list/$folderName/$deckName/review_card',
+                                          extra: viewCardModel.cardsForReview);
                                     },
                                     child: const Text(
                                       'O',
