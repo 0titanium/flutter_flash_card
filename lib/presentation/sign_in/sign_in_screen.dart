@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -12,30 +13,33 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          backgroundColor: Colors.green,
+          leading: IconButton(
+            onPressed: () {
+              context.go('/home');
+            },
+            icon: const Icon(Icons.home),
+          ),
+        ),
         body: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  foregroundColor: Colors.black87,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+              SizedBox(
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(24),
+                    onTap: () {
+                      // google sign in
+                    },
+                    child: Image.asset(
+                      'assets/images/android_dark_rd_ctn@1x.png',
+                      fit: BoxFit.fitWidth,
+                    ),
                   ),
                 ),
-                icon: Image.asset(
-                  'assets/images/android_dark_rd_ctn@1x.png',
-                  height: 24,
-                ),
-                label: const Text(
-                  '구글로 계속하기',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                onPressed: () {},
               ),
             ],
           ),
