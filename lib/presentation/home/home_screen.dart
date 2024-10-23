@@ -39,7 +39,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       side: BorderSide(width: 1),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    context.go('/sign_in');
+                  },
                   child: const Text('로그인 / 회원가입'),
                 ),
               ),
