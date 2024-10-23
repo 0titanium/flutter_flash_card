@@ -31,7 +31,7 @@ final GoRouter router = GoRouter(
   initialLocation: '/home',
   routes: [
     GoRoute(
-      path: '/signin',
+      path: '/sign_in',
       parentNavigatorKey: rootNavigatorKey,
       builder: (context, state) {
         return SignInScreen();
