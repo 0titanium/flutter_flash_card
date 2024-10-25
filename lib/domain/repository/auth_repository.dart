@@ -1,6 +1,6 @@
-import 'package:flutter_flash_card/domain/model/user.dart';
+import 'package:flutter_flash_card/domain/model/flash_card_user.dart';
 
 abstract interface class AuthRepository {
-  Future<User> signInWithGoogle();
+  Future<FlashCardUser> signInWithGoogle();
   Future<void> signOutWithGoogle();
 }

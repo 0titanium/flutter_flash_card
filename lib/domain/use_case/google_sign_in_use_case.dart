@@ -1,4 +1,4 @@
-import 'package:flutter_flash_card/domain/model/user.dart';
+import 'package:flutter_flash_card/domain/model/flash_card_user.dart';
 import 'package:flutter_flash_card/domain/repository/auth_repository.dart';
 
 class GoogleSignInUseCase {
@@ -6,7 +6,7 @@ class GoogleSignInUseCase {
 
   GoogleSignInUseCase(this._authRepository);
 
-  Future<User> execute() async {
+  Future<FlashCardUser> execute() async {
     return await _authRepository.signInWithGoogle();
   }
 }
