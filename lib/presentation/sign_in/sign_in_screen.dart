@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_flash_card/core/router/router.dart';
 import 'package:flutter_flash_card/presentation/providers/flash_card_auth_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
