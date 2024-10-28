@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_flash_card/presentation/components/flash_card_app_bar/flash_card_app_bar.dart';
 import 'package:flutter_flash_card/presentation/folder/folder_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -16,36 +17,7 @@ class _FolderScreenState extends State<FolderScreen> {
     final folderModel = context.watch<FolderModel>();
 
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(70.0),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 16.0),
-          child: AppBar(
-            title: Text(
-              folderModel.folderData.name,
-              style: const TextStyle(fontSize: 24),
-            ),
-            centerTitle: true,
-            actions: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextButton(
-                  style: TextButton.styleFrom(
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(8),
-                      ),
-                      side: BorderSide(width: 1),
-                    ),
-                  ),
-                  onPressed: () {},
-                  child: const Text('로그인 / 회원가입'),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+      appBar: FlashCardAppBar(appBarTitle: folderModel.folderData.name),
       body: Column(
         children: [
           Padding(

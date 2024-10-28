@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_flash_card/presentation/components/flash_card_app_bar/flash_card_app_bar.dart';
 import 'package:flutter_flash_card/presentation/components/flash_card_bottom/flash_card_bottom_model.dart';
 import 'package:flutter_flash_card/presentation/home/home_screen_model.dart';
 import 'package:go_router/go_router.dart';
@@ -18,35 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final flashCardBottomModel = context.watch<FlashCardBottomModel>();
 
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(70.0),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 16.0),
-          child: AppBar(
-            title: const Text(
-              '플래시 카드',
-              style: TextStyle(fontSize: 24),
-            ),
-            actions: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextButton(
-                  style: TextButton.styleFrom(
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(8),
-                      ),
-                      side: BorderSide(width: 1),
-                    ),
-                  ),
-                  onPressed: () {},
-                  child: const Text('로그인 / 회원가입'),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+      appBar: const FlashCardAppBar(appBarTitle: '플래시카드'),
       body: homeScreenModel.savedFolders.isEmpty
           ? const Text('최근 방문한 폴더가 없습니다')
           : ListView.builder(
