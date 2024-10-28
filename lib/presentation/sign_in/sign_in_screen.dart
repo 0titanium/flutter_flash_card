@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_flash_card/core/router/router.dart';
+import 'package:flutter_flash_card/presentation/providers/flash_card_auth_provider.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -11,6 +14,8 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
+    final flashCardAuthProvider = context.watch<FlashCardAuthProvider>();
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -32,7 +37,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   child: InkWell(
                     borderRadius: BorderRadius.circular(24),
                     onTap: () {
-                      // google sign in
+                      flashCardAuthProvider.signInWithGoogle();
                     },
                     child: Image.asset(
                       'assets/images/android_dark_rd_ctn@1x.png',
