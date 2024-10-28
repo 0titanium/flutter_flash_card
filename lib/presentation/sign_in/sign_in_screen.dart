@@ -37,6 +37,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     borderRadius: BorderRadius.circular(24),
                     onTap: () {
                       flashCardAuthProvider.signInWithGoogle();
+                      context.go('/home');
                     },
                     child: Image.asset(
                       'assets/images/android_dark_rd_ctn@1x.png',
