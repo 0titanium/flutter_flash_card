@@ -28,7 +28,7 @@ class FlashCardAppBar extends StatelessWidget implements PreferredSizeWidget {
         actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: !flashCardAuthProvider.isSignIn
+            child: flashCardAuthProvider.flashCardUser == null
                 ? TextButton(
                     style: TextButton.styleFrom(
                       shape: const RoundedRectangleBorder(
