@@ -34,7 +34,7 @@ final GoRouter router = GoRouter(
       path: '/sign_in',
       parentNavigatorKey: rootNavigatorKey,
       builder: (context, state) {
-        return SignInScreen();
+        return const SignInScreen();
       },
     ),
     ShellRoute(
