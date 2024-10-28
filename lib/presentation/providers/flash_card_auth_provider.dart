@@ -3,7 +3,7 @@ import 'package:flutter_flash_card/domain/model/flash_card_user.dart';
 import 'package:flutter_flash_card/domain/use_case/google_sign_in_use_case.dart';
 import 'package:flutter_flash_card/domain/use_case/google_sign_out_use_case.dart';
 
-class AuthProvider extends ChangeNotifier {
+class FlashCardAuthProvider extends ChangeNotifier {
   final GoogleSignInUseCase _googleSignInUseCase;
   final GoogleSignOutUseCase _googleSignOutUseCase;
 
@@ -17,7 +17,7 @@ class AuthProvider extends ChangeNotifier {
 
   String? get error => _error;
 
-  AuthProvider({
+  FlashCardAuthProvider({
     required GoogleSignInUseCase googleSignInUseCase,
     required GoogleSignOutUseCase googleSignOutUseCase,
   })  : _googleSignInUseCase = googleSignInUseCase,
