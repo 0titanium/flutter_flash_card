@@ -34,4 +34,20 @@ class BackUpService {
       return false;
     }
   }
+
+  Future<List<String>> getBackupsList(String userId) async {
+    try {
+      final backupsSnapshot = await _firestore
+          .collection('backups')
+          .doc(userId)
+          .collection('backups')
+          .orderBy('timestamp', descending: true)
+          .get();
+
+      return backupsSnapshot.docs.map((doc) => doc.id).toList();
+    } catch (e) {
+      debugPrint('Error getting backups list: $e');
+      return [];
+    }
+  }
 }
