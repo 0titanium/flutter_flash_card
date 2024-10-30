@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_flash_card/data/local/data_service.dart';
+import 'package:flutter_flash_card/data/remote/back_up_service.dart';
 import 'package:flutter_flash_card/domain/model/deck.dart';
 import 'package:flutter_flash_card/domain/model/folder.dart';
 import 'package:flutter_flash_card/domain/model/learning_card.dart';
@@ -14,6 +15,7 @@ import 'package:flutter_flash_card/presentation/folder_list/folder_list_model.da
 import 'package:flutter_flash_card/presentation/folder_list/folder_list_screen.dart';
 import 'package:flutter_flash_card/presentation/home/home_screen.dart';
 import 'package:flutter_flash_card/presentation/home/home_screen_model.dart';
+import 'package:flutter_flash_card/presentation/my_info/my_info_model.dart';
 import 'package:flutter_flash_card/presentation/my_info/my_info_screen.dart';
 import 'package:flutter_flash_card/presentation/review_card/review_card_model.dart';
 import 'package:flutter_flash_card/presentation/review_card/review_card_screen.dart';
@@ -122,7 +124,12 @@ final GoRouter router = GoRouter(
         ),
         GoRoute(
           path: '/my_info',
-          builder: (context, state) => const MyInfoScreen(),
+          builder: (context, state) {
+            return ChangeNotifierProvider(
+              create: (_) => MyInfoModel(backUpService: BackUpService()),
+              child: const MyInfoScreen(),
+            );
+          },
         ),
       ],
     ),
