@@ -43,15 +43,25 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                           ? Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: SizedBox(
-                                child: myInfoModel.backUpList.isEmpty
-                                    ? const Text('최근 저장 내역이 없습니다.')
-                                    : Text(myInfoModel.backUpList.first),
+                                child: TextButton(
+                                    onPressed: () {
+                                      debugPrint(flashCardAuthProvider
+                                          .flashCardUser
+                                          .toString());
+                                      myInfoModel.loadBackUpList();
+                                    },
+                                    child: const Text('최근 저장 일자 확인')),
                               ),
                             )
                           : const Padding(
                               padding: EdgeInsets.all(8.0),
                               child: Text('로그인 하세요'),
                             ),
+                      if (myInfoModel.backUpList.isNotEmpty)
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(myInfoModel.backUpList.first),
+                        )
                     ],
                   ),
                 ),
