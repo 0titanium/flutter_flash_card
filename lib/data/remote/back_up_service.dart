@@ -17,11 +17,11 @@ class BackUpService {
     }
 
     try {
-      final prefs = await SharedPreferences.getInstance();
+      final SharedPreferencesAsync asyncPrefs = SharedPreferencesAsync();
 
-      final String? rootFolderJson = prefs.getString('root_folder');
+      final String? folderJson = await asyncPrefs.getString('root_folder');
 
-      if (rootFolderJson == null) {
+      if (folderJson == null) {
         debugPrint('No data found in SharedPreferences');
         return false;
       }
@@ -32,7 +32,7 @@ class BackUpService {
 
       final backupData = {
         'timestamp': timestamp,
-        'root_folder': rootFolderJson,
+        'root_folder': folderJson,
       };
 
       await userDocRef.collection('backups').doc(timestamp).set(backupData);
