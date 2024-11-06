@@ -1,11 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BackUpService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<bool> backupToFirestore(String userId) async {
+    final currentUser = _auth.currentUser;
+    if (currentUser == null || currentUser.uid != userId) {
+      debugPrint('$currentUser?.uid.toString() from back up service');
+      debugPrint('$currentUser.toString() --------------');
+      debugPrint('Authentication error: User not logged in or userId mismatch');
+      return false;
+    }
+
     try {
       final prefs = await SharedPreferences.getInstance();
 
