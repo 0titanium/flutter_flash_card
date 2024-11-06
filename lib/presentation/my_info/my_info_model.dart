@@ -1,25 +1,25 @@
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:flutter/material.dart';
 import 'package:flutter_flash_card/data/remote/back_up_service.dart';
-import 'package:flutter_flash_card/presentation/providers/flash_card_auth_provider.dart';
 
 class MyInfoModel extends ChangeNotifier {
   final BackUpService _backUpService;
-  final FlashCardAuthProvider _flashCardAuthProvider;
+  final firebase_auth.FirebaseAuth _firebaseAuth;
   List<String> _backUpList = [];
 
   List<String> get backUpList => _backUpList;
 
   MyInfoModel({
     required BackUpService backUpService,
-    required FlashCardAuthProvider flashCardAuthProvider,
+    required firebase_auth.FirebaseAuth firebaseAuth,
   })  : _backUpService = backUpService,
-        _flashCardAuthProvider = flashCardAuthProvider;
+        _firebaseAuth = firebaseAuth;
 
   Future<List<String>> loadBackUpList() async {
-    final userId = _flashCardAuthProvider.flashCardUser?.id;
+    final currentUser = _firebaseAuth.currentUser;
 
-    if (userId != null) {
-      _backUpList = await _backUpService.getBackupsList(userId);
+    if (currentUser != null) {
+      _backUpList = await _backUpService.getBackupsList(currentUser.uid);
     }
     notifyListeners();
 
@@ -27,11 +27,12 @@ class MyInfoModel extends ChangeNotifier {
   }
 
   Future<void> uploadToCloud() async {
-    final userId = _flashCardAuthProvider.flashCardUser?.id;
+    final currentUser = _firebaseAuth.currentUser;
 
-    if (userId != null) {
-      await _backUpService.backupToFirestore(userId);
+    if (currentUser != null) {
+      await _backUpService.backupToFirestore(currentUser.uid);
       await loadBackUpList();
     }
+    debugPrint('---upload---');
   }
 }
