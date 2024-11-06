@@ -23,13 +23,13 @@ void main() async {
   final authRepository = AuthRepositoryImpl(googleSignIn, firebaseAuth);
 
   final googleSignInUseCase = GoogleSignInUseCase(authRepository);
-  final signOutUseCase = GoogleSignOutUseCase(authRepository);
+  final googleSignOutUseCase = GoogleSignOutUseCase(authRepository);
 
   runApp(
     ChangeNotifierProvider(
       create: (_) => FlashCardAuthProvider(
         googleSignInUseCase: googleSignInUseCase,
-        googleSignOutUseCase: signOutUseCase,
+        googleSignOutUseCase: googleSignOutUseCase,
       ),
       child: const Main(),
     ),
