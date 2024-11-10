@@ -14,6 +14,7 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<FlashCardUser> signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+
       if (googleUser == null) throw Exception('Google Sign In Canceled');
 
       final GoogleSignInAuthentication googleAuth =
@@ -39,5 +40,38 @@ class AuthRepositoryImpl implements AuthRepository {
       _googleSignIn.signOut(),
       _firebaseAuth.signOut(),
     ]);
+  }
+
+  @override
+  Future<void> deleteAccount() async {
+    try {
+      final currentUser = _firebaseAuth.currentUser;
+
+      if (currentUser == null) {
+        throw Exception('No user is currently signed in');
+      }
+
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+
+      if (googleUser == null) {
+        throw Exception('Google Sign In Canceled');
+      }
+
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+
+      final credential = firebase_auth.GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      await currentUser.reauthenticateWithCredential(credential);
+
+      await currentUser.delete();
+
+      await signOutWithGoogle();
+    } catch (e) {
+      throw Exception('Failed to delete account: ${e.toString()}');
+    }
   }
 }
