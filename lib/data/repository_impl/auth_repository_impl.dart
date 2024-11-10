@@ -69,7 +69,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
       await currentUser.delete();
 
-      await _googleSignIn.signOut();
+      await signOutWithGoogle();
     } catch (e) {
       throw Exception('Failed to delete account: ${e.toString()}');
     }
