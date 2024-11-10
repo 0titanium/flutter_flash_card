@@ -64,6 +64,7 @@ class FlashCardAuthProvider extends ChangeNotifier {
       _error = null;
       notifyListeners();
 
+      _flashCardUser = null;
       await _firebaseAuthDeleteAccountUseCase.execute();
     } catch (e) {
       _error = e.toString();
