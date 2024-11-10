@@ -96,7 +96,16 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                       ),
                     ),
                     SizedBox(
-                      child: Center(),
+                      child: Center(
+                        child: flashCardAuthProvider.flashCardUser == null
+                            ? const Text('로그인 하세요')
+                            : TextButton(
+                                onPressed: () {
+                                  flashCardAuthProvider.deleteAccount();
+                                },
+                                child: const Text('계정 탈퇴'),
+                              ),
+                      ),
                     ),
                   ],
                 ),
