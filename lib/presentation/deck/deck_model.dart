@@ -10,8 +10,8 @@ class DeckModel extends ChangeNotifier {
   final TextEditingController cardFrontController = TextEditingController();
   final TextEditingController cardBackController = TextEditingController();
 
-  TextEditingController editFrontController = TextEditingController();
-  TextEditingController editBackController = TextEditingController();
+  final Map<String, TextEditingController> _editFrontControllers = {};
+  final Map<String, TextEditingController> _editBackControllers = {};
 
   List<LearningCard> _cards = [];
 
@@ -41,6 +41,25 @@ class DeckModel extends ChangeNotifier {
     willChangeOrder = inOrder;
   }
 
+  TextEditingController getEditFrontController(String cardId) {
+    if (!_editFrontControllers.containsKey(cardId)) {
+      final card = _cards.firstWhere((card) => card.id == cardId);
+      _editFrontControllers[cardId] =
+          TextEditingController(text: card.frontText);
+    }
+
+    return _editFrontControllers[cardId]!;
+  }
+
+  TextEditingController getEditBackController(String cardId) {
+    if (!_editBackControllers.containsKey(cardId)) {
+      final card = _cards.firstWhere((card) => card.id == cardId);
+      _editBackControllers[cardId] = TextEditingController(text: card.backText);
+    }
+
+    return _editBackControllers[cardId]!;
+  }
+
   Future<void> loadCards() async {
     try {
       final rootFolder = await _dataService.loadRootFolder();
@@ -49,10 +68,19 @@ class DeckModel extends ChangeNotifier {
       if (deck != null) {
         _cards = List.from(deck.cards);
 
+        _clearControllers();
+
+        for (final card in _cards) {
+          _editFrontControllers[card.id] =
+              TextEditingController(text: card.frontText);
+          _editBackControllers[card.id] =
+              TextEditingController(text: card.backText);
+        }
+
         deckDetails = {
           'cardList': _cards,
           'order': willChangeOrder,
-          'deckId' : deckData.id,
+          'deckId': deckData.id,
         };
 
         _isLongPressed = List.filled(_cards.length, false);
@@ -80,7 +108,6 @@ class DeckModel extends ChangeNotifier {
           await _dataService.addCard(deckData.id, cardFrontText, cardBackText);
 
       if (updatedDeck != null) {
-        // deckData = updatedDeck;
         _cards = List.from(updatedDeck.cards);
 
         _isLongPressed = List.filled(_cards.length, false);
@@ -101,8 +128,8 @@ class DeckModel extends ChangeNotifier {
   }
 
   Future<void> editCard(String cardId) async {
-    final editFrontText = editFrontController.text.trim();
-    final editBackText = editBackController.text.trim();
+    final editFrontText = _editFrontControllers[cardId]!.text.trim();
+    final editBackText = _editBackControllers[cardId]!.text.trim();
 
     if (editFrontText.isEmpty || editBackText.isEmpty) {
       return;
@@ -119,7 +146,7 @@ class DeckModel extends ChangeNotifier {
             backText: editBackText,
           );
 
-          _isEditing = List.filled(_cards.length, false);
+          _isEditing[cardIndex] = false;
 
           deckDetails['cardList'] = _cards;
 
@@ -167,17 +194,27 @@ class DeckModel extends ChangeNotifier {
 
   void showEditingMode(int index) {
     _isEditing[index] = !_isEditing[index];
-    editFrontController = TextEditingController(text: _cards[index].frontText);
-    editBackController = TextEditingController(text: _cards[index].backText);
+
     notifyListeners();
+  }
+
+  void _clearControllers() {
+    for (final controller in _editFrontControllers.values) {
+      controller.dispose();
+    }
+    for (final controller in _editBackControllers.values) {
+      controller.dispose();
+    }
+    _editFrontControllers.clear();
+    _editBackControllers.clear();
   }
 
   @override
   void dispose() {
     cardFrontController.dispose();
     cardBackController.dispose();
-    editFrontController.dispose();
-    editBackController.dispose();
+
+    _clearControllers();
 
     super.dispose();
   }
