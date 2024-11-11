@@ -149,7 +149,8 @@ class _DeckScreenState extends State<DeckScreen> {
                                     children: [
                                       TextField(
                                         controller:
-                                            deckModel.editFrontController,
+                                            deckModel.getEditFrontController(
+                                                deckModel.cards[index].id),
                                         decoration: const InputDecoration(
                                           hintText: '앞면',
                                           border: OutlineInputBorder(),
@@ -158,7 +159,8 @@ class _DeckScreenState extends State<DeckScreen> {
                                       const SizedBox(height: 8),
                                       TextField(
                                         controller:
-                                            deckModel.editBackController,
+                                            deckModel.getEditBackController(
+                                                deckModel.cards[index].id),
                                         decoration: const InputDecoration(
                                           hintText: '뒷면',
                                           border: OutlineInputBorder(),
