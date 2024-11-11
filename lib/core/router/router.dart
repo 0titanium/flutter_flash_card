@@ -20,7 +20,6 @@ import 'package:flutter_flash_card/presentation/my_info/my_info_model.dart';
 import 'package:flutter_flash_card/presentation/my_info/my_info_screen.dart';
 import 'package:flutter_flash_card/presentation/review_card/review_card_model.dart';
 import 'package:flutter_flash_card/presentation/review_card/review_card_screen.dart';
-import 'package:flutter_flash_card/presentation/sign_in/sign_in_screen.dart';
 import 'package:flutter_flash_card/presentation/view_card/view_card_model.dart';
 import 'package:flutter_flash_card/presentation/view_card/view_card_screen.dart';
 import 'package:go_router/go_router.dart';
@@ -33,13 +32,6 @@ final GoRouter router = GoRouter(
   navigatorKey: rootNavigatorKey,
   initialLocation: '/home',
   routes: [
-    GoRoute(
-      path: '/sign_in',
-      parentNavigatorKey: rootNavigatorKey,
-      builder: (context, state) {
-        return const SignInScreen();
-      },
-    ),
     ShellRoute(
       navigatorKey: shellNavigatorKey,
       builder: (context, state, child) {

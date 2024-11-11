@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_flash_card/presentation/components/flash_card_app_bar/flash_card_app_bar.dart';
 import 'package:flutter_flash_card/presentation/my_info/my_info_model.dart';
 import 'package:flutter_flash_card/presentation/providers/flash_card_auth_provider.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_flash_card/presentation/sign_in/sign_in_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
 class MyInfoScreen extends StatefulWidget {
@@ -87,7 +87,15 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                               if (flashCardAuthProvider.flashCardUser != null) {
                                 myInfoModel.uploadToCloud();
                               } else {
-                                context.go('/sign_in');
+                                showModalBottomSheet(
+                                  context: context,
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(20)),
+                                  ),
+                                  builder: (context) =>
+                                      const SignInBottomSheet(),
+                                );
                               }
                             },
                             child: const Text('클라우드에 저장하기'),
@@ -98,7 +106,19 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                     SizedBox(
                       child: Center(
                         child: flashCardAuthProvider.flashCardUser == null
-                            ? const Text('로그인 하세요')
+                            ? TextButton(
+                                onPressed: () {
+                                  showModalBottomSheet(
+                                    context: context,
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(20)),
+                                    ),
+                                    builder: (context) =>
+                                        const SignInBottomSheet(),
+                                  );
+                                },
+                                child: const Text('로그인 하세요'))
                             : TextButton(
                                 onPressed: () {
                                   flashCardAuthProvider.deleteAccount();
