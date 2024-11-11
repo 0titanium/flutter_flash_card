@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_flash_card/presentation/providers/flash_card_auth_provider.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_flash_card/presentation/sign_in/sign_in_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
 class FlashCardAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -39,7 +39,14 @@ class FlashCardAppBar extends StatelessWidget implements PreferredSizeWidget {
                       ),
                     ),
                     onPressed: () {
-                      context.go('/sign_in');
+                      showModalBottomSheet(
+                        context: context,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.vertical(top: Radius.circular(20)),
+                        ),
+                        builder: (context) => const SignInBottomSheet(),
+                      );
                     },
                     child: const Text('로그인 / 회원가입'),
                   )
