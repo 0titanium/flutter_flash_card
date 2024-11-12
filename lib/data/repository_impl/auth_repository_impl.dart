@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import 'package:flutter_flash_card/data/mapper/firebase_user_mapper.dart';
 import 'package:flutter_flash_card/data/mapper/google_user_mapper.dart';
 import 'package:flutter_flash_card/domain/model/flash_card_user.dart';
 import 'package:flutter_flash_card/domain/repository/auth_repository.dart';
@@ -11,7 +12,7 @@ class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl(this._googleSignIn, this._firebaseAuth);
 
   @override
-  Future<FlashCardUser> signInWithGoogle() async {
+  Future<FlashCardUser?> signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
 
@@ -28,7 +29,9 @@ class AuthRepositoryImpl implements AuthRepository {
 
       await _firebaseAuth.signInWithCredential(credential);
 
-      return googleUser.toUser();
+      final firebaseUser = _firebaseAuth.currentUser;
+
+      return firebaseUser?.toFlashCardUser();
     } catch (e) {
       throw Exception('Failed to sign in with Google: ${e.toString()}');
     }
