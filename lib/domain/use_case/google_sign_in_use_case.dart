@@ -6,7 +6,7 @@ class GoogleSignInUseCase {
 
   GoogleSignInUseCase(this._authRepository);
 
-  Future<FlashCardUser> execute() async {
+  Future<FlashCardUser?> execute() async {
     return await _authRepository.signInWithGoogle();
   }
 }
