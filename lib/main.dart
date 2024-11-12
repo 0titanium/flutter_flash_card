@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_flash_card/core/router/router.dart';
 import 'package:flutter_flash_card/data/repository_impl/auth_repository_impl.dart';
 import 'package:flutter_flash_card/domain/use_case/firebase_auth_delete_acoount_use_case.dart';
+import 'package:flutter_flash_card/domain/use_case/get_current_user_use_case.dart';
 import 'package:flutter_flash_card/domain/use_case/google_sign_in_use_case.dart';
 import 'package:flutter_flash_card/domain/use_case/google_sign_out_use_case.dart';
 import 'package:flutter_flash_card/firebase_options.dart';
@@ -27,6 +28,7 @@ void main() async {
   final googleSignOutUseCase = GoogleSignOutUseCase(authRepository);
   final firebaseAuthDeleteAccountUseCase =
       FirebaseAuthDeleteAccountUseCase(authRepository);
+  final getCurrentUserUseCase = GetCurrentUserUseCase(authRepository);
 
   runApp(
     ChangeNotifierProvider(
@@ -34,6 +36,7 @@ void main() async {
         googleSignInUseCase: googleSignInUseCase,
         googleSignOutUseCase: googleSignOutUseCase,
         firebaseAuthDeleteAccountUseCase: firebaseAuthDeleteAccountUseCase,
+        getCurrentUserUseCase: getCurrentUserUseCase,
       ),
       child: const Main(),
     ),
