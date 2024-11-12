@@ -29,42 +29,46 @@ class FlashCardAppBar extends StatelessWidget implements PreferredSizeWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: flashCardAuthProvider.flashCardUser == null
-                ? TextButton(
-                    style: TextButton.styleFrom(
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(8),
+                ? flashCardAuthProvider.isLoading == false
+                    ? TextButton(
+                        style: TextButton.styleFrom(
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(8),
+                            ),
+                            side: BorderSide(width: 1),
+                          ),
                         ),
-                        side: BorderSide(width: 1),
-                      ),
-                    ),
-                    onPressed: () {
-                      showModalBottomSheet(
-                        context: context,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.vertical(top: Radius.circular(20)),
+                        onPressed: () {
+                          showModalBottomSheet(
+                            context: context,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(20)),
+                            ),
+                            builder: (context) => const SignInBottomSheet(),
+                          );
+                        },
+                        child: const Text('로그인 / 회원가입'),
+                      )
+                    : const CircularProgressIndicator()
+                : flashCardAuthProvider.isLoading == false
+                    ? TextButton(
+                        style: TextButton.styleFrom(
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(8),
+                            ),
+                            side: BorderSide(width: 1),
+                          ),
                         ),
-                        builder: (context) => const SignInBottomSheet(),
-                      );
-                    },
-                    child: const Text('로그인 / 회원가입'),
-                  )
-                : TextButton(
-                    style: TextButton.styleFrom(
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(8),
-                        ),
-                        side: BorderSide(width: 1),
-                      ),
-                    ),
-                    onPressed: () {
-                      flashCardAuthProvider.signOutWithGoogle();
-                    },
-                    child: Text(
-                        '${flashCardAuthProvider.flashCardUser?.displayName} 로그아웃'),
-                  ),
+                        onPressed: () {
+                          flashCardAuthProvider.signOutWithGoogle();
+                        },
+                        child: Text(
+                            '${flashCardAuthProvider.flashCardUser?.displayName} 로그아웃'),
+                      )
+                    : const CircularProgressIndicator(),
           ),
         ],
       ),
