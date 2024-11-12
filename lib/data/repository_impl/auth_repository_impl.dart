@@ -77,4 +77,11 @@ class AuthRepositoryImpl implements AuthRepository {
       throw Exception('Failed to delete account: ${e.toString()}');
     }
   }
+
+  @override
+  FlashCardUser? getCurrentUser() {
+    final currentUser = _firebaseAuth.currentUser;
+
+    return currentUser?.toFlashCardUser();
+  }
 }

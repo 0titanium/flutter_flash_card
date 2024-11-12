@@ -4,4 +4,5 @@ abstract interface class AuthRepository {
   Future<FlashCardUser?> signInWithGoogle();
   Future<void> signOutWithGoogle();
   Future<void> deleteAccount();
+  FlashCardUser? getCurrentUser();
 }
