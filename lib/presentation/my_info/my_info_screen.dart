@@ -100,6 +100,12 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                             },
                             child: const Text('클라우드에 저장하기'),
                           ),
+                          TextButton(
+                            onPressed: () {
+                              myInfoModel.deleteBackUpData();
+                            },
+                            child: const Text('저장한 데이터 삭제'),
+                          ),
                         ],
                       ),
                     ),
