@@ -11,7 +11,6 @@ class BackUpService {
     final currentUser = _auth.currentUser;
     if (currentUser == null || currentUser.uid != userId) {
       debugPrint('$currentUser?.uid.toString() from back up service');
-      debugPrint('$currentUser.toString() --------------');
       debugPrint('Authentication error: User not logged in or userId mismatch');
       return false;
     }
@@ -58,6 +57,41 @@ class BackUpService {
     } catch (e) {
       debugPrint('Error getting backups list: $e');
       return [];
+    }
+  }
+
+  Future<bool> deleteBackups(String userId) async {
+    try {
+      final currentUser = _auth.currentUser;
+
+      if (currentUser == null || currentUser.uid != userId) {
+        debugPrint(
+            'Authentication error: User not logged in or userId mismatch');
+        return false;
+      }
+
+      final backupsSnapshot = await _firestore
+          .collection('backups')
+          .doc(userId)
+          .collection('backups')
+          .get();
+
+      final batch = _firestore.batch();
+
+      for (final doc in backupsSnapshot.docs) {
+        batch.delete(doc.reference);
+      }
+      await batch.commit();
+
+      await _firestore.collection('backups').doc(userId).delete();
+
+      debugPrint('All backups deleted successfully');
+
+      return true;
+    } catch (e) {
+      debugPrint('Error deleting all backups: $e');
+
+      return false;
     }
   }
 }
