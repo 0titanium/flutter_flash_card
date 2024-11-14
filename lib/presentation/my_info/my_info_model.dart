@@ -35,4 +35,13 @@ class MyInfoModel extends ChangeNotifier {
     }
     debugPrint('---upload---');
   }
+
+  Future<void> deleteBackUpData() async {
+    final currentUser = _firebaseAuth.currentUser;
+
+    if (currentUser != null) {
+      await _backUpService.deleteBackups(currentUser.uid);
+      await loadBackUpList();
+    }
+  }
 }
