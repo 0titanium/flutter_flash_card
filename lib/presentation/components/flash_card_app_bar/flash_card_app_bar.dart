@@ -63,7 +63,6 @@ class FlashCardAppBar extends StatelessWidget implements PreferredSizeWidget {
                           ),
                         ),
                         onPressed: () {
-                          // flashCardAuthProvider.signOutWithGoogle();
                           _showSignOutConfirmationDialog(context);
                         },
                         child: Text(
