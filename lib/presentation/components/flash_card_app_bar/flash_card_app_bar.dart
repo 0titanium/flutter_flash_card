@@ -88,16 +88,28 @@ class FlashCardAppBar extends StatelessWidget implements PreferredSizeWidget {
           actionsAlignment: MainAxisAlignment.spaceEvenly,
           actions: [
             ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                ),
                 onPressed: () {
                   flashCardAuthProvider.signOutWithGoogle();
                   Navigator.pop(context);
                 },
-                child: const Text('로그아웃')),
+                child: const Text(
+                  '로그아웃',
+                  style: TextStyle(color: Colors.white),
+                )),
             ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                ),
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: const Text('취소')),
+                child: const Text(
+                  '취소',
+                  style: TextStyle(color: Colors.white),
+                )),
           ],
         );
       },
