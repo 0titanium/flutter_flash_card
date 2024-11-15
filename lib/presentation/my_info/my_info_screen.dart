@@ -102,7 +102,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                           ),
                           TextButton(
                             onPressed: () {
-                              myInfoModel.deleteBackUpData();
+                              _showConfirmationDialogs(context, '저장한 데이터 삭제');
                             },
                             child: const Text('저장한 데이터 삭제'),
                           ),
@@ -127,7 +127,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                                 child: const Text('로그인 하세요'))
                             : TextButton(
                                 onPressed: () {
-                                  flashCardAuthProvider.deleteAccount();
+                                  _showConfirmationDialogs(context, '계정 탈퇴');
                                 },
                                 child: const Text('계정 탈퇴'),
                               ),
@@ -140,6 +140,44 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  void _showConfirmationDialogs(context, String dialogType) {
+    final flashCardAuthProvider =
+        Provider.of<FlashCardAuthProvider>(context, listen: false);
+    final myInfoModel = Provider.of<MyInfoModel>(context, listen: false);
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('확인'),
+          content: Text('$dialogType 하시겠습니까?'),
+          actionsAlignment: MainAxisAlignment.spaceEvenly,
+          actions: [
+            ElevatedButton(
+                onPressed: () {
+                  if (dialogType == '저장한 데이터 삭제') {
+                    myInfoModel.deleteBackUpData();
+                    Navigator.pop(context);
+                    return;
+                  }
+
+                  if (dialogType == '계정 탈퇴') {
+                    flashCardAuthProvider.deleteAccount();
+                    Navigator.pop(context);
+                  }
+                },
+                child: const Text('예')),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('아니오')),
+          ],
+        );
+      },
     );
   }
 }
