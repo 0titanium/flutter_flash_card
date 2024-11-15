@@ -63,7 +63,7 @@ class FlashCardAppBar extends StatelessWidget implements PreferredSizeWidget {
                           ),
                         ),
                         onPressed: () {
-                          flashCardAuthProvider.signOutWithGoogle();
+                          _showSignOutConfirmationDialog(context);
                         },
                         child: Text(
                             '${flashCardAuthProvider.flashCardUser?.displayName} 로그아웃'),
@@ -72,6 +72,47 @@ class FlashCardAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ],
       ),
+    );
+  }
+
+  void _showSignOutConfirmationDialog(context) {
+    final flashCardAuthProvider =
+        Provider.of<FlashCardAuthProvider>(context, listen: false);
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('확인'),
+          content: const Text('로그아웃 하시겠습니까?'),
+          actionsAlignment: MainAxisAlignment.spaceEvenly,
+          actions: [
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                ),
+                onPressed: () {
+                  flashCardAuthProvider.signOutWithGoogle();
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  '로그아웃',
+                  style: TextStyle(color: Colors.white),
+                )),
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  '취소',
+                  style: TextStyle(color: Colors.white),
+                )),
+          ],
+        );
+      },
     );
   }
 }
