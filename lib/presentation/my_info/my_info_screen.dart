@@ -98,7 +98,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                           ),
                           TextButton(
                             onPressed: () {
-                              _showConfirmationDialogs(context, '저장한 데이터 삭제');
+                              _showConfirmationDialogs(context, '저장한 데이터를 삭제');
                             },
                             child: const Text('저장한 데이터 삭제'),
                           ),
@@ -123,7 +123,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                                 child: const Text('로그인 하세요'))
                             : TextButton(
                                 onPressed: () {
-                                  _showConfirmationDialogs(context, '계정 탈퇴');
+                                  _showConfirmationDialogs(context, '계정을 탈퇴');
                                 },
                                 child: const Text('계정 탈퇴'),
                               ),
@@ -153,6 +153,9 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
           actionsAlignment: MainAxisAlignment.spaceEvenly,
           actions: [
             ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                ),
                 onPressed: () {
                   if (dialogType == '클라우드에 저장') {
                     myInfoModel.uploadToCloud();
@@ -160,23 +163,32 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                     return;
                   }
 
-                  if (dialogType == '저장한 데이터 삭제') {
+                  if (dialogType == '저장한 데이터를 삭제') {
                     myInfoModel.deleteBackUpData();
                     Navigator.pop(context);
                     return;
                   }
 
-                  if (dialogType == '계정 탈퇴') {
+                  if (dialogType == '계정을 탈퇴') {
                     flashCardAuthProvider.deleteAccount();
                     Navigator.pop(context);
                   }
                 },
-                child: const Text('예')),
+                child: const Text(
+                  '예',
+                  style: TextStyle(color: Colors.white),
+                )),
             ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                ),
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: const Text('아니오')),
+                child: const Text(
+                  '아니오',
+                  style: TextStyle(color: Colors.white),
+                )),
           ],
         );
       },
