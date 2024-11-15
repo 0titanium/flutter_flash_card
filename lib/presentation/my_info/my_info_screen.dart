@@ -59,10 +59,6 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                                           child: SizedBox(
                                             child: TextButton(
                                                 onPressed: () {
-                                                  debugPrint(
-                                                      flashCardAuthProvider
-                                                          .flashCardUser
-                                                          .toString());
                                                   myInfoModel.loadBackUpList();
                                                 },
                                                 child:
@@ -85,7 +81,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                           TextButton(
                             onPressed: () {
                               if (flashCardAuthProvider.flashCardUser != null) {
-                                myInfoModel.uploadToCloud();
+                                _showConfirmationDialogs(context, '클라우드에 저장');
                               } else {
                                 showModalBottomSheet(
                                   context: context,
@@ -158,6 +154,12 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
           actions: [
             ElevatedButton(
                 onPressed: () {
+                  if (dialogType == '클라우드에 저장') {
+                    myInfoModel.uploadToCloud();
+                    Navigator.pop(context);
+                    return;
+                  }
+
                   if (dialogType == '저장한 데이터 삭제') {
                     myInfoModel.deleteBackUpData();
                     Navigator.pop(context);
