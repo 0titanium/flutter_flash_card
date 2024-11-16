@@ -22,23 +22,49 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: const FlashCardAppBar(appBarTitle: '플래시카드'),
       body: homeScreenModel.savedFolders.isEmpty
           ? const Text('최근 방문한 폴더가 없습니다')
-          : ListView.builder(
-              padding: const EdgeInsets.all(8),
-              itemCount: homeScreenModel.savedFolders.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  child: ListTile(
-                    onTap: () {
-                      flashCardBottomModel.setIndex(1);
-                      context.go(
-                        '/folder_list/:${homeScreenModel.savedFolders[index].name}',
-                        extra: homeScreenModel.savedFolders[index],
+          : Column(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Divider(height: 1.0),
+                ),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 16.0),
+                      child: Text(
+                        '최근 방문한 폴더',
+                        style: TextStyle(fontSize: 16.0),
+                      ),
+                    ),
+                  ],
+                ),
+                const Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Divider(height: 1.0),
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    padding: const EdgeInsets.all(8),
+                    itemCount: homeScreenModel.savedFolders.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        child: ListTile(
+                          onTap: () {
+                            flashCardBottomModel.setIndex(1);
+                            context.go(
+                              '/folder_list/:${homeScreenModel.savedFolders[index].name}',
+                              extra: homeScreenModel.savedFolders[index],
+                            );
+                          },
+                          title: Text(homeScreenModel.savedFolders[index].name),
+                        ),
                       );
                     },
-                    title: Text(homeScreenModel.savedFolders[index].name),
                   ),
-                );
-              },
+                ),
+              ],
             ),
     );
   }

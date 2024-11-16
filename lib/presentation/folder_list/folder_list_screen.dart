@@ -20,52 +20,64 @@ class _FolderListScreenState extends State<FolderListScreen> {
       appBar: const FlashCardAppBar(appBarTitle: '폴더 목록'),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 8.0),
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        '폴더 추가',
-                        style: TextStyle(fontSize: 16.0),
-                      ),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(),
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(8.0, 0, 8.0, 0),
-                            child: TextField(
-                              controller: folderListModel.folderNameController,
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Divider(height: 1.0),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              InkWell(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('폴더 추가'),
+                        content: TextField(
+                          controller: folderListModel.folderNameController,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
                             ),
+                            hintText: '폴더명을 입력하세요',
                           ),
                         ),
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        folderListModel.createFolder();
-                      },
-                      icon: const Icon(Icons.create_new_folder),
-                    ),
-                  ],
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('취소'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              folderListModel.createFolder();
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('추가'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                  child: Row(
+                    children: [
+                      Icon(Icons.create_new_folder),
+                      SizedBox(width: 4.0),
+                      Text('폴더 추가'),
+                    ],
+                  ),
                 ),
               ),
-            ),
+            ],
+          ),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Divider(height: 1.0),
           ),
           Expanded(
             child: ListView.builder(
