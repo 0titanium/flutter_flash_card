@@ -90,34 +90,38 @@ class _DeckScreenState extends State<DeckScreen> {
                       builder: (BuildContext context) {
                         return AlertDialog(
                           title: const Text('카드 추가'),
-                          content: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: TextField(
-                                  controller: deckModel.cardFrontController,
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8.0),
+                          content: SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.95,
+                            height: MediaQuery.of(context).size.height * 0.2,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: TextField(
+                                    controller: deckModel.cardFrontController,
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(8.0),
+                                      ),
+                                      hintText: '카드 앞면을 작성하세요',
                                     ),
-                                    hintText: '카드 앞면을 작성하세요',
                                   ),
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: TextField(
-                                  controller: deckModel.cardBackController,
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8.0),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: TextField(
+                                    controller: deckModel.cardBackController,
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(8.0),
+                                      ),
+                                      hintText: '카드 뒷면을 작성하세요',
                                     ),
-                                    hintText: '카드 뒷면을 작성하세요',
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                           actions: [
                             TextButton(
