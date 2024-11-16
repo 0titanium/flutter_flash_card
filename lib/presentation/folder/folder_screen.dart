@@ -79,53 +79,6 @@ class _FolderScreenState extends State<FolderScreen> {
             padding: EdgeInsets.all(8.0),
             child: Divider(height: 1.0),
           ),
-          // Padding(
-          //   padding: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 8.0),
-          //   child: Container(
-          //     decoration: BoxDecoration(
-          //       border: Border.all(),
-          //       borderRadius: BorderRadius.circular(8),
-          //     ),
-          //     child: Padding(
-          //       padding: const EdgeInsets.all(8.0),
-          //       child: Row(
-          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //         children: [
-          //           const Padding(
-          //             padding: EdgeInsets.all(8.0),
-          //             child: Text(
-          //               '덱 추가',
-          //               style: TextStyle(fontSize: 16.0),
-          //             ),
-          //           ),
-          //           Expanded(
-          //             child: Padding(
-          //               padding: const EdgeInsets.all(8.0),
-          //               child: Container(
-          //                 decoration: BoxDecoration(
-          //                   border: Border.all(),
-          //                   borderRadius: BorderRadius.circular(8.0),
-          //                 ),
-          //                 child: Padding(
-          //                   padding: const EdgeInsets.fromLTRB(8.0, 0, 8.0, 0),
-          //                   child: TextField(
-          //                     controller: folderModel.deckNameController,
-          //                   ),
-          //                 ),
-          //               ),
-          //             ),
-          //           ),
-          //           IconButton(
-          //             onPressed: () {
-          //               folderModel.createDeck();
-          //             },
-          //             icon: const Icon(Icons.archive),
-          //           ),
-          //         ],
-          //       ),
-          //     ),
-          //   ),
-          // ),
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.all(8),
