@@ -76,57 +76,85 @@ class _DeckScreenState extends State<DeckScreen> {
                 ),
               ),
             ),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-              child: Container(
-                padding: const EdgeInsets.all(16.0),
-                decoration: BoxDecoration(
-                  border: Border.all(),
-                  borderRadius: BorderRadius.circular(16.0),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        children: [
-                          TextField(
-                            controller: deckModel.cardFrontController,
-                            decoration: const InputDecoration(
-                              hintText: '앞면',
-                              border: OutlineInputBorder(),
-                            ),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Divider(height: 1.0),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                InkWell(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('카드 추가'),
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextField(
+                                  controller: deckModel.cardFrontController,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    hintText: '카드 앞면을 작성하세요',
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextField(
+                                  controller: deckModel.cardBackController,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    hintText: '카드 뒷면을 작성하세요',
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                          const SizedBox(height: 8),
-                          TextField(
-                            controller: deckModel.cardBackController,
-                            decoration: const InputDecoration(
-                              hintText: '뒷면',
-                              border: OutlineInputBorder(),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('취소'),
                             ),
-                          ),
-                        ],
-                      ),
+                            TextButton(
+                              onPressed: () {
+                                deckModel.createCard();
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('추가'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  child: const Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                    child: Row(
+                      children: [
+                        Icon(Icons.create_new_folder),
+                        SizedBox(width: 4.0),
+                        Text('카드 추가'),
+                      ],
                     ),
-                    const SizedBox(width: 16),
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.13,
-                      decoration: BoxDecoration(
-                        border: Border.all(),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: IconButton(
-                        icon: const Icon(Icons.add),
-                        onPressed: () {
-                          deckModel.createCard();
-                          FocusScope.of(context).unfocus();
-                        },
-                        iconSize: MediaQuery.of(context).size.width * 0.1,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+              ],
+            ),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Divider(height: 1.0),
             ),
             Expanded(
               child: ListView.builder(
