@@ -151,7 +151,7 @@ class _DeckScreenState extends State<DeckScreen> {
                             ],
                           );
                         },
-                      );
+                      ).then((_) => {deckModel.clearControllers()});
                     },
                     child: const Padding(
                       padding:
