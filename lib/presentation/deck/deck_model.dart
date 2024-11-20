@@ -230,6 +230,10 @@ class DeckModel extends ChangeNotifier {
     _clearControllers();
     _isEditing = List.filled(_cards.length, false);
 
+    debugPrint('--------clear controllers------------');
+    debugPrint(_editFrontControllers.toString());
+    debugPrint(_editBackControllers.toString());
+
     notifyListeners();
   }
 
