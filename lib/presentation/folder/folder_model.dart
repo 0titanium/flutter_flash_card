@@ -46,7 +46,7 @@ class FolderModel extends ChangeNotifier {
     final nowFolder = _dataService.findFolder(rootFolder, folderId);
 
     if (nowFolder != null) {
-      _decks = nowFolder.decks;
+      _decks = List.from(nowFolder.decks);
       debugPrint(_decks.toString());
       _isLongPressed = List.filled(_decks.length, false);
       _isEditing = List.filled(_decks.length, false);
@@ -116,12 +116,11 @@ class FolderModel extends ChangeNotifier {
           _editDeckControllers.remove(deckId);
 
           debugPrint('Deck edited: ${_decks[deckIndex]}');
-
-          notifyListeners();
         }
       } else {
         debugPrint('Deck not found in local list');
       }
+      notifyListeners();
     } catch (e) {
       debugPrint('Error : $e');
     }
