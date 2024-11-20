@@ -70,13 +70,6 @@ class DeckModel extends ChangeNotifier {
 
         _clearControllers();
 
-        for (final card in _cards) {
-          _editFrontControllers[card.id] =
-              TextEditingController(text: card.frontText);
-          _editBackControllers[card.id] =
-              TextEditingController(text: card.backText);
-        }
-
         deckDetails = {
           'cardList': _cards,
           'order': willChangeOrder,
@@ -128,6 +121,13 @@ class DeckModel extends ChangeNotifier {
   }
 
   Future<void> editCard(String cardId) async {
+    final frontController = _editFrontControllers[cardId];
+    final backController = _editBackControllers[cardId];
+
+    if (frontController == null || backController == null) {
+      return;
+    }
+
     final editFrontText = _editFrontControllers[cardId]!.text.trim();
     final editBackText = _editBackControllers[cardId]!.text.trim();
 
@@ -148,6 +148,11 @@ class DeckModel extends ChangeNotifier {
 
           _isEditing[cardIndex] = false;
 
+          frontController.dispose();
+          backController.dispose();
+          _editFrontControllers.remove(cardId);
+          _editBackControllers.remove(cardId);
+
           deckDetails['cardList'] = _cards;
 
           notifyListeners();
@@ -166,6 +171,15 @@ class DeckModel extends ChangeNotifier {
     try {
       final success = await _dataService.deleteCard(deckData.id, cardId);
       if (success) {
+        if (_editFrontControllers.containsKey(cardId)) {
+          _editFrontControllers[cardId]!.dispose();
+          _editFrontControllers.remove(cardId);
+        }
+        if (_editBackControllers.containsKey(cardId)) {
+          _editBackControllers[cardId]!.dispose();
+          _editBackControllers.remove(cardId);
+        }
+
         _cards.removeWhere((card) => card.id == cardId);
         _isLongPressed = _isLongPressed.sublist(0, _cards.length);
         _isEditing = _isEditing.sublist(0, _cards.length);
@@ -207,6 +221,17 @@ class DeckModel extends ChangeNotifier {
     }
     _editFrontControllers.clear();
     _editBackControllers.clear();
+  }
+
+  void clearControllers() {
+    _clearControllers();
+    _isEditing = List.filled(_cards.length, false);
+
+    debugPrint('--------clear controllers------------');
+    debugPrint(_editFrontControllers.toString());
+    debugPrint(_editBackControllers.toString());
+
+    notifyListeners();
   }
 
   @override
