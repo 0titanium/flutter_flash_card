@@ -112,9 +112,6 @@ class DeckModel extends ChangeNotifier {
         cardBackController.clear();
 
         notifyListeners();
-
-        cardFrontController.dispose();
-        cardBackController.dispose();
       } else {
         debugPrint('Failed to add card');
       }
@@ -174,11 +171,6 @@ class DeckModel extends ChangeNotifier {
     try {
       final success = await _dataService.deleteCard(deckData.id, cardId);
       if (success) {
-        _cards.removeWhere((card) => card.id == cardId);
-        _isLongPressed = _isLongPressed.sublist(0, _cards.length);
-        _isEditing = _isEditing.sublist(0, _cards.length);
-        deckDetails['cardList'] = _cards;
-
         if (_editFrontControllers.containsKey(cardId)) {
           _editFrontControllers[cardId]!.dispose();
           _editFrontControllers.remove(cardId);
@@ -187,6 +179,11 @@ class DeckModel extends ChangeNotifier {
           _editBackControllers[cardId]!.dispose();
           _editBackControllers.remove(cardId);
         }
+
+        _cards.removeWhere((card) => card.id == cardId);
+        _isLongPressed = _isLongPressed.sublist(0, _cards.length);
+        _isEditing = _isEditing.sublist(0, _cards.length);
+        deckDetails['cardList'] = _cards;
 
         notifyListeners();
       } else {
