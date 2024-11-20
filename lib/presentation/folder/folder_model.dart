@@ -176,7 +176,6 @@ class FolderModel extends ChangeNotifier {
 
   void showEditingMode(int index) {
     _isEditing[index] = !_isEditing[index];
-    // editDeckController = TextEditingController(text: _decks[index].deckName);
     notifyListeners();
   }
 
