@@ -9,13 +9,15 @@ class FolderListModel extends ChangeNotifier {
 
   List<Folder> _folders = [];
 
-  List<Folder> get folders => _folders;
-
   List<bool> _isLongPressed = [];
 
-  List<bool> get isLongPressed => _isLongPressed;
-
   List<bool> _isEditing = [];
+
+  bool _isShowAll = false;
+
+  List<Folder> get folders => _folders;
+
+  List<bool> get isLongPressed => _isLongPressed;
 
   List<bool> get isEditing => _isEditing;
 
@@ -118,6 +120,22 @@ class FolderListModel extends ChangeNotifier {
       }
     } catch (e) {
       debugPrint('Error deleting folder: $e');
+    }
+  }
+
+  void showAllHiddenButtons() {
+    if (_isShowAll == false) {
+      _isShowAll = true;
+      _isLongPressed = List.filled(_folders.length, true);
+      notifyListeners();
+      return;
+    }
+
+    if (_isShowAll == true) {
+      _isShowAll = false;
+      _isLongPressed = List.filled(_folders.length, false);
+      notifyListeners();
+      return;
     }
   }
 
