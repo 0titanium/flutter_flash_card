@@ -15,8 +15,6 @@ class DeckModel extends ChangeNotifier {
 
   List<LearningCard> _cards = [];
 
-  List<LearningCard> get cards => _cards;
-
   String inOrder = 'inOrder';
 
   String inRandomOrder = 'inRandomOrder';
@@ -27,9 +25,13 @@ class DeckModel extends ChangeNotifier {
 
   List<bool> _isLongPressed = [];
 
-  List<bool> get isLongPressed => _isLongPressed;
-
   List<bool> _isEditing = [];
+
+  bool _isShowAll = false;
+
+  List<LearningCard> get cards => _cards;
+
+  List<bool> get isLongPressed => _isLongPressed;
 
   List<bool> get isEditing => _isEditing;
 
@@ -199,6 +201,22 @@ class DeckModel extends ChangeNotifier {
     notifyListeners();
 
     deckDetails['order'] = willChangeOrder;
+  }
+
+  void showAllHiddenButtons() {
+    if (_isShowAll == false) {
+      _isShowAll = true;
+      _isLongPressed = List.filled(_cards.length, true);
+      notifyListeners();
+      return;
+    }
+
+    if (_isShowAll == true) {
+      _isShowAll = false;
+      _isLongPressed = List.filled(_cards.length, false);
+      notifyListeners();
+      return;
+    }
   }
 
   void showHiddenButtons(int index) {

@@ -11,13 +11,15 @@ class FolderModel extends ChangeNotifier {
 
   List<Deck> _decks = [];
 
-  List<Deck> get decks => _decks;
-
   List<bool> _isLongPressed = [];
 
-  List<bool> get isLongPressed => _isLongPressed;
-
   List<bool> _isEditing = [];
+
+  bool _isShowAll = false;
+
+  List<Deck> get decks => _decks;
+
+  List<bool> get isLongPressed => _isLongPressed;
 
   List<bool> get isEditing => _isEditing;
 
@@ -121,6 +123,22 @@ class FolderModel extends ChangeNotifier {
       }
     } catch (e) {
       debugPrint('Error : $e');
+    }
+  }
+
+  void showAllHiddenButtons() {
+    if (_isShowAll == false) {
+      _isShowAll = true;
+      _isLongPressed = List.filled(_decks.length, true);
+      notifyListeners();
+      return;
+    }
+
+    if (_isShowAll == true) {
+      _isShowAll = false;
+      _isLongPressed = List.filled(_decks.length, false);
+      notifyListeners();
+      return;
     }
   }
 

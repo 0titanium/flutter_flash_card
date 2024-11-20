@@ -73,6 +73,22 @@ class _FolderListScreenState extends State<FolderListScreen> {
                   ),
                 ),
               ),
+              InkWell(
+                onTap: () {
+                  folderListModel.showAllHiddenButtons();
+                },
+                child: const Padding(
+                  padding:
+                  EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                  child: Row(
+                    children: [
+                      Icon(Icons.settings),
+                      SizedBox(width: 4.0),
+                      Text('폴더 관리'),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
           const Padding(
