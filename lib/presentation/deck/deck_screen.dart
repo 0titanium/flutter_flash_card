@@ -69,6 +69,7 @@ class _DeckScreenState extends State<DeckScreen> {
                           onPressed: () {
                             context.go('$path/view_card',
                                 extra: deckModel.deckDetails);
+                            deckModel.clearControllers();
                           },
                           icon: const Icon(Icons.view_carousel)),
                     ],
@@ -102,7 +103,8 @@ class _DeckScreenState extends State<DeckScreen> {
                                     controller: deckModel.cardFrontController,
                                     decoration: InputDecoration(
                                       border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(8.0),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
                                       ),
                                       hintText: '카드 앞면을 작성하세요',
                                     ),
@@ -114,7 +116,8 @@ class _DeckScreenState extends State<DeckScreen> {
                                     controller: deckModel.cardBackController,
                                     decoration: InputDecoration(
                                       border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(8.0),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
                                       ),
                                       hintText: '카드 뒷면을 작성하세요',
                                     ),
@@ -126,16 +129,19 @@ class _DeckScreenState extends State<DeckScreen> {
                           actions: [
                             TextButton(
                               onPressed: () {
+                                deckModel.createCard();
                                 Navigator.of(context).pop();
+                                FocusScope.of(context).unfocus();
+                                deckModel.clearControllers();
                               },
-                              child: const Text('취소'),
+                              child: const Text('추가'),
                             ),
                             TextButton(
                               onPressed: () {
-                                deckModel.createCard();
-                                Navigator.of(context).pop();
+                                FocusScope.of(context).unfocus();
+                                deckModel.clearControllers();
                               },
-                              child: const Text('추가'),
+                              child: const Text('취소'),
                             ),
                           ],
                         );
@@ -217,9 +223,10 @@ class _DeckScreenState extends State<DeckScreen> {
                                         onPressed: () {
                                           deckModel.editCard(
                                               deckModel.cards[index].id);
-                                          FocusScope.of(context).unfocus();
                                           deckModel.showEditingMode(index);
                                           deckModel.showHiddenButtons(index);
+                                          FocusScope.of(context).unfocus();
+                                          deckModel.clearControllers();
                                         },
                                         iconSize:
                                             MediaQuery.of(context).size.width *
@@ -228,9 +235,10 @@ class _DeckScreenState extends State<DeckScreen> {
                                       IconButton(
                                         icon: const Icon(Icons.cancel),
                                         onPressed: () {
-                                          FocusScope.of(context).unfocus();
                                           deckModel.showEditingMode(index);
                                           deckModel.showHiddenButtons(index);
+                                          FocusScope.of(context).unfocus();
+                                          deckModel.clearControllers();
                                         },
                                         iconSize:
                                             MediaQuery.of(context).size.width *
@@ -288,6 +296,9 @@ class _DeckScreenState extends State<DeckScreen> {
                                               onPressed: () {
                                                 deckModel
                                                     .showEditingMode(index);
+                                                FocusScope.of(context)
+                                                    .unfocus();
+                                                deckModel.clearControllers();
                                               },
                                               icon: const Icon(Icons.mode_edit),
                                             ),
