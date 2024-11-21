@@ -154,7 +154,7 @@ class FolderModel extends ChangeNotifier {
 
   void showAllHiddenButtons() {
     _isShowAll = !_isShowAll;
-    _isEditing = List.filled(_decks.length, _isShowAll);
+    _isLongPressed = List.filled(_decks.length, _isShowAll);
 
     notifyListeners();
   }

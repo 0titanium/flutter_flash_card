@@ -208,7 +208,7 @@ class DeckModel extends ChangeNotifier {
 
   void showAllHiddenButtons() {
     _isShowAll = !_isShowAll;
-    _isEditing = List.filled(_cards.length, _isShowAll);
+    _isLongPressed = List.filled(_cards.length, _isShowAll);
 
     notifyListeners();
   }
