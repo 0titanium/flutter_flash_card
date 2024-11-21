@@ -13,17 +13,18 @@ class MyInfoModel extends ChangeNotifier {
     required BackUpService backUpService,
     required firebase_auth.FirebaseAuth firebaseAuth,
   })  : _backUpService = backUpService,
-        _firebaseAuth = firebaseAuth;
+        _firebaseAuth = firebaseAuth {
+    loadBackUpList();
+  }
 
-  Future<List<String>> loadBackUpList() async {
+  Future<void> loadBackUpList() async {
     final currentUser = _firebaseAuth.currentUser;
 
     if (currentUser != null) {
       _backUpList = await _backUpService.getBackupsList(currentUser.uid);
     }
-    notifyListeners();
 
-    return _backUpList;
+    notifyListeners();
   }
 
   Future<void> uploadToCloud() async {
@@ -41,7 +42,9 @@ class MyInfoModel extends ChangeNotifier {
 
     if (currentUser != null) {
       await _backUpService.deleteBackups(currentUser.uid);
-      await loadBackUpList();
+      _backUpList = [];
     }
+
+    notifyListeners();
   }
 }
