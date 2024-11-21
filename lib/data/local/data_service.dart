@@ -32,7 +32,12 @@ class DataService {
     List<Folder> visitedFolders = await getVisitedFolders() ?? [];
 
     const int maxVisitedFolders = 10;
-    visitedFolders.removeWhere((item) => item.name == folder.name);
+
+    visitedFolders = visitedFolders.map((existingFolder) {
+      return existingFolder.id == folder.id ? folder : existingFolder;
+    }).toList();
+
+    visitedFolders.removeWhere((item) => item.id == folder.id);
     visitedFolders.insert(0, folder);
 
     if (visitedFolders.length > maxVisitedFolders) {
