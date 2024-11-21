@@ -151,19 +151,10 @@ class FolderListModel extends ChangeNotifier {
   }
 
   void showAllHiddenButtons() {
-    if (_isShowAll == false) {
-      _isShowAll = true;
-      _isLongPressed = List.filled(_folders.length, true);
-      notifyListeners();
-      return;
-    }
+    _isShowAll = !_isShowAll;
+    _isEditing = List.filled(_folders.length, _isShowAll);
 
-    if (_isShowAll == true) {
-      _isShowAll = false;
-      _isLongPressed = List.filled(_folders.length, false);
-      notifyListeners();
-      return;
-    }
+    notifyListeners();
   }
 
   void showHiddenButtons(int index) {

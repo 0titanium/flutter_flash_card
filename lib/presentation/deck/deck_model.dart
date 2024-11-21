@@ -207,19 +207,10 @@ class DeckModel extends ChangeNotifier {
   }
 
   void showAllHiddenButtons() {
-    if (_isShowAll == false) {
-      _isShowAll = true;
-      _isLongPressed = List.filled(_cards.length, true);
-      notifyListeners();
-      return;
-    }
+    _isShowAll = !_isShowAll;
+    _isEditing = List.filled(_cards.length, _isShowAll);
 
-    if (_isShowAll == true) {
-      _isShowAll = false;
-      _isLongPressed = List.filled(_cards.length, false);
-      notifyListeners();
-      return;
-    }
+    notifyListeners();
   }
 
   void showHiddenButtons(int index) {
