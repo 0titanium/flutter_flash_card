@@ -5,7 +5,8 @@ import 'package:flutter_flash_card/domain/model/folder.dart';
 class FolderListModel extends ChangeNotifier {
   final DataService _dataService;
   final TextEditingController folderNameController = TextEditingController();
-  TextEditingController editFolderController = TextEditingController();
+
+  final Map<String, TextEditingController> _editFolderControllers = {};
 
   List<Folder> _folders = [];
 
@@ -27,12 +28,22 @@ class FolderListModel extends ChangeNotifier {
     loadFolders();
   }
 
+  TextEditingController getEditFolderController(String folderId) {
+    if (!_editFolderControllers.containsKey(folderId)) {
+      final folder = _folders.firstWhere((folder) => folder.id == folderId);
+      _editFolderControllers[folderId] =
+          TextEditingController(text: folder.name);
+    }
+
+    return _editFolderControllers[folderId]!;
+  }
+
   Future<void> loadFolders() async {
     final rootFolder = await _dataService.loadRootFolder();
 
     debugPrint(rootFolder.toString());
 
-    _folders = [...rootFolder.subFolders];
+    _folders = List.from(rootFolder.subFolders);
 
     _isLongPressed = List.filled(_folders.length, false);
     _isEditing = List.filled(_folders.length, false);
@@ -73,7 +84,13 @@ class FolderListModel extends ChangeNotifier {
   }
 
   Future<void> editFolderName(String folderId) async {
-    final newFolderName = editFolderController.text.trim();
+    final folderNameController = _editFolderControllers[folderId];
+
+    if (folderNameController == null) {
+      return;
+    }
+
+    final newFolderName = folderNameController.text.trim();
 
     if (newFolderName.isEmpty) {
       throw const FormatException('empty name');
@@ -91,7 +108,12 @@ class FolderListModel extends ChangeNotifier {
             name: newFolderName,
           );
 
-          _isEditing = List.filled(_folders.length, false);
+          _isEditing[folderIndex] = false;
+
+          folderNameController.dispose();
+
+          _editFolderControllers.remove(folderId);
+
           debugPrint('Folder edited: ${_folders[folderIndex]}');
 
           notifyListeners();
@@ -109,6 +131,11 @@ class FolderListModel extends ChangeNotifier {
       final success = await _dataService.deleteFolder(folderId);
 
       if (success) {
+        if (_editFolderControllers.containsKey(folderId)) {
+          _editFolderControllers[folderId]!.dispose();
+          _editFolderControllers.remove(folderId);
+        }
+
         _folders.removeWhere((folder) => folder.id == folderId);
 
         _isLongPressed = List.filled(_folders.length, false);
@@ -124,19 +151,10 @@ class FolderListModel extends ChangeNotifier {
   }
 
   void showAllHiddenButtons() {
-    if (_isShowAll == false) {
-      _isShowAll = true;
-      _isLongPressed = List.filled(_folders.length, true);
-      notifyListeners();
-      return;
-    }
+    _isShowAll = !_isShowAll;
+    _isLongPressed = List.filled(_folders.length, _isShowAll);
 
-    if (_isShowAll == true) {
-      _isShowAll = false;
-      _isLongPressed = List.filled(_folders.length, false);
-      notifyListeners();
-      return;
-    }
+    notifyListeners();
   }
 
   void showHiddenButtons(int index) {
@@ -146,14 +164,21 @@ class FolderListModel extends ChangeNotifier {
 
   void showEditingMode(int index) {
     _isEditing[index] = !_isEditing[index];
-    editFolderController = TextEditingController(text: _folders[index].name);
     notifyListeners();
+  }
+
+  void _clearControllers() {
+    for (final controller in _editFolderControllers.values) {
+      controller.dispose();
+    }
+
+    _editFolderControllers.clear();
   }
 
   @override
   void dispose() {
     folderNameController.dispose();
-    editFolderController.dispose();
+    _clearControllers();
     super.dispose();
   }
 }

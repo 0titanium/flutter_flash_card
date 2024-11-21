@@ -7,7 +7,8 @@ class FolderModel extends ChangeNotifier {
   final Folder folderData;
   final DataService _dataService;
   final TextEditingController deckNameController = TextEditingController();
-  TextEditingController editDeckController = TextEditingController();
+
+  final Map<String, TextEditingController> _editDeckControllers = {};
 
   List<Deck> _decks = [];
 
@@ -30,13 +31,22 @@ class FolderModel extends ChangeNotifier {
     loadDecks();
   }
 
+  TextEditingController getEditDeckController(String deckId) {
+    if (!_editDeckControllers.containsKey(deckId)) {
+      final deck = _decks.firstWhere((deck) => deck.id == deckId);
+      _editDeckControllers[deckId] = TextEditingController(text: deck.deckName);
+    }
+
+    return _editDeckControllers[deckId]!;
+  }
+
   Future<void> loadDecks() async {
     final folderId = folderData.id;
     final rootFolder = await _dataService.loadRootFolder();
     final nowFolder = _dataService.findFolder(rootFolder, folderId);
 
     if (nowFolder != null) {
-      _decks = nowFolder.decks;
+      _decks = List.from(nowFolder.decks);
       debugPrint(_decks.toString());
       _isLongPressed = List.filled(_decks.length, false);
       _isEditing = List.filled(_decks.length, false);
@@ -76,7 +86,13 @@ class FolderModel extends ChangeNotifier {
   }
 
   Future<void> editDeckName(String deckId) async {
-    final newDeckName = editDeckController.text.trim();
+    final deckNameController = _editDeckControllers[deckId];
+
+    if (deckNameController == null) {
+      return;
+    }
+
+    final newDeckName = deckNameController.text.trim();
 
     if (newDeckName.isEmpty) {
       return;
@@ -87,19 +103,24 @@ class FolderModel extends ChangeNotifier {
 
       if (success) {
         final deckIndex = _decks.indexWhere((deck) => deck.id == deckId);
+
         if (deckIndex != -1) {
           _decks[deckIndex] = _decks[deckIndex].copyWith(
             deckName: newDeckName,
           );
 
-          _isEditing = List.filled(_decks.length, false);
-          debugPrint('Deck edited: ${_decks[deckIndex]}');
+          _isEditing[deckIndex] = false;
 
-          notifyListeners();
+          deckNameController.dispose();
+
+          _editDeckControllers.remove(deckId);
+
+          debugPrint('Deck edited: ${_decks[deckIndex]}');
         }
       } else {
         debugPrint('Deck not found in local list');
       }
+      notifyListeners();
     } catch (e) {
       debugPrint('Error : $e');
     }
@@ -115,7 +136,12 @@ class FolderModel extends ChangeNotifier {
       Folder? nowFolder = _dataService.findFolder(rootFolder, folderId);
 
       if (nowFolder != null) {
-        _decks = List.from(nowFolder.decks);
+        if (_editDeckControllers.containsKey(deckId)) {
+          _editDeckControllers[deckId]!.dispose();
+          _editDeckControllers.remove(deckId);
+        }
+
+        _decks.removeWhere((deck) => deck.id == deckId);
         _isLongPressed = _isLongPressed.sublist(0, _decks.length);
         _isEditing = _isEditing.sublist(0, _decks.length);
 
@@ -127,19 +153,10 @@ class FolderModel extends ChangeNotifier {
   }
 
   void showAllHiddenButtons() {
-    if (_isShowAll == false) {
-      _isShowAll = true;
-      _isLongPressed = List.filled(_decks.length, true);
-      notifyListeners();
-      return;
-    }
+    _isShowAll = !_isShowAll;
+    _isLongPressed = List.filled(_decks.length, _isShowAll);
 
-    if (_isShowAll == true) {
-      _isShowAll = false;
-      _isLongPressed = List.filled(_decks.length, false);
-      notifyListeners();
-      return;
-    }
+    notifyListeners();
   }
 
   void showHiddenButtons(int index) {
@@ -149,14 +166,21 @@ class FolderModel extends ChangeNotifier {
 
   void showEditingMode(int index) {
     _isEditing[index] = !_isEditing[index];
-    editDeckController = TextEditingController(text: _decks[index].deckName);
     notifyListeners();
+  }
+
+  void _clearControllers() {
+    for (final controller in _editDeckControllers.values) {
+      controller.dispose();
+    }
+
+    _editDeckControllers.clear();
   }
 
   @override
   void dispose() {
     deckNameController.dispose();
-    editDeckController.dispose();
+    _clearControllers();
     super.dispose();
   }
 }

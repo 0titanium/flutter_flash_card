@@ -140,8 +140,10 @@ class DeckModel extends ChangeNotifier {
     try {
       final success = await _dataService.editCard(
           deckData.id, cardId, editFrontText, editBackText);
+
       if (success) {
         final cardIndex = _cards.indexWhere((card) => card.id == cardId);
+
         if (cardIndex != -1) {
           _cards[cardIndex] = _cards[cardIndex].copyWith(
             frontText: editFrontText,
@@ -172,6 +174,7 @@ class DeckModel extends ChangeNotifier {
   Future<void> deleteCard(String cardId) async {
     try {
       final success = await _dataService.deleteCard(deckData.id, cardId);
+
       if (success) {
         if (_editFrontControllers.containsKey(cardId)) {
           _editFrontControllers[cardId]!.dispose();
@@ -204,19 +207,10 @@ class DeckModel extends ChangeNotifier {
   }
 
   void showAllHiddenButtons() {
-    if (_isShowAll == false) {
-      _isShowAll = true;
-      _isLongPressed = List.filled(_cards.length, true);
-      notifyListeners();
-      return;
-    }
+    _isShowAll = !_isShowAll;
+    _isLongPressed = List.filled(_cards.length, _isShowAll);
 
-    if (_isShowAll == true) {
-      _isShowAll = false;
-      _isLongPressed = List.filled(_cards.length, false);
-      notifyListeners();
-      return;
-    }
+    notifyListeners();
   }
 
   void showHiddenButtons(int index) {

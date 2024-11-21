@@ -29,10 +29,15 @@ class DataService {
 
   Future<void> saveVisitedFolders(Folder folder) async {
     final SharedPreferencesAsync asyncPrefs = SharedPreferencesAsync();
-    List<Folder> visitedFolders = await getVisitedFolders() ?? [];
+    List<Folder> visitedFolders = await getVisitedFolders();
 
     const int maxVisitedFolders = 10;
-    visitedFolders.removeWhere((item) => item.name == folder.name);
+
+    visitedFolders = visitedFolders.map((existingFolder) {
+      return existingFolder.id == folder.id ? folder : existingFolder;
+    }).toList();
+
+    visitedFolders.removeWhere((item) => item.id == folder.id);
     visitedFolders.insert(0, folder);
 
     if (visitedFolders.length > maxVisitedFolders) {
@@ -45,7 +50,24 @@ class DataService {
     await asyncPrefs.setStringList('visited_folders', encodedFolders);
   }
 
-  Future<List<Folder>?> getVisitedFolders() async {
+  Future<void> deleteSavedFolder(Folder folder) async {
+    final SharedPreferencesAsync asyncPrefs = SharedPreferencesAsync();
+    List<Folder> visitedFolders = await getVisitedFolders();
+
+    if (visitedFolders == []) {
+      return;
+    }
+
+    visitedFolders
+        .removeWhere((existingFolder) => existingFolder.id == folder.id);
+
+    final List<String> encodedFolders =
+        visitedFolders.map((folder) => jsonEncode(folder.toJson())).toList();
+
+    await asyncPrefs.setStringList('visited_folders', encodedFolders);
+  }
+
+  Future<List<Folder>> getVisitedFolders() async {
     final SharedPreferencesAsync asyncPrefs = SharedPreferencesAsync();
     final List<String>? visitedFolders =
         await asyncPrefs.getStringList('visited_folders');

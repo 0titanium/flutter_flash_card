@@ -78,8 +78,7 @@ class _FolderListScreenState extends State<FolderListScreen> {
                   folderListModel.showAllHiddenButtons();
                 },
                 child: const Padding(
-                  padding:
-                  EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                   child: Row(
                     children: [
                       Icon(Icons.settings),
@@ -104,7 +103,8 @@ class _FolderListScreenState extends State<FolderListScreen> {
                     ? Card(
                         child: ListTile(
                           title: TextField(
-                            controller: folderListModel.editFolderController,
+                            controller: folderListModel.getEditFolderController(
+                                folderListModel.folders[index].id),
                           ),
                           trailing: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
