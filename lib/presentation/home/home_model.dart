@@ -15,8 +15,7 @@ class HomeModel extends ChangeNotifier {
 
   List<Folder> get savedFolders => _savedFolders;
 
-  HomeModel({required DataService dataService})
-      : _dataService = dataService {
+  HomeModel({required DataService dataService}) : _dataService = dataService {
     loadSavedFolderNames();
   }
 
@@ -32,10 +31,13 @@ class HomeModel extends ChangeNotifier {
     try {
       await _dataService.deleteSavedFolder(folder);
 
+      showAllHiddenButtons();
+
       loadSavedFolderNames();
     } catch (e) {
       debugPrint(e.toString());
     }
+    notifyListeners();
   }
 
   void showAllHiddenButtons() {
