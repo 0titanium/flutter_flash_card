@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_flash_card/data/local/data_service.dart';
 import 'package:flutter_flash_card/domain/model/folder.dart';
 
-class HomeScreenModel extends ChangeNotifier {
+class HomeModel extends ChangeNotifier {
   final DataService _dataService;
 
   List<Folder> _savedFolders = [];
@@ -15,7 +15,7 @@ class HomeScreenModel extends ChangeNotifier {
 
   List<Folder> get savedFolders => _savedFolders;
 
-  HomeScreenModel({required DataService dataService})
+  HomeModel({required DataService dataService})
       : _dataService = dataService {
     loadSavedFolderNames();
   }

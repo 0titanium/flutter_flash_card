@@ -15,7 +15,7 @@ import 'package:flutter_flash_card/presentation/folder/folder_screen.dart';
 import 'package:flutter_flash_card/presentation/folder_list/folder_list_model.dart';
 import 'package:flutter_flash_card/presentation/folder_list/folder_list_screen.dart';
 import 'package:flutter_flash_card/presentation/home/home_screen.dart';
-import 'package:flutter_flash_card/presentation/home/home_screen_model.dart';
+import 'package:flutter_flash_card/presentation/home/home_model.dart';
 import 'package:flutter_flash_card/presentation/my_info/my_info_model.dart';
 import 'package:flutter_flash_card/presentation/my_info/my_info_screen.dart';
 import 'package:flutter_flash_card/presentation/review_card/review_card_model.dart';
@@ -48,7 +48,7 @@ final GoRouter router = GoRouter(
           path: '/home',
           builder: (context, state) {
             return ChangeNotifierProvider(
-              create: (_) => HomeScreenModel(dataService: DataService()),
+              create: (_) => HomeModel(dataService: DataService()),
               child: const HomeScreen(),
             );
           },

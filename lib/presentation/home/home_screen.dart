@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_flash_card/presentation/components/flash_card_app_bar/flash_card_app_bar.dart';
 import 'package:flutter_flash_card/presentation/components/flash_card_bottom/flash_card_bottom_model.dart';
-import 'package:flutter_flash_card/presentation/home/home_screen_model.dart';
+import 'package:flutter_flash_card/presentation/home/home_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +15,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    final homeModel = context.watch<HomeScreenModel>();
+    final homeModel = context.watch<HomeModel>();
     final flashCardBottomModel = context.watch<FlashCardBottomModel>();
 
     return Scaffold(
