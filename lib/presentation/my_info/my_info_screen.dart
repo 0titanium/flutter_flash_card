@@ -57,22 +57,37 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                                       ? Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: SizedBox(
-                                            child: Text(
-                                                myInfoModel.backUpList.isNotEmpty
-                                                    ? myInfoModel
-                                                        .backUpList.first
-                                                    : '저장 기록이 없습니다'),
+                                            child: Text(myInfoModel
+                                                    .backUpList.isNotEmpty
+                                                ? myInfoModel.backUpList.first
+                                                : '저장 기록이 없습니다'),
                                           ),
                                         )
-                                      : const Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Text('로그인 하세요'),
+                                      : Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: ElevatedButton(
+                                            onPressed: () {
+                                              showModalBottomSheet(
+                                                context: context,
+                                                shape:
+                                                    const RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.vertical(
+                                                          top: Radius.circular(
+                                                              20)),
+                                                ),
+                                                builder: (context) =>
+                                                    const SignInBottomSheet(),
+                                              );
+                                            },
+                                            child: const Text('로그인 하세요'),
+                                          ),
                                         ),
                                 ],
                               ),
                             ),
                           ),
-                          TextButton(
+                          ElevatedButton(
                             onPressed: () {
                               if (flashCardAuthProvider.flashCardUser != null) {
                                 _showConfirmationDialogs(context, '클라우드에 저장');
@@ -90,11 +105,28 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                             },
                             child: const Text('클라우드에 저장하기'),
                           ),
-                          TextButton(
-                            onPressed: () {
-                              _showConfirmationDialogs(context, '저장한 데이터를 삭제');
-                            },
-                            child: const Text('저장한 데이터 삭제'),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 16.0),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                if (flashCardAuthProvider.flashCardUser !=
+                                    null) {
+                                  _showConfirmationDialogs(
+                                      context, '저장한 데이터를 삭제');
+                                } else {
+                                  showModalBottomSheet(
+                                    context: context,
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(20)),
+                                    ),
+                                    builder: (context) =>
+                                        const SignInBottomSheet(),
+                                  );
+                                }
+                              },
+                              child: const Text('저장한 데이터 삭제'),
+                            ),
                           ),
                         ],
                       ),
@@ -102,7 +134,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                     SizedBox(
                       child: Center(
                         child: flashCardAuthProvider.flashCardUser == null
-                            ? TextButton(
+                            ? ElevatedButton(
                                 onPressed: () {
                                   showModalBottomSheet(
                                     context: context,
@@ -115,7 +147,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                                   );
                                 },
                                 child: const Text('로그인 하세요'))
-                            : TextButton(
+                            : ElevatedButton(
                                 onPressed: () {
                                   _showConfirmationDialogs(context, '계정을 탈퇴');
                                 },

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_flash_card/domain/model/flash_card_user.dart';
 import 'package:flutter_flash_card/domain/use_case/firebase_auth_delete_acoount_use_case.dart';
@@ -6,6 +8,8 @@ import 'package:flutter_flash_card/domain/use_case/google_sign_in_use_case.dart'
 import 'package:flutter_flash_card/domain/use_case/google_sign_out_use_case.dart';
 
 class FlashCardAuthProvider extends ChangeNotifier {
+  Timer? _debounceTimer;
+
   final GoogleSignInUseCase _googleSignInUseCase;
   final GoogleSignOutUseCase _googleSignOutUseCase;
   final FirebaseAuthDeleteAccountUseCase _firebaseAuthDeleteAccountUseCase;
@@ -34,50 +38,65 @@ class FlashCardAuthProvider extends ChangeNotifier {
   }
 
   Future<void> signInWithGoogle() async {
-    try {
-      _isLoading = true;
-      _error = null;
-      notifyListeners();
+    if (_isLoading) return;
 
-      _flashCardUser = await _googleSignInUseCase.execute();
-    } catch (e) {
-      _error = e.toString();
-    } finally {
-      _isLoading = false;
-      notifyListeners();
-    }
+    _debounceTimer?.cancel();
+    _debounceTimer = Timer(const Duration(milliseconds: 300), () async {
+      try {
+        _isLoading = true;
+        _error = null;
+        notifyListeners();
+
+        _flashCardUser = await _googleSignInUseCase.execute();
+      } catch (e) {
+        _error = e.toString();
+      } finally {
+        _isLoading = false;
+        notifyListeners();
+      }
+    });
   }
 
   Future<void> signOutWithGoogle() async {
-    try {
-      _isLoading = true;
-      _error = null;
-      notifyListeners();
+    if (_isLoading) return;
 
-      await _googleSignOutUseCase.execute();
-      _flashCardUser = null;
-    } catch (e) {
-      _error = e.toString();
-    } finally {
-      _isLoading = false;
-      notifyListeners();
-    }
+    _debounceTimer?.cancel();
+    _debounceTimer = Timer(const Duration(milliseconds: 300), () async {
+      try {
+        _isLoading = true;
+        _error = null;
+        notifyListeners();
+
+        await _googleSignOutUseCase.execute();
+        _flashCardUser = null;
+      } catch (e) {
+        _error = e.toString();
+      } finally {
+        _isLoading = false;
+        notifyListeners();
+      }
+    });
   }
 
   Future<void> deleteAccount() async {
-    try {
-      _isLoading = true;
-      _error = null;
-      notifyListeners();
+    if (_isLoading) return;
 
-      _flashCardUser = null;
-      await _firebaseAuthDeleteAccountUseCase.execute();
-    } catch (e) {
-      _error = e.toString();
-    } finally {
-      _isLoading = false;
-      notifyListeners();
-    }
+    _debounceTimer?.cancel();
+    _debounceTimer = Timer(const Duration(milliseconds: 300), () async {
+      try {
+        _isLoading = true;
+        _error = null;
+        notifyListeners();
+
+        _flashCardUser = null;
+        await _firebaseAuthDeleteAccountUseCase.execute();
+      } catch (e) {
+        _error = e.toString();
+      } finally {
+        _isLoading = false;
+        notifyListeners();
+      }
+    });
   }
 
   void getCurrentUser() {
@@ -92,5 +111,11 @@ class FlashCardAuthProvider extends ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     }
+  }
+
+  @override
+  void dispose() {
+    _debounceTimer?.cancel();
+    super.dispose();
   }
 }
