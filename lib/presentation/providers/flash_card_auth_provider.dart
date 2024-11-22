@@ -38,6 +38,8 @@ class FlashCardAuthProvider extends ChangeNotifier {
   }
 
   Future<void> signInWithGoogle() async {
+    if (_isLoading) return;
+
     _debounceTimer?.cancel();
     _debounceTimer = Timer(const Duration(milliseconds: 300), () async {
       try {
@@ -56,6 +58,8 @@ class FlashCardAuthProvider extends ChangeNotifier {
   }
 
   Future<void> signOutWithGoogle() async {
+    if (_isLoading) return;
+
     _debounceTimer?.cancel();
     _debounceTimer = Timer(const Duration(milliseconds: 300), () async {
       try {
@@ -75,6 +79,8 @@ class FlashCardAuthProvider extends ChangeNotifier {
   }
 
   Future<void> deleteAccount() async {
+    if (_isLoading) return;
+
     _debounceTimer?.cancel();
     _debounceTimer = Timer(const Duration(milliseconds: 300), () async {
       try {
