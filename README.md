@@ -51,31 +51,33 @@
 
 ## 프로젝트 구조
 
-lib  
-├─core  
-│  └─router  
-├─data  
-│  ├─local  
-│  ├─mapper  
-│  ├─remote  
-│  └─repository_impl  
-├─domain  
-│  ├─model  
-│  ├─repository  
-│  └─use_case  
-└─presentation  
-├─components  
-│  ├─flash_card_app_bar  
-│  └─flash_card_bottom  
-├─deck  
-├─flip_card  
-├─folder  
-├─folder_list  
-├─home  
-├─my_info  
-├─providers  
-├─review_card  
-├─sign_in  
-└─view_card
+<pre>
+lib
+    ├─ core
+    │     └─ router
+    ├─ data
+    │     ├─ local
+    │     ├─ mapper
+    │     ├─ remote
+    │     └─ repository_impl
+    ├─ domain
+    │     ├─ model
+    │     ├─ repository
+    │     └─ use_case
+    └─ presentation
+          ├─ components
+          │     ├─ flash_card_app_bar
+          │     └─ flash_card_bottom
+          ├─ deck
+          ├─ flip_card
+          ├─ folder
+          ├─ folder_list
+          ├─ home
+          ├─ my_info
+          ├─ providers
+          ├─ review_card
+          ├─ sign_in
+          └─ view_card
+</pre>
 
 ## 업데이트
