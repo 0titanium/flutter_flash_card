@@ -50,6 +50,24 @@ class DataService {
     await asyncPrefs.setStringList('visited_folders', encodedFolders);
   }
 
+  Future<void> updateVisitedFolders(List<Folder> folderList) async {
+    final SharedPreferencesAsync asyncPrefs = SharedPreferencesAsync();
+    List<Folder> visitedFolders = await getVisitedFolders();
+
+    visitedFolders = visitedFolders.map((visitedFolder) {
+      final updatedFolder = folderList.firstWhere(
+          (folder) => folder.id == visitedFolder.id,
+          orElse: () => visitedFolder);
+
+      return updatedFolder;
+    }).toList();
+
+    final List<String> encodedFolders =
+        visitedFolders.map((folder) => jsonEncode(folder.toJson())).toList();
+
+    await asyncPrefs.setStringList('visited_folders', encodedFolders);
+  }
+
   Future<void> deleteSavedFolder(Folder folder) async {
     final SharedPreferencesAsync asyncPrefs = SharedPreferencesAsync();
     List<Folder> visitedFolders = await getVisitedFolders();

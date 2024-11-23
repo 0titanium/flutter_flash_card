@@ -116,6 +116,8 @@ class FolderListModel extends ChangeNotifier {
 
           debugPrint('Folder edited: ${_folders[folderIndex]}');
 
+          _dataService.updateVisitedFolders(_folders);
+
           notifyListeners();
         }
       } else {
