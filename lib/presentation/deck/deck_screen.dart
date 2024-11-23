@@ -15,7 +15,10 @@ class _DeckScreenState extends State<DeckScreen> {
   @override
   Widget build(BuildContext context) {
     final deckModel = context.watch<DeckModel>();
-    final path = GoRouter.of(context).routerDelegate.currentConfiguration.uri;
+    final String folderName =
+        GoRouterState.of(context).pathParameters['folderName'] ?? '';
+    final String deckName =
+        GoRouterState.of(context).pathParameters['deckName'] ?? '';
 
     return SafeArea(
       child: Scaffold(
@@ -72,7 +75,8 @@ class _DeckScreenState extends State<DeckScreen> {
                         ),
                         IconButton(
                             onPressed: () {
-                              context.go('$path/view_card',
+                              context.go(
+                                  '/folder_list/$folderName/$deckName/view_card',
                                   extra: deckModel.deckDetails);
                               deckModel.clearControllers();
                             },
