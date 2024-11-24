@@ -100,3 +100,12 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+flutter_native_splash:
+  image: "assets/images/flip_learn_splash_logo.png"
+  android_12:
+    image: "assets/images/flip_learn_splash_logo.png"
+    color: "#FFFFFF"
+  color: "#FFFFFF"
+  android: true
+  ios: true
