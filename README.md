@@ -50,14 +50,16 @@
 - FrameWork : Flutter
 
 - Libraries :
-  - provider : 상태 관리
-  - go_router : 라우팅
-  - shared_preferences : 로컬 데이터 저장
-  - firebase_core : firebase 연동
-  - firebase_auth : 로그인 계정 인증
-  - google_sign_in : 구글 계정 연동
-  - cloud_firestore : 외부 데이터 저장
-  - freezed : 모델 작성
+  - provider: ^6.1.2 - 상태 관리
+  - go_router: ^14.2.7 - 라우팅
+  - shared_preferences: ^2.3.2 - 로컬 데이터 저장
+  - firebase_core: ^3.6.0 - firebase 연동
+  - firebase_auth: ^5.3.1 - 로그인 계정 인증
+  - google_sign_in: ^6.2.1 - 구글 계정 연동
+  - cloud_firestore: ^5.4.4 - 외부 데이터 저장
+  - freezed: ^2.5.7 - 모델 작성
+  - flutter_native_splash: ^2.4.3 - 스플래시 화면
+  - flutter_launcher_icons: ^0.14.1 - 앱 아이콘
 
 - Database : Firestore
 
