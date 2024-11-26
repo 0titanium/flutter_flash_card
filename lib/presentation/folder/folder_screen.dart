@@ -33,7 +33,7 @@ class _FolderScreenState extends State<FolderScreen> {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: const Text('폴더 추가'),
+                        title: const Text('덱 추가'),
                         content: TextField(
                           controller: folderModel.deckNameController,
                           decoration: InputDecoration(
@@ -46,16 +46,16 @@ class _FolderScreenState extends State<FolderScreen> {
                         actions: [
                           TextButton(
                             onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: const Text('취소'),
-                          ),
-                          TextButton(
-                            onPressed: () {
                               folderModel.createDeck();
                               Navigator.of(context).pop();
                             },
                             child: const Text('추가'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('취소'),
                           ),
                         ],
                       );
