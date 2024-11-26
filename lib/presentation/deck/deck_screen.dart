@@ -299,6 +299,8 @@ class _DeckScreenState extends State<DeckScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           deckModel.cards[index].frontText,
