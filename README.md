@@ -1,16 +1,22 @@
 # FlipLearn 플립런 - 플래시 카드 앱
 
+<img width="256" alt="app_icon_image" src="https://github.com/0titanium/flutter_flash_card/blob/master/assets/images/flip_learn_icon.png" >
+
+<br/>
+
 ## 설명
 
 - 모바일 플래시 카드 앱
 
 - 카드의 앞면과 뒷면을 번갈아 확인하며 효율적인 학습
 
+<br/>
+
 ## 데모
 
-| 시작 화면 | 카드 보기 |
-| --- | --- |
-| <img width="256" alt="app_start-gif" src="https://private-user-images.githubusercontent.com/38120056/389865553-7f8ba19c-08b1-4106-a55e-e1eaf52c0321.gif?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzI2MTA5NDQsIm5iZiI6MTczMjYxMDY0NCwicGF0aCI6Ii8zODEyMDA1Ni8zODk4NjU1NTMtN2Y4YmExOWMtMDhiMS00MTA2LWE1NWUtZTFlYWY1MmMwMzIxLmdpZj9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDExMjYlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQxMTI2VDA4NDQwNFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTk5MTk2NTc4YzE4YWYzYmZmZTg0MGI0Zjk5ZTlkN2FmZWI2NjQ2ZmEyMmI5NzNmOThiMDc4ODY4NmE4OTBhMjMmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.4MaaboWsRQJ0VEtNIy7RKgKvji8dfyGX4CgovO72eSs" > | <video autoplay loop src="https://private-user-images.githubusercontent.com/38120056/389865623-d49f10ee-0711-490d-b516-684858e6082e.mp4?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzI2MTA5NDQsIm5iZiI6MTczMjYxMDY0NCwicGF0aCI6Ii8zODEyMDA1Ni8zODk4NjU2MjMtZDQ5ZjEwZWUtMDcxMS00OTBkLWI1MTYtNjg0ODU4ZTYwODJlLm1wND9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDExMjYlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQxMTI2VDA4NDQwNFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTFjMDk0MDhjZjc5MjFlZjE0N2FjMGM0YWIxYmZmY2RiYzE5MTA2Nzk1NDVmZTM1YzQwZDgzM2I4ZDg1NWE1ZjImWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.Cm3Vk268VPB90cExNnKTxOqw3FS92JJcJN2UWabDXIk" width="400" /> |
+| 시작 화면                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | 카드 보기                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |     |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
+| <img width="256" alt="app_start_gif" src="https://private-user-images.githubusercontent.com/38120056/389865553-7f8ba19c-08b1-4106-a55e-e1eaf52c0321.gif?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzI2MTA5NDQsIm5iZiI6MTczMjYxMDY0NCwicGF0aCI6Ii8zODEyMDA1Ni8zODk4NjU1NTMtN2Y4YmExOWMtMDhiMS00MTA2LWE1NWUtZTFlYWY1MmMwMzIxLmdpZj9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDExMjYlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQxMTI2VDA4NDQwNFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTk5MTk2NTc4YzE4YWYzYmZmZTg0MGI0Zjk5ZTlkN2FmZWI2NjQ2ZmEyMmI5NzNmOThiMDc4ODY4NmE4OTBhMjMmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.4MaaboWsRQJ0VEtNIy7RKgKvji8dfyGX4CgovO72eSs" > | <video autoplay loop src="https://private-user-images.githubusercontent.com/38120056/389865623-d49f10ee-0711-490d-b516-684858e6082e.mp4?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzI2MTA5NDQsIm5iZiI6MTczMjYxMDY0NCwicGF0aCI6Ii8zODEyMDA1Ni8zODk4NjU2MjMtZDQ5ZjEwZWUtMDcxMS00OTBkLWI1MTYtNjg0ODU4ZTYwODJlLm1wND9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDExMjYlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQxMTI2VDA4NDQwNFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTFjMDk0MDhjZjc5MjFlZjE0N2FjMGM0YWIxYmZmY2RiYzE5MTA2Nzk1NDVmZTM1YzQwZDgzM2I4ZDg1NWE1ZjImWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.Cm3Vk268VPB90cExNnKTxOqw3FS92JJcJN2UWabDXIk" width="400" /> |     |
 
 <br/>
 
@@ -35,7 +41,7 @@
 
 - 로그인, 로그아웃, 계정 탈퇴 : Firebase Authentication으로 구글 계정과 연동을 통한 로그인, 로그아웃, 계정 탈퇴
 
-## 사용 방법
+<br/>
 
 ## 기술
 
@@ -54,6 +60,8 @@
   - freezed : 모델 작성
 
 - Database : Firestore
+
+<br/>
 
 ## 프로젝트 구조
 
@@ -85,5 +93,7 @@ lib
           ├─ sign_in
           └─ view_card
 </pre>
+
+<br/>
 
 ## 업데이트
