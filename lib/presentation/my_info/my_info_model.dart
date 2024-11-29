@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:flutter/material.dart';
-import 'package:flutter_flash_card/data/remote/back_up_service.dart';
+import 'package:flutter_flash_card/data/data_source/remote/back_up_service.dart';
 
 class MyInfoModel extends ChangeNotifier {
   Timer? _debounceTimer;

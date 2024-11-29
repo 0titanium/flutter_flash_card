@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_flash_card/data/local/data_service.dart';
+import 'package:flutter_flash_card/data/data_source/local/data_service.dart';
 import 'package:flutter_flash_card/domain/model/folder.dart';
 
 class FolderListModel extends ChangeNotifier {
