@@ -112,6 +112,29 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                                 if (flashCardAuthProvider.flashCardUser !=
                                     null) {
                                   _showConfirmationDialogs(
+                                      context, '클라우드 데이터와 동기화');
+                                } else {
+                                  showModalBottomSheet(
+                                    context: context,
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(20)),
+                                    ),
+                                    builder: (context) =>
+                                    const SignInBottomSheet(),
+                                  );
+                                }
+                              },
+                              child: const Text('클라우드 데이터와 동기화'),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 16.0),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                if (flashCardAuthProvider.flashCardUser !=
+                                    null) {
+                                  _showConfirmationDialogs(
                                       context, '저장한 데이터를 삭제');
                                 } else {
                                   showModalBottomSheet(
@@ -185,6 +208,12 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                 onPressed: () {
                   if (dialogType == '클라우드에 저장') {
                     myInfoModel.uploadToCloud();
+                    Navigator.pop(context);
+                    return;
+                  }
+
+                  if (dialogType == '클라우드 데이터와 동기화') {
+                    myInfoModel.syncCloudData();
                     Navigator.pop(context);
                     return;
                   }
