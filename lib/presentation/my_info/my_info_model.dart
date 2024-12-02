@@ -53,6 +53,25 @@ class MyInfoModel extends ChangeNotifier {
     });
   }
 
+  Future<void> syncCloudData() async {
+    if (_isLoading) return;
+
+    _debounceTimer?.cancel();
+    _debounceTimer = Timer(const Duration(milliseconds: 300), () async {
+      _isLoading = true;
+      notifyListeners();
+
+      final currentUser = _firebaseAuth.currentUser;
+
+      if (currentUser != null) {
+        await _backUpService.syncLatestBackup(currentUser.uid);
+      }
+
+      _isLoading = false;
+      notifyListeners();
+    });
+  }
+
   Future<void> deleteBackUpData() async {
     if (_isLoading) return;
 
