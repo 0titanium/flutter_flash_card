@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:flutter/material.dart';
-import 'package:flutter_flash_card/data/remote/back_up_service.dart';
+import 'package:flutter_flash_card/data/data_source/remote/back_up_service.dart';
 
 class MyInfoModel extends ChangeNotifier {
   Timer? _debounceTimer;
@@ -47,6 +47,25 @@ class MyInfoModel extends ChangeNotifier {
         await loadBackUpList();
       }
       debugPrint('---upload---');
+
+      _isLoading = false;
+      notifyListeners();
+    });
+  }
+
+  Future<void> syncCloudData() async {
+    if (_isLoading) return;
+
+    _debounceTimer?.cancel();
+    _debounceTimer = Timer(const Duration(milliseconds: 300), () async {
+      _isLoading = true;
+      notifyListeners();
+
+      final currentUser = _firebaseAuth.currentUser;
+
+      if (currentUser != null) {
+        await _backUpService.syncLatestBackup(currentUser.uid);
+      }
 
       _isLoading = false;
       notifyListeners();

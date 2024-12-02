@@ -46,16 +46,16 @@ class _FolderListScreenState extends State<FolderListScreen> {
                         actions: [
                           TextButton(
                             onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: const Text('취소'),
-                          ),
-                          TextButton(
-                            onPressed: () {
                               folderListModel.createFolder();
                               Navigator.of(context).pop();
                             },
                             child: const Text('추가'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('취소'),
                           ),
                         ],
                       );

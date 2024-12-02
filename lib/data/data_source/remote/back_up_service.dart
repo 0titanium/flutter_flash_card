@@ -60,6 +60,49 @@ class BackUpService {
     }
   }
 
+  Future<bool> syncLatestBackup(String userId) async {
+    final currentUser = _auth.currentUser;
+
+    if (currentUser == null || currentUser.uid != userId) {
+      debugPrint(
+          'Authentication error: Not logged in or user ID does not match');
+      return false;
+    }
+
+    try {
+      final backupSnapshot = await _firestore
+          .collection('backups')
+          .doc(userId)
+          .collection('backups')
+          .orderBy('timestamp', descending: true)
+          .limit(1)
+          .get();
+
+      if (backupSnapshot.docs.isEmpty) {
+        debugPrint('No recent backup data found');
+        return false;
+      }
+
+      final backupDoc = backupSnapshot.docs.first;
+      final backupData = backupDoc.data();
+
+      if (!backupData.containsKey('root_folder')) {
+        debugPrint('Invalid backup data');
+        return false;
+      }
+
+      final SharedPreferencesAsync asyncPrefs = SharedPreferencesAsync();
+
+      await asyncPrefs.setString('root_folder', backupData['root_folder']);
+
+      debugPrint('Recent backup data restoration completed');
+      return true;
+    } catch (e) {
+      debugPrint('Error during restoration: $e');
+      return false;
+    }
+  }
+
   Future<bool> deleteBackups(String userId) async {
     try {
       final currentUser = _auth.currentUser;
