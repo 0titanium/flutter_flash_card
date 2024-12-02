@@ -27,19 +27,19 @@
 
   - 작성된 순서, 랜덤 순서로 학습
 
-- 카드 작성, 수정, 삭제 : 카드 앞면과 뒷면의 내용을 작성, 수정, 삭제
+- 카드 관리 : 카드 앞면과 뒷면의 내용을 작성, 수정, 삭제
 
-- 덱 구성, 수정, 삭제 : 여러 카드를 저장할 덱을 구성, 수정, 삭제
+- 덱 관리 : 여러 카드를 저장할 덱을 구성, 수정, 삭제
 
-- 폴더 생성, 수정, 삭제 : 여러 덱을 저장할 폴더를 생성, 수정, 삭제
+- 폴더 관리 : 여러 덱을 저장할 폴더를 생성, 수정, 삭제
 
 - 학습 기록 : 최근에 방문한 폴더 기록 표시, 삭제
 
-- 로컬 데이터 저장, 삭제 : 폴더, 덱, 카드를 로컬에 저장, 삭제
+- 로컬 데이터 관리 : 폴더, 덱, 카드를 로컬에 저장, 삭제
 
-- 외부 데이터 저장, 삭제 : 폴더, 덱, 카드를 Firestore database에 저장, 삭제
+- 외부 데이터 관리 : 폴더, 덱, 카드를 Firestore database에 업로드, 다운로드,  삭제
 
-- 로그인, 로그아웃, 계정 탈퇴 : Firebase Authentication으로 구글 계정과 연동을 통한 로그인, 로그아웃, 계정 탈퇴
+- 계정 관리 : Firebase Authentication으로 구글 계정과 연동을 통한 로그인, 로그아웃, 계정 탈퇴
 
 <br/>
 
@@ -69,31 +69,32 @@
 
 <pre>
 lib
-    ├─ core
-    │     └─ router
-    ├─ data
-    │     ├─ local
-    │     ├─ mapper
-    │     ├─ remote
-    │     └─ repository_impl
-    ├─ domain
-    │     ├─ model
-    │     ├─ repository
-    │     └─ use_case
-    └─ presentation
-          ├─ components
-          │     ├─ flash_card_app_bar
-          │     └─ flash_card_bottom
-          ├─ deck
-          ├─ flip_card
-          ├─ folder
-          ├─ folder_list
-          ├─ home
-          ├─ my_info
-          ├─ providers
-          ├─ review_card
-          ├─ sign_in
-          └─ view_card
+  ├─core
+  │  └─router
+  ├─data
+  │  ├─data_source
+  │  │  ├─local
+  │  │  └─remote
+  │  ├─mapper
+  │  └─repository_impl
+  ├─domain
+  │  ├─model
+  │  ├─repository
+  │  └─use_case
+  └─presentation
+      ├─components
+      │  ├─flash_card_app_bar
+      │  └─flash_card_bottom
+      ├─deck
+      ├─flip_card
+      ├─folder
+      ├─folder_list
+      ├─home
+      ├─my_info
+      ├─providers
+      ├─review_card
+      ├─sign_in
+      └─view_card
 </pre>
 
 <br/>
